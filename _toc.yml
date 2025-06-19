@@ -1,0 +1,12 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: 0.intro
+chapters:
+- file: 1.induction
+- file: 2.estimation-uncertainty
+- file: 3.null-hypothesis-testing
+- file: 4.controversy
+- file: 5.alternatives
+- file: summary
