@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>The Problem of Induction &#8212; Linear Models II: Statistical Inference for Linear Models</title>
+    <title>The Purpose of Statistical Inference &#8212; Linear Models II: Statistical Inference for Linear Models</title>
   
   
   
@@ -60,7 +60,9 @@
     <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = '1.induction';</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '1.purpose-of-inference';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Uncertainty in Estimation" href="2.estimation-uncertainty.html" />
@@ -169,11 +171,11 @@
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">The Problem of Induction</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">The Purpose of Statistical Inference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="2.estimation-uncertainty.html">Uncertainty in Estimation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3.null-hypothesis-testing.html">Null Hypothesis Significance Testing (NHST)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="4.controversy.html">The Controversy of NHST</a></li>
-<li class="toctree-l1"><a class="reference internal" href="5.alternatives.html">Alternatives to NHST</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5.alternatives.html">What Can We Do?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="summary.html">Summary</a></li>
 </ul>
 
@@ -251,7 +253,7 @@
       
       
       
-      <li><a href="https://github.com/PCHN63101-Advanced-Data-Skills/Inference-Linear-Model/issues/new?title=Issue%20on%20page%20%2F1.induction.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/PCHN63101-Advanced-Data-Skills/Inference-Linear-Model/issues/new?title=Issue%20on%20page%20%2F1.purpose-of-inference.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -281,7 +283,7 @@
       
       
       
-      <li><a href="_sources/1.induction.ipynb" target="_blank"
+      <li><a href="_sources/1.purpose-of-inference.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -344,7 +346,9 @@
 <button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
 </button>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -355,11 +359,21 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>The Problem of Induction</h1>
+    <h1>The Purpose of Statistical Inference</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deductive-vs-inductive-reasoning">Deductive vs Inductive Reasoning</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-problem-of-induction">The Problem of Induction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statistical-inferences-as-induction">Statistical Inferences as Induction</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -369,8 +383,42 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="the-problem-of-induction">
-<h1>The Problem of Induction<a class="headerlink" href="#the-problem-of-induction" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="the-purpose-of-statistical-inference">
+<h1>The Purpose of Statistical Inference<a class="headerlink" href="#the-purpose-of-statistical-inference" title="Link to this heading">#</a></h1>
+<section id="deductive-vs-inductive-reasoning">
+<h2>Deductive vs Inductive Reasoning<a class="headerlink" href="#deductive-vs-inductive-reasoning" title="Link to this heading">#</a></h2>
+<p>An example of a logically valid modus tollens would be:</p>
+<ol class="arabic simple">
+<li><p>If it is raining, the ground will be wet.</p></li>
+<li><p>The ground is not wet.</p></li>
+<li><p>Therefore, it is not raining.</p></li>
+</ol>
+<p>If the premises are <em>true</em> then the conclusion <em>has</em> to be true. As another example:</p>
+<ol class="arabic simple">
+<li><p>All humans are mortal.</p></li>
+<li><p>Socrates is a human.</p></li>
+<li><p>Therefore, Socrates is mortal.</p></li>
+</ol>
+<p>This is perfectly logically valid. Both premises are true and thus the conclusion must also be true.</p>
+</section>
+<section id="the-problem-of-induction">
+<h2>The Problem of Induction<a class="headerlink" href="#the-problem-of-induction" title="Link to this heading">#</a></h2>
+<p>Although we would ideally want scientific reasoning to be deductive and thus justifiable purely on logical grounds, the process of scientific discovery usually takes the form</p>
+<ol class="arabic simple">
+<li><p>If theory <span class="math notranslate nohighlight">\(T\)</span> is true, then data <span class="math notranslate nohighlight">\(D\)</span> is likely.</p></li>
+<li><p>We observe <span class="math notranslate nohighlight">\(D\)</span>.</p></li>
+<li><p>Therefore, <span class="math notranslate nohighlight">\(T\)</span> is probably true.</p></li>
+</ol>
+<p>This is not deductive. Although the premises may well be correct, it does not follow that theory <span class="math notranslate nohighlight">\(T\)</span> is true as there may be many other theories that could explain the observation of <span class="math notranslate nohighlight">\(D\)</span>. If we instead state that theory <span class="math notranslate nohighlight">\(T\)</span> is <em>probably</em> true, then we have moved from pure reason into the world of probability. By saying that <span class="math notranslate nohighlight">\(T\)</span> is <em>probably</em> true, we are accepting that it may be incorrect and thus the conclusion is not a certainty based on the premises.</p>
+<blockquote class="epigraph">
+<div><p>All our experimental conclusions depend on the supposition that the course of nature continues uniformly the same.</p>
+<p class="attribution">—David Hume</p>
+</div></blockquote>
+</section>
+<section id="statistical-inferences-as-induction">
+<h2>Statistical Inferences as Induction<a class="headerlink" href="#statistical-inferences-as-induction" title="Link to this heading">#</a></h2>
+<p>On the face of it, statistical inference is precisely an exercise in induction. As such, taking a hard-nosed perspective, statistical inference can <em>never</em> be logically justified. Fundamentally, statistical inference is based on assuming that predictions about the future will resemble the past and thus cannot be justified using pure logic. Although this may seem highly problematic, induction within statistics (as well as more broadly in science) can be coherently structured, pragmatically justified and rationally defensible, even if it cannot make peace with a pure framework of logic. In other words, statistical inference is <em>useful</em>, even if it is on shaky logical ground.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -427,6 +475,24 @@
             </div>
             
             
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deductive-vs-inductive-reasoning">Deductive vs Inductive Reasoning</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-problem-of-induction">The Problem of Induction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statistical-inferences-as-induction">Statistical Inferences as Induction</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

@@ -65,7 +65,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = '4.controversy';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Alternatives to NHST" href="5.alternatives.html" />
+    <link rel="next" title="What Can We Do?" href="5.alternatives.html" />
     <link rel="prev" title="Null Hypothesis Significance Testing (NHST)" href="3.null-hypothesis-testing.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -171,11 +171,11 @@
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="1.induction.html">The Problem of Induction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="1.purpose-of-inference.html">The Purpose of Statistical Inference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="2.estimation-uncertainty.html">Uncertainty in Estimation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3.null-hypothesis-testing.html">Null Hypothesis Significance Testing (NHST)</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">The Controversy of NHST</a></li>
-<li class="toctree-l1"><a class="reference internal" href="5.alternatives.html">Alternatives to NHST</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5.alternatives.html">What Can We Do?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="summary.html">Summary</a></li>
 </ul>
 
@@ -369,7 +369,15 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problems-with-nhst">Problems with NHST</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-null-hypothesis-is-implausible">The Null Hypothesis is Implausible</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dichotomisation-of-evidence">Dichotomisation of Evidence</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-illusion-of-obtaining-improbability">The Illusion of Obtaining Improbability</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#erroneous-scientific-reasoning">Erroneous Scientific Reasoning</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-asa-statement-on-p-values">The ASA Statement on <span class="math notranslate nohighlight">\(p\)</span>-values</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#should-p-values-be-abandoned">Should <span class="math notranslate nohighlight">\(p\)</span>-values be Abandoned?</a></li>
 </ul>
             </nav>
         </div>
@@ -384,8 +392,113 @@
   <section class="tex2jax_ignore mathjax_ignore" id="the-controversy-of-nhst">
 <h1>The Controversy of NHST<a class="headerlink" href="#the-controversy-of-nhst" title="Link to this heading">#</a></h1>
 <p>…</p>
+<section id="problems-with-nhst">
+<h2>Problems with NHST<a class="headerlink" href="#problems-with-nhst" title="Link to this heading">#</a></h2>
+<section id="the-null-hypothesis-is-implausible">
+<h3>The Null Hypothesis is Implausible<a class="headerlink" href="#the-null-hypothesis-is-implausible" title="Link to this heading">#</a></h3>
+</section>
+<section id="dichotomisation-of-evidence">
+<h3>Dichotomisation of Evidence<a class="headerlink" href="#dichotomisation-of-evidence" title="Link to this heading">#</a></h3>
+</section>
+<section id="the-illusion-of-obtaining-improbability">
+<h3>The Illusion of Obtaining Improbability<a class="headerlink" href="#the-illusion-of-obtaining-improbability" title="Link to this heading">#</a></h3>
+<p>Another problem with NHST is that the logic almost universally applied when reaching a conclusion from a <span class="math notranslate nohighlight">\(p\)</span>-value is flawed. To see this, let us first examine a valid application of syllogistic reasoning. Consider the following adapted example from <a class="reference external" href="https://www.sjsu.edu/faculty/gerstman/misc/Cohen1994.pdf">Cohen (1994)</a>:</p>
+<ol class="arabic simple">
+<li><p>If a person is a Martian then they are not a Member of Parliment.</p></li>
+<li><p>This person is a Member of Parliment.</p></li>
+<li><p>Therefore, this person is not a Martian.</p></li>
+</ol>
+<p>Putting aside any personal paranoia about aliens invading our political system, this is a perfectly valid application of a <em>modus tollens</em> argument. The conclusion logically and irrefutably follows from the premises. However, we can reach an <em>invalid</em> conclusion if any of the premises are faulty.</p>
+<ol class="arabic simple">
+<li><p>If a person is British then they are not a Member of Parliment.</p></li>
+<li><p>This person is a Member of Parliment.</p></li>
+<li><p>Therefore, this person is not British.</p></li>
+</ol>
+<p>This is a perfectly valid argument, but the conclusion is not sensible because the first premise is wrong. <em>Some</em> British people are Members of Parliment. We can make the premise more correct by making it probabilistic.</p>
+<ol class="arabic simple">
+<li><p>If a person is British then it is unlikely that they are a Member of Parliment.</p></li>
+<li><p>This person is a Member of Parliment.</p></li>
+<li><p>Therefore, this person is unlikely to be British.</p></li>
+</ol>
+<p>Unfortunately, the application of logic has now failed and has led to a conclusion that is not sensible. The reason is that applying probability in this way is fraught with issues. Probability quantifies <em>belief</em> or <em>uncertainty</em>, rather than absolute truth. In fact, probability does not preserve truth in the same way as formal logic. This is precisely because there are <em>always exceptions</em>. As such, we can easily reach false conclusions, as shown above.</p>
+<p>The error in assuming that someone is not British because they are a Member of Parliment should hopefully be clear. What is perhaps less immediately obvious is that the same error is made when we do the following:</p>
+<ol class="arabic simple">
+<li><p>If <span class="math notranslate nohighlight">\(H_{0}\)</span> is true, then it is unlikely we would have generated this result (i.e. the <span class="math notranslate nohighlight">\(p\)</span>-value will be small).</p></li>
+<li><p>This result has been generated (i.e. we have calculated a small <span class="math notranslate nohighlight">\(p\)</span>-value).</p></li>
+<li><p>Therefore, <span class="math notranslate nohighlight">\(H_{0}\)</span> is unlikely to be true.</p></li>
+</ol>
+<p>This is exactly the same logical form as above and yet it <em>sounds</em> like a plausible line of reasoning. Nevertheless, in the same vein as the example above, it is logically invalid. And yet, this is the conclusion that is implicitly reached by every significant finding in the experimental psychology literature. This is what <a class="reference external" href="https://www.sjsu.edu/faculty/gerstman/misc/Cohen1994.pdf">Cohen (1994)</a> refers to as “the illusion of obtaining improbability”.</p>
+<p>Another way of thinking about this is that a probabilitsic conclusion has been reached about <span class="math notranslate nohighlight">\(H_{0}\)</span>, yet we know that a <span class="math notranslate nohighlight">\(p\)</span>-value is <em>not</em> a probability statement about <span class="math notranslate nohighlight">\(H_{0}\)</span>. Instead, a <span class="math notranslate nohighlight">\(p\)</span>-value is a probability statement about the <em>data</em>. In other words, <span class="math notranslate nohighlight">\(p = P(\mathcal{D}|H_{0}) \neq P(H_{0}|\mathcal{D})\)</span>. As such, no statement can be made about how likely or unlikely <span class="math notranslate nohighlight">\(H_{0}\)</span> is, given the current data. Although <span class="math notranslate nohighlight">\(P(\mathcal{D}|H_{0})\)</span> and <span class="math notranslate nohighlight">\(P(H_{0}|\mathcal{D})\)</span> sound very similar, they are not the same quantity (as discussed further in the drop-down box below). If we have a significant <span class="math notranslate nohighlight">\(p\)</span>-value, we can conclude that our data are unlikely, if the null hypothesis were true. Nothing else. This presupposes that the null is true and thus <em>cannot</em> tell us anything about its probability. As such, is the <span class="math notranslate nohighlight">\(p\)</span>-value actually telling us anything useful?</p>
+<blockquote class="epigraph">
+<div><p>What’s wrong with NHST? Well, among many other things, it does not tell us what we want to know, and we
+so much want to know what we want to know that, out of desperation, we nevertheless believe that it does!</p>
+<p class="attribution">—Jacob Cohen</p>
+</div></blockquote>
+<div class="tip dropdown admonition">
+<p class="admonition-title">Why <span class="math notranslate nohighlight">\(P(\mathcal{D}|H_{0}) \neq P(H_{0}|\mathcal{D})\)</span></p>
+<p>It can be helpful in trying to understand why the two statements <span class="math notranslate nohighlight">\(P(\mathcal{D}|H_{0})\)</span> and <span class="math notranslate nohighlight">\(P(H_{0}|\mathcal{D})\)</span> are <em>not</em> the same quantity by studying an example. This is taken from <a class="reference external" href="https://www.sjsu.edu/faculty/gerstman/misc/Cohen1994.pdf">Cohen (1994)</a> and concerns the results of a new test for Schizophrenia. Based on testing 1,000 random individual from the whole population, we have:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Result</p></th>
+<th class="head"><p>Normal</p></th>
+<th class="head"><p>Schiz</p></th>
+<th class="head text-right"><p>Total</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Negative test (Normal)</p></td>
+<td><p>949</p></td>
+<td><p>1</p></td>
+<td class="text-right"><p>950</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>Positive test (Schiz)</p></td>
+<td><p>30</p></td>
+<td><p>20</p></td>
+<td class="text-right"><p>50</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>Total</p></td>
+<td><p>979</p></td>
+<td><p>21</p></td>
+<td class="text-right"><p>1000</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>To put this into the framework of NHST, let us then assume:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(H_{0}\)</span> = An individual is “normal”</p></li>
+<li><p><span class="math notranslate nohighlight">\(H_{1}\)</span> = An individual has Schizophrenia</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathcal{D}\)</span> = The test result is positive for Schizophrenia</p></li>
+</ul>
+<p>From here, let us see what the <span class="math notranslate nohighlight">\(p\)</span>-value tells us. Remembering that <span class="math notranslate nohighlight">\(p = P(\mathcal{D}|H_{0})\)</span>, we are therefore conditioning on <span class="math notranslate nohighlight">\(H_{0}\)</span> being true. For the table above, that means we are only looking at the <em>first column</em>. Based on this column alone, what is the probability that the result is positive? In this instance, we would calculate <span class="math notranslate nohighlight">\(30\)</span> positive results out of a total of <span class="math notranslate nohighlight">\(979\)</span>, which gives a <span class="math notranslate nohighlight">\(p\)</span>-value of <span class="math notranslate nohighlight">\(30/979 = 0.031\)</span>. So we would say that this is a <em>significant</em> result. In other words, if it is true that the individual is “normal”, the chance of getting a positive test result is small. Given our usual convention, we would therefore <em>reject the null-hypothesis</em> that the individual is “normal”.</p>
+<p>Now let us see what <span class="math notranslate nohighlight">\(P(H_{0}|\mathcal{D})\)</span> tells us. This time, we are conditioning on the data we have obtained. Because these data indicate a <em>positive</em> test result, this means only looking at the <em>second row</em> of the table. Here, we want to know, out of all individuals who recieved a positive test result, how likely is it that they are “normal”? In this instance, we would calculate <span class="math notranslate nohighlight">\(30\)</span> “normal” individuals out of a total of <span class="math notranslate nohighlight">\(50\)</span> individuals who recieved a positive test, which gives a probability of <span class="math notranslate nohighlight">\(30/50 = 0.60\)</span>. So far from the null hypothesis being unlikely, it is actually fairly probable that the null hypothesis is <em>true</em>, given the data we have.</p>
+<p>In this example, the extreme difference comes from the low base-rate of Schizophrenia. If we pluck a random individual off the street, it is fairly unlikely that they have Schizophrenia. Even if they test positive, it still remains unlikely that we found someone with Schizophrenia by chance. However, if we know ahead of time that we have only selected individuals <em>without</em> Schizophrenia, the chance of the test coming back positive is very low. This is the difference between conditioning on the data versus conditioning on the null. This illustrates why the two probability statements are not interchangeable, and also illustrates why you cannot say anything about the probability of the null from a <span class="math notranslate nohighlight">\(p\)</span>-value because the calculation of the <span class="math notranslate nohighlight">\(p\)</span>-value <em>presupposes the null is true</em>.</p>
+</div>
+</section>
+<section id="erroneous-scientific-reasoning">
+<h3>Erroneous Scientific Reasoning<a class="headerlink" href="#erroneous-scientific-reasoning" title="Link to this heading">#</a></h3>
+<p>Taking rejection of the null as evidence of some other preferred hypothesis.
+Statistical versus practical significance.
+Evidence of causality.
+The difference between significant and non-significant is not itself significant.</p>
+</section>
+</section>
 <section id="the-asa-statement-on-p-values">
 <h2>The ASA Statement on <span class="math notranslate nohighlight">\(p\)</span>-values<a class="headerlink" href="#the-asa-statement-on-p-values" title="Link to this heading">#</a></h2>
+<p>This statement is based on 6 key principles:</p>
+<ol class="arabic simple">
+<li><p>P-values can indicate how incompatible the data are with a specified statistical model.</p></li>
+<li><p>P-values do not measure the probability that the studied hypothesis is true, or the probability that the data were produced by random chance alone.</p></li>
+<li><p>Scientific conclusions and business or policy decisions should not be based only on whether a p-value passes a specific threshold.</p></li>
+<li><p>Proper inference requires full reporting and transparency</p></li>
+<li><p>A p-value, or statistical significance, does not measure the size of an effect or the importance of a result.</p></li>
+<li><p>By itself, a p-value does not provide a good measure of evidence regarding a model or hypothesis.</p></li>
+</ol>
+<p>Taken together, these principles highlight how basing much of our scientific knowledge on <span class="math notranslate nohighlight">\(p\)</span>-values alone is deeply flawed and misleading. Yet, this is precisely what the field of experimental psychology has done for years.</p>
+</section>
+<section id="should-p-values-be-abandoned">
+<h2>Should <span class="math notranslate nohighlight">\(p\)</span>-values be Abandoned?<a class="headerlink" href="#should-p-values-be-abandoned" title="Link to this heading">#</a></h2>
+<p>Given all the problems</p>
 </section>
 </section>
 
@@ -433,7 +546,7 @@
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Alternatives to NHST</p>
+        <p class="prev-next-title">What Can We Do?</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -454,7 +567,15 @@
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problems-with-nhst">Problems with NHST</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-null-hypothesis-is-implausible">The Null Hypothesis is Implausible</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dichotomisation-of-evidence">Dichotomisation of Evidence</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-illusion-of-obtaining-improbability">The Illusion of Obtaining Improbability</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#erroneous-scientific-reasoning">Erroneous Scientific Reasoning</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-asa-statement-on-p-values">The ASA Statement on <span class="math notranslate nohighlight">\(p\)</span>-values</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#should-p-values-be-abandoned">Should <span class="math notranslate nohighlight">\(p\)</span>-values be Abandoned?</a></li>
 </ul>
   </nav></div>
 
