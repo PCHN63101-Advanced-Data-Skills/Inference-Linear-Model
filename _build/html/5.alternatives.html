@@ -371,6 +371,7 @@
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#treat-p-values-as-only-one-piece-of-evidence">Treat <span class="math notranslate nohighlight">\(p\)</span>-values as Only <em>One</em> Piece of Evidence</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#focus-on-effects-and-effect-sizes">Focus on Effects and Effect Sizes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mayo-s-severe-test">Mayo’s Severe Test</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#use-bayesian-inference-instead">Use Bayesian Inference Instead</a></li>
 </ul>
             </nav>
@@ -392,8 +393,24 @@
 <h2>Focus on Effects and Effect Sizes<a class="headerlink" href="#focus-on-effects-and-effect-sizes" title="Link to this heading">#</a></h2>
 <p>An issue with effect sizes is that we need some means of interpreting them, which requires some guidelines for “small”, “medium” and “large” effects. If one core issue with <span class="math notranslate nohighlight">\(p\)</span>-values is that they dichotomise evidence, then this new system just serves to <em>trichotomise</em> evidence instead.</p>
 </section>
+<section id="mayo-s-severe-test">
+<h2>Mayo’s Severe Test<a class="headerlink" href="#mayo-s-severe-test" title="Link to this heading">#</a></h2>
+</section>
 <section id="use-bayesian-inference-instead">
 <h2>Use Bayesian Inference Instead<a class="headerlink" href="#use-bayesian-inference-instead" title="Link to this heading">#</a></h2>
+<p>Much of the complexity in classical statistics comes from</p>
+<ul class="simple">
+<li><p>Imposing a pure frequency perspective on probability</p></li>
+<li><p>Trying to enforce objectivity on statistical procedure, rather than embracing subjectivity</p></li>
+</ul>
+<p>On the face of it, these both sound like reasonable and noble pursuits, but in reality they can cause problems. … From a Frequentist perspective, talking about the probability of the null hypothesis makes no sense. Hypotheses are not random variables, they are fixed quantities. The only random element is the data. There is no long-run frequency of a hypothesis that can be used to derive a probability. As such, the quantity <span class="math notranslate nohighlight">\(P(H_{0}|\mathcal{D})\)</span> is meaningless to a Frequentist<a class="footnote-reference brackets" href="#freqprobfoot" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>. However, for a Bayesian, probability reflects <em>degrees of belief</em> or <em>plausibility</em> given our current state of knowledge. As such, the probability of the null makes perfect sense, as this reflects how plausible the null is, or how much we believe in the null, given our current data. Given that it is often our intuition to try and derive the probability of the null, it would seem that many people take a natural Bayesian view of probability.</p>
+<hr class="footnotes docutils" />
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="freqprobfoot" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>To make this clear for the example we saw earlier, a Frequentist would say that calculating the probability that an individual is “normal” makes no sense, because they either are “normal” or have Schizophrenia. There is no long-run frequency where that individual is sometimes “normal” and is sometimes not. Their diagnostic status is a fixed constant. For a Bayesian, this <em>does</em> make sense because this probability reflects our <em>degree of belief</em> that the person is “normal”, given our current data.</p>
+</aside>
+</aside>
 </section>
 </section>
 
@@ -464,6 +481,7 @@
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#treat-p-values-as-only-one-piece-of-evidence">Treat <span class="math notranslate nohighlight">\(p\)</span>-values as Only <em>One</em> Piece of Evidence</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#focus-on-effects-and-effect-sizes">Focus on Effects and Effect Sizes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mayo-s-severe-test">Mayo’s Severe Test</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#use-bayesian-inference-instead">Use Bayesian Inference Instead</a></li>
 </ul>
   </nav></div>
