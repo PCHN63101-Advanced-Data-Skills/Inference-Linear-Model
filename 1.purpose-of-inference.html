@@ -372,6 +372,7 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deductive-vs-inductive-reasoning">Deductive vs Inductive Reasoning</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-problem-of-induction">The Problem of Induction</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statistical-inferences-as-induction">Statistical Inferences as Induction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modern-science-and-induction">Modern Science and Induction</a></li>
 </ul>
             </nav>
         </div>
@@ -385,6 +386,7 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="the-purpose-of-statistical-inference">
 <h1>The Purpose of Statistical Inference<a class="headerlink" href="#the-purpose-of-statistical-inference" title="Link to this heading">#</a></h1>
+<p>In our previous weeks, we have established a very general framework for statistical modelling and have examined one particular case in the form of simple/multiple regression. Throughout all of this, our aim was to say something about a <em>population</em> on the basis of a <em>sample</em>. At the end of the previous lesson, we were left with an estimated model that we visualised and interpreted in a very general sense. However, it is important to remind ourseleves that we are not really interested in the <em>estimates</em> per-se. What we are interested in is the <em>population values</em>. We may well have a slope estimate of <span class="math notranslate nohighlight">\(\hat{\beta}_{1} = -3.80\)</span>, but our real question is whether the <em>real</em> slope is equal to <span class="math notranslate nohighlight">\(-3.80\)</span>, or whether <span class="math notranslate nohighlight">\(-3.80\)</span> is even close to the real value? In general saying something about only a single specific group of measurements is not very useful scientifically. However, saying something much more general <em>is</em> very useful, because we can make predictions about the future, implementing changes that have real-world consequences and developing theories that apply to the population as a whole. Our desire is therefore to go from our one specific sample and generalise much more widely. Although this sounds like a reasonable aim, this whole endeavour is actually on shaky logical ground.</p>
 <section id="deductive-vs-inductive-reasoning">
 <h2>Deductive vs Inductive Reasoning<a class="headerlink" href="#deductive-vs-inductive-reasoning" title="Link to this heading">#</a></h2>
 <p>An example of a logically valid modus tollens would be:</p>
@@ -403,13 +405,19 @@
 </section>
 <section id="the-problem-of-induction">
 <h2>The Problem of Induction<a class="headerlink" href="#the-problem-of-induction" title="Link to this heading">#</a></h2>
-<p>Although we would ideally want scientific reasoning to be deductive and thus justifiable purely on logical grounds, the process of scientific discovery usually takes the form</p>
+<figure class="align-left">
+<a class="reference internal image-reference" href="_images/hulme.png"><img alt="_images/hulme.png" src="_images/hulme.png" style="width: 300.0px; height: 363.25px;" /></a>
+</figure>
+<p>The problem of induction was articuled by the Scottish philosopher <a class="reference external" href="https://en.wikipedia.org/wiki/David_Hume">David Hulme</a> …</p>
+<p>As an example, why do you believe the sun will rise tomorrow morning? The answer is probably because it has always risen in the past. However, this is a circular argument because it relies on induction to justify induction. To make this clearer, the argument is</p>
 <ol class="arabic simple">
-<li><p>If theory <span class="math notranslate nohighlight">\(T\)</span> is true, then data <span class="math notranslate nohighlight">\(D\)</span> is likely.</p></li>
-<li><p>We observe <span class="math notranslate nohighlight">\(D\)</span>.</p></li>
-<li><p>Therefore, <span class="math notranslate nohighlight">\(T\)</span> is probably true.</p></li>
+<li><p>The sun has risen every day in the past</p></li>
+<li><p>Therefore, the sun will rise tomorrow</p></li>
 </ol>
-<p>This is not deductive. Although the premises may well be correct, it does not follow that theory <span class="math notranslate nohighlight">\(T\)</span> is true as there may be many other theories that could explain the observation of <span class="math notranslate nohighlight">\(D\)</span>. If we instead state that theory <span class="math notranslate nohighlight">\(T\)</span> is <em>probably</em> true, then we have moved from pure reason into the world of probability. By saying that <span class="math notranslate nohighlight">\(T\)</span> is <em>probably</em> true, we are accepting that it may be incorrect and thus the conclusion is not a certainty based on the premises.</p>
+<figure class="align-right">
+<a class="reference internal image-reference" href="_images/circular-reasoning.jpg"><img alt="_images/circular-reasoning.jpg" src="_images/circular-reasoning.jpg" style="width: 258.0px; height: 257.2px;" /></a>
+</figure>
+<p>But to get from 1 to 2, you have to make the assumption that the future will always represent the past. You have justified the assumption that the future resembles the past by appealing to the fact that it has resembled the past in the past. The conclusion therefore cannot be reached with pure logic because it relies on an extra assumption. Or, to put it another way, “predicting the future from the past works because predicting the future from the past works…”. We have justified our logic using the logic we are trying to justify. As such, Hulme’s insight is that you can <em>never</em> deduce future regularities from past experience because this relies on circular reasoning<a class="footnote-reference brackets" href="#probfoot" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>. So in what way are we ever able to logically justify reaching general conclusions from specific instances? This is not just an issue for statistical inference, as it puts the whole enterprise of science into question.</p>
 <blockquote class="epigraph">
 <div><p>All our experimental conclusions depend on the supposition that the course of nature continues uniformly the same.</p>
 <p class="attribution">—David Hume</p>
@@ -418,6 +426,27 @@
 <section id="statistical-inferences-as-induction">
 <h2>Statistical Inferences as Induction<a class="headerlink" href="#statistical-inferences-as-induction" title="Link to this heading">#</a></h2>
 <p>On the face of it, statistical inference is precisely an exercise in induction. As such, taking a hard-nosed perspective, statistical inference can <em>never</em> be logically justified. Fundamentally, statistical inference is based on assuming that predictions about the future will resemble the past and thus cannot be justified using pure logic. Although this may seem highly problematic, induction within statistics (as well as more broadly in science) can be coherently structured, pragmatically justified and rationally defensible, even if it cannot make peace with a pure framework of logic. In other words, statistical inference is <em>useful</em>, even if it is on shaky logical ground.</p>
+<p>….</p>
+<p>Although we would ideally want scientific reasoning to be deductive and thus justifiable purely on logical grounds, the process of scientific discovery usually takes the form</p>
+<ol class="arabic simple">
+<li><p>If theory <span class="math notranslate nohighlight">\(T\)</span> is true, then data <span class="math notranslate nohighlight">\(D\)</span> is likely.</p></li>
+<li><p>We observe <span class="math notranslate nohighlight">\(D\)</span>.</p></li>
+<li><p>Therefore, <span class="math notranslate nohighlight">\(T\)</span> is probably true.</p></li>
+</ol>
+<p>This is not deductive. Although the premises may well be correct, it does not follow that theory <span class="math notranslate nohighlight">\(T\)</span> is true as there may be many other theories that could explain the observation of <span class="math notranslate nohighlight">\(D\)</span>. If we instead state that theory <span class="math notranslate nohighlight">\(T\)</span> is <em>probably</em> true, then we have moved from pure reason into the world of probability. By saying that <span class="math notranslate nohighlight">\(T\)</span> is <em>probably</em> true, we are accepting that it may be incorrect and thus the conclusion is not a certainty based on the premises.</p>
+<p>….</p>
+<p>The important point of all of this is that <em>inference is where the controversy lies</em>. There is nothing controversial about building a statistical model and then finding parameter estimates that make the data as probable as possible. What is controversial is trying to say something about the population as a whole based on that model. Indeed, arguments within statistics about Frequentist vs Bayesian approaches are often centred on how this different paradigms treat inductive inference. Furthermore, this is not just an issue with statistics, but with science as a whole. We assume that if our experiments have worked in the past, then they will continue to work in the future. But, as Hulme articulated, there is no pure logical justification for this.</p>
+</section>
+<section id="modern-science-and-induction">
+<h2>Modern Science and Induction<a class="headerlink" href="#modern-science-and-induction" title="Link to this heading">#</a></h2>
+<p>The problem of induction has not been solved. However, modern science has effectively <em>outmaneuvered</em> it on pragmatic grounds. … However, it is important to understand the fact that statistical inference as an exercise in induction cannot be rationalised on pure logical ground. The act of performing inference is an act of pragmatic reasoning based on past success. However, there is no singular “correct” method for performing inference. We have one approach, called <em>null hypothesis significance testing</em>, that has gained much traction within the field of experimental psychology. However, this method is also controversial and other approaches do exist (such as Bayesian inference). In order to be a strong data analyst and experimental psychologist, this lack of logical grounding for inductive reasoning is important to understand, as well as how this influences the methods we use to try and make generalisations from our data, even if technically we have no logical justification for doing so.</p>
+<hr class="footnotes docutils" />
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="probfoot" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>You might think to skirt this issue by making it probabilistic. For instance, “the sun has always risen in the past, therefore it is highly probable that it will rise tomorrow”. However, this has the same issue of circular reasoning because it requires the assumption that past frequencies of an event can justify a belief about the future. In doing so, our only argument is that this has worked in the past and we hit the same problem.</p>
+</aside>
+</aside>
 </section>
 </section>
 
@@ -489,6 +518,7 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deductive-vs-inductive-reasoning">Deductive vs Inductive Reasoning</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-problem-of-induction">The Problem of Induction</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statistical-inferences-as-induction">Statistical Inferences as Induction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modern-science-and-induction">Modern Science and Induction</a></li>
 </ul>
   </nav></div>
 
