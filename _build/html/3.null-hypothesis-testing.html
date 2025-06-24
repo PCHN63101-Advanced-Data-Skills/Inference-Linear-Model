@@ -60,6 +60,8 @@
     <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '3.null-hypothesis-testing';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -344,7 +346,9 @@
 <button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
 </button>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -360,6 +364,30 @@
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#estimates-and-population-values">Estimates and Population Values</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-an-estimate-with-a-hypothesised-value">Comparing an Estimate with a Hypothesised Value</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretation-of-the-effect">Interpretation of the Effect</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#test-statistics">Test Statistics</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-z-statistic">The <span class="math notranslate nohighlight">\(z\)</span>-statistic</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-null-hypothesis">The Null Hypothesis</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#null-distributions">Null Distributions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-t-statistic">The <span class="math notranslate nohighlight">\(t\)</span>-statistic</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-p-value">The <span class="math notranslate nohighlight">\(p\)</span>-value</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#confidence-intervals">Confidence Intervals</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inference-in-r">Inference in <code class="docutils literal notranslate"><span class="pre">R</span></code></a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -372,6 +400,150 @@
   <section class="tex2jax_ignore mathjax_ignore" id="null-hypothesis-significance-testing-nhst">
 <h1>Null Hypothesis Significance Testing (NHST)<a class="headerlink" href="#null-hypothesis-significance-testing-nhst" title="Link to this heading">#</a></h1>
 <p>…</p>
+<section id="estimates-and-population-values">
+<h2>Estimates and Population Values<a class="headerlink" href="#estimates-and-population-values" title="Link to this heading">#</a></h2>
+<section id="comparing-an-estimate-with-a-hypothesised-value">
+<h3>Comparing an Estimate with a Hypothesised Value<a class="headerlink" href="#comparing-an-estimate-with-a-hypothesised-value" title="Link to this heading">#</a></h3>
+<p>We will denote our estimate <span class="math notranslate nohighlight">\(\hat{\beta}_{1}\)</span> as usual, and our hypothesised population value as <span class="math notranslate nohighlight">\(\beta_{1}^{(0)}\)</span>. Hopefully this makes it clear that we still do not know what value <span class="math notranslate nohighlight">\(\beta_{1}\)</span> has, but we are simply taking a guess.</p>
+</section>
+<section id="interpretation-of-the-effect">
+<h3>Interpretation of the Effect<a class="headerlink" href="#interpretation-of-the-effect" title="Link to this heading">#</a></h3>
+<p>The magnitude of our calculated effect tells us how far away our estimate is from our hypothesised population value. It would be tempting to therefore interpret a large difference as indicative that our hypothesised value is wrong, or a small differences as indicative that our hypothesised value may be correct. However, there are two problems with trying to interpret the effect in this manner. Firstly, the magnitude of the difference depends upon the units of <span class="math notranslate nohighlight">\(y\)</span>, which can cause problems both for intepretation, but also for comparison across different studies and contexts. Secondly, the effect on its own does not take into account the degree of uncertainty around the estimation process. Within the context of NHST, both these issues are resolved by defining a <em>test statistic</em>.</p>
+</section>
+</section>
+<section id="test-statistics">
+<h2>Test Statistics<a class="headerlink" href="#test-statistics" title="Link to this heading">#</a></h2>
+<section id="the-z-statistic">
+<h3>The <span class="math notranslate nohighlight">\(z\)</span>-statistic<a class="headerlink" href="#the-z-statistic" title="Link to this heading">#</a></h3>
+<p>Dividing a normal random variable by a constant simply <em>scales</em> that random variable and so the shape of the distribution does not change, only the units.</p>
+</section>
+</section>
+<section id="the-null-hypothesis">
+<h2>The Null Hypothesis<a class="headerlink" href="#the-null-hypothesis" title="Link to this heading">#</a></h2>
+<p>This simplifies the calculation of the test statistic greatly, because our hypothesised value is then 0 and disappears from the calculation.</p>
+<p>Importantly, the null value does not have to be 0. But the test will always compare the <em>difference</em> to 0. For instance, if we did use <span class="math notranslate nohighlight">\(\beta_{1}^{(0)} = 0\)</span> then</p>
+<div class="math notranslate nohighlight">
+\[
+z = \frac{\hat{\beta}_{1} - \beta_{1}^{(0)}}{} = \frac{\hat{\beta}_{1} - 0}{} = \frac{\hat{\beta}_{1}}{}.
+\]</div>
+<p>By dividing the parameter estimate by the standard error, we are <em>implicitly</em> comparing the <em>difference</em> between <span class="math notranslate nohighlight">\(\hat{\beta}_{1}\)</span> and <span class="math notranslate nohighlight">\(0\)</span>. Alternatively, if we used <span class="math notranslate nohighlight">\(\beta_{1}^{(0)} = 5\)</span> then</p>
+<div class="math notranslate nohighlight">
+\[
+z = \frac{\hat{\beta}_{1} - \beta_{1}^{(0)}}{} = \frac{\hat{\beta}_{1} - 5}{}
+\]</div>
+<p>and we are comparing the <em>difference</em> between <span class="math notranslate nohighlight">\(\hat{\beta}_{1}\)</span> and <span class="math notranslate nohighlight">\(5\)</span> to <span class="math notranslate nohighlight">\(0\)</span>. So, in every case, the numerator represents an offset from 0, whether that is the value of the parameter itself, or a difference with some other proposed value. In other words, the null is always that that <em>magnitude of the difference is 0</em>, but that difference can be defined in lots of different ways.</p>
+<div class="tip admonition">
+<p class="admonition-title">Null Comparisons in Software</p>
+<p>Generally speaking, we do not always have control over what value is used for the proposed value in software. For instance, within the context of a linear model, we will automatically get test statistics that use an implicit proposed value of 0, as the software will simply divide the estimate by the standard error. For regression slopes, this is fine because a slope of 0 indicates <em>no relationship</em> and thus is sensible. However, for the intercept, the test is asking whether <span class="math notranslate nohighlight">\(\beta_{0}^{(0)} = 0\)</span>. In other words, could the population slope be a regression through the origin? For many problems, this is not a very sensible or meaningful question and thus the test on the intercept is largely ignored. This highlights the importance of considering what <em>question</em> tests are asking when they are produced automatically.</p>
+</div>
+</section>
+<section id="null-distributions">
+<h2>Null Distributions<a class="headerlink" href="#null-distributions" title="Link to this heading">#</a></h2>
+<section id="the-t-statistic">
+<h3>The <span class="math notranslate nohighlight">\(t\)</span>-statistic<a class="headerlink" href="#the-t-statistic" title="Link to this heading">#</a></h3>
+<p>In the previous section, we saw that the standard error of the sampling distribution of <span class="math notranslate nohighlight">\(\hat{\beta}_{1}\)</span> depends upon <span class="math notranslate nohighlight">\(\sigma^{2}\)</span>. However, in practise, we do not known <span class="math notranslate nohighlight">\(\sigma^{2}\)</span>. Instead, we have an estimate derived from the residuals <span class="math notranslate nohighlight">\(\hat{\sigma}^{2}\)</span>. So how does that change things? We can plug-in our estimate like so</p>
+<div class="math notranslate nohighlight">
+\[
+\widehat{\text{Var}}\left(\hat{\beta}_{1}\right) = \frac{\hat{\sigma}^{2}}{(n-1)s^{2}_{x}}
+\]</div>
+<p>and we have a value for the variance from which we can take the square-root to give the standard error. However, what we have done here is replaced a <em>constant</em> (<span class="math notranslate nohighlight">\(\sigma^{2}\)</span>) with a <em>random variable</em> (<span class="math notranslate nohighlight">\(\hat{\sigma}^{2}\)</span>). This means we have introduced randomness into this calculation. In other words, the standard error will change with each sample. In fact, what we have created is an <em>estimate</em> of the variance of <span class="math notranslate nohighlight">\(\hat{\beta}_{1}\)</span>. So, we now have an estimate of the variance of an estimate. This means that the denominator of our test statistic is no longer a constant that simple scales the distribution. Rather, we are now dividing a <em>random variable</em> by <em>another random variable</em>.</p>
+<p>So what happens when you divide one random variable by another? You end up with a distribution that changes shape dynamically. … For the <span class="math notranslate nohighlight">\(t\)</span>-distribution, the dynamic reshaping of the distribution depends upon the distribution’s <em>degrees of freedom</em>, which are directly informed by the sampling distribution of the standard error. So, rather than having a fixed shape like a standard normal distribution, the <span class="math notranslate nohighlight">\(t\)</span>-distribution can grow fatter or thinner, depending upon the properties of the denominator. This is illustrated below.</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="_images/1624b4c5b36c482cfa7353e2c0aa15b3e680a06947435b3e557fda3f2977ba27.png" src="_images/1624b4c5b36c482cfa7353e2c0aa15b3e680a06947435b3e557fda3f2977ba27.png" />
+</div>
+</div>
+<p>An important result here is that as <span class="math notranslate nohighlight">\(n \rightarrow \infty\)</span>, the <span class="math notranslate nohighlight">\(t\)</span>-distribution converges on the normal distribution. This is because the scaling introduced by the degrees of freedom becomes so large that it has basically no effect. If we therefore wanted to ignore the fact that <span class="math notranslate nohighlight">\(\hat{\sigma}^{2}\)</span> was an estimate, we could say that our test statistic is <em>asymptotically</em> normally distributed. In other words, as <span class="math notranslate nohighlight">\(n\)</span> approaches infinity, this is correct. Of course, this is only sensible mathematically, as we will never have an <em>infinite</em> sample size. However, for practical purposes, this just means that the <em>larger</em> the sample size, the more we can trust this simplification. As we can see above, when <span class="math notranslate nohighlight">\(\nu &gt; 100\)</span> the <span class="math notranslate nohighlight">\(t\)</span>-distribution becomes practically indistinguishable from the standard normal distribution. Although this may seem unnecessary, later in the course we will be exmaining mixed-effects models where the concepts of degrees of freedom can break-down. In this situation, one option is to rely on test statistics that do not depend upon the degrees of freedom and just assume an asymptotically correct distribution.</p>
+</section>
+</section>
+<section id="the-p-value">
+<h2>The <span class="math notranslate nohighlight">\(p\)</span>-value<a class="headerlink" href="#the-p-value" title="Link to this heading">#</a></h2>
+<p>This level is referred to as <span class="math notranslate nohighlight">\(\alpha\)</span>.</p>
+<p>Fisher vs Neyman-Pearson</p>
+<p>Fisher actually viewed <span class="math notranslate nohighlight">\(p\)</span>-values as continuous evidence against the null, rather than as a threshold value for declaring significance. In fact, although the criterion of 0.05 is attributed to Fisher, it is insightful to see what he <em>actually</em> said about it:</p>
+<blockquote class="epigraph">
+<div><p>The value for which <span class="math notranslate nohighlight">\(p = 0.05\)</span>, or 1 in 20, is convenient to use in practice if we want to draw a line beyond which we say that the deviation is significant, but it must not be forgotten that we shall often draw such a line when there is nothing there but chance.</p>
+<p class="attribution">—Ronald Fisher</p>
+</div></blockquote>
+<p>So, Fisher viewed this criterion as a convenient heuristic, but fully acknowledged its limitations and did not ever state that we should <em>reject</em> the null hypothesis when <span class="math notranslate nohighlight">\(p &lt; 0.05\)</span>. Indeed, Fisher strongly disagreed with the Neyman-Pearson concept of rejecting or failing to reject the null</p>
+<blockquote class="epigraph">
+<div><p>It is a mistake to speak of the null hypothesis as though it were a thing we are testing, or as though we were trying to accept or reject it.</p>
+<p class="attribution">—Ronald Fisher</p>
+</div></blockquote>
+<p>Indeed, in Fisher’s conceptualising a small <span class="math notranslate nohighlight">\(p\)</span>-value simply means that the data are surpring under the null, whereas a large <span class="math notranslate nohighlight">\(p\)</span>-value means that the data are not surprising under the null. Smaller <span class="math notranslate nohighlight">\(p\)</span>-values present more evidence against the null, but only so far as we make the logical leap of saying that very suprising data make it less likely that the null is correct. However, we would not <em>reject</em> the null, because it still remains possible that the null is correct. All we are saying is that the data we have are less compatible with the null. Nothing more.</p>
+</section>
+<section id="confidence-intervals">
+<h2>Confidence Intervals<a class="headerlink" href="#confidence-intervals" title="Link to this heading">#</a></h2>
+<p>Notice that this depends upon assuming normality.</p>
+</section>
+<section id="inference-in-r">
+<h2>Inference in <code class="docutils literal notranslate"><span class="pre">R</span></code><a class="headerlink" href="#inference-in-r" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">data</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
+
+<span class="n">mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">hp</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="nf">summary</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Call:
+lm(formula = mpg ~ wt + hp, data = mtcars)
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+-3.941 -1.600 -0.182  1.050  5.854 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 37.22727    1.59879  23.285  &lt; 2e-16 ***
+wt          -3.87783    0.63273  -6.129 1.12e-06 ***
+hp          -0.03177    0.00903  -3.519  0.00145 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 2.593 on 29 degrees of freedom
+Multiple R-squared:  0.8268,	Adjusted R-squared:  0.8148 
+F-statistic: 69.21 on 2 and 29 DF,  p-value: 9.109e-12
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can also produce confidence intervals using the <code class="docutils literal notranslate"><span class="pre">confint()</span></code> function</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="nf">confint</span><span class="p">(</span><span class="n">mod</span><span class="p">),</span><span class="w"> </span><span class="n">level</span><span class="o">=</span><span class="m">0.95</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                  2.5 %      97.5 %
+(Intercept) 33.95738245 40.49715778
+wt          -5.17191604 -2.58374544
+hp          -0.05024078 -0.01330512
+</pre></div>
+</div>
+</div>
+</div>
+<p>Notably, other confidence interval levels can be produced. For instance, 80% CIs can be calculated using</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="nf">confint</span><span class="p">(</span><span class="n">mod</span><span class="p">),</span><span class="w"> </span><span class="n">level</span><span class="o">=</span><span class="m">0.80</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                  2.5 %      97.5 %
+(Intercept) 33.95738245 40.49715778
+wt          -5.17191604 -2.58374544
+hp          -0.05024078 -0.01330512
+</pre></div>
+</div>
+</div>
+</div>
+<p>However, it is not very typical to do this as 95% CIs are considered the standard due to their compatibility with <span class="math notranslate nohighlight">\(\alpha = 0.05\)</span>.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -428,6 +600,38 @@
             </div>
             
             
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#estimates-and-population-values">Estimates and Population Values</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-an-estimate-with-a-hypothesised-value">Comparing an Estimate with a Hypothesised Value</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretation-of-the-effect">Interpretation of the Effect</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#test-statistics">Test Statistics</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-z-statistic">The <span class="math notranslate nohighlight">\(z\)</span>-statistic</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-null-hypothesis">The Null Hypothesis</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#null-distributions">Null Distributions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-t-statistic">The <span class="math notranslate nohighlight">\(t\)</span>-statistic</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-p-value">The <span class="math notranslate nohighlight">\(p\)</span>-value</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#confidence-intervals">Confidence Intervals</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inference-in-r">Inference in <code class="docutils literal notranslate"><span class="pre">R</span></code></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
