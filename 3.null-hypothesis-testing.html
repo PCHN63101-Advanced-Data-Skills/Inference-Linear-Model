@@ -475,6 +475,7 @@ z = \frac{\hat{\beta}_{1} - \beta_{1}^{(0)}}{} = \frac{\hat{\beta}_{1} - 5}{}
 </section>
 <section id="confidence-intervals">
 <h2>Confidence Intervals<a class="headerlink" href="#confidence-intervals" title="Link to this heading">#</a></h2>
+<p>What we were actually looking at here were 68% confidence intervals.</p>
 <p>Notice that this depends upon assuming normality.</p>
 </section>
 <section id="inference-in-r">
@@ -483,30 +484,31 @@ z = \frac{\hat{\beta}_{1} - \beta_{1}^{(0)}}{} = \frac{\hat{\beta}_{1} - 5}{}
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">data</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
 
-<span class="n">mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">hp</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="n">mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">hp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">disp</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
 <span class="nf">summary</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Call:
-lm(formula = mpg ~ wt + hp, data = mtcars)
+lm(formula = mpg ~ wt + hp + disp, data = mtcars)
 
 Residuals:
    Min     1Q Median     3Q    Max 
--3.941 -1.600 -0.182  1.050  5.854 
+-3.891 -1.640 -0.172  1.061  5.861 
 
 Coefficients:
-            Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept) 37.22727    1.59879  23.285  &lt; 2e-16 ***
-wt          -3.87783    0.63273  -6.129 1.12e-06 ***
-hp          -0.03177    0.00903  -3.519  0.00145 ** 
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 37.105505   2.110815  17.579  &lt; 2e-16 ***
+wt          -3.800891   1.066191  -3.565  0.00133 ** 
+hp          -0.031157   0.011436  -2.724  0.01097 *  
+disp        -0.000937   0.010350  -0.091  0.92851    
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Residual standard error: 2.593 on 29 degrees of freedom
-Multiple R-squared:  0.8268,	Adjusted R-squared:  0.8148 
-F-statistic: 69.21 on 2 and 29 DF,  p-value: 9.109e-12
+Residual standard error: 2.639 on 28 degrees of freedom
+Multiple R-squared:  0.8268,	Adjusted R-squared:  0.8083 
+F-statistic: 44.57 on 3 and 28 DF,  p-value: 8.65e-11
 </pre></div>
 </div>
 </div>
@@ -514,31 +516,33 @@ F-statistic: 69.21 on 2 and 29 DF,  p-value: 9.109e-12
 <p>We can also produce confidence intervals using the <code class="docutils literal notranslate"><span class="pre">confint()</span></code> function</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="nf">confint</span><span class="p">(</span><span class="n">mod</span><span class="p">),</span><span class="w"> </span><span class="n">level</span><span class="o">=</span><span class="m">0.95</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="nf">confint</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span><span class="w"> </span><span class="n">level</span><span class="o">=</span><span class="m">0.95</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                  2.5 %      97.5 %
-(Intercept) 33.95738245 40.49715778
-wt          -5.17191604 -2.58374544
-hp          -0.05024078 -0.01330512
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                  2.5 %       97.5 %
+(Intercept) 32.78169625 41.429314293
+wt          -5.98488310 -1.616898063
+hp          -0.05458171 -0.007731388
+disp        -0.02213750  0.020263482
 </pre></div>
 </div>
 </div>
 </div>
-<p>Notably, other confidence interval levels can be produced. For instance, 80% CIs can be calculated using</p>
+<p>Notably, other confidence interval levels can be produced. For instance, the intervals we used previous of <span class="math notranslate nohighlight">\(\pm 1 \times \text{SE}\)</span> correspond to an approximate 68% CI, as shown below.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="nf">confint</span><span class="p">(</span><span class="n">mod</span><span class="p">),</span><span class="w"> </span><span class="n">level</span><span class="o">=</span><span class="m">0.80</span><span class="p">)</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="nf">confint</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span><span class="w"> </span><span class="n">level</span><span class="o">=</span><span class="m">0.68</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                  2.5 %      97.5 %
-(Intercept) 33.95738245 40.49715778
-wt          -5.17191604 -2.58374544
-hp          -0.05024078 -0.01330512
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                   16 %         84 %
+(Intercept) 34.96844420 39.242566342
+wt          -4.88033821 -2.721442954
+hp          -0.04273454 -0.019578564
+disp        -0.01141544  0.009541424
 </pre></div>
 </div>
 </div>
