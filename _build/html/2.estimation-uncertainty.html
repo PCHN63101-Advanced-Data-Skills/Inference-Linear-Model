@@ -373,13 +373,17 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#demonstration-in-r">Demonstration in <code class="docutils literal notranslate"><span class="pre">R</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sampling-distributions-and-the-standard-error">Sampling Distributions and the Standard Error</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sampling-distributions">Sampling Distributions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sampling-distributions-of-estimates-from-linear-models">Sampling Distributions of Estimates from Linear Models</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-the-standard-error">Understanding the Standard Error</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-intercept-and-variance">The Intercept and Variance</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-in-r-with-real-data">Example in <code class="docutils literal notranslate"><span class="pre">R</span></code> with Real Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-the-expected-value">Understanding the Expected Value</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-the-standard-error">Understanding the Standard Error</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#why-does-the-spread-of-x-matter">Why Does the Spread of <span class="math notranslate nohighlight">\(x\)</span> Matter?</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dependence-on-sample-size">Dependence on Sample Size</a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#estimation-uncertainty-in-r">Estimation Uncertainty in <code class="docutils literal notranslate"><span class="pre">R</span></code></a></li>
 </ul>
             </nav>
         </div>
@@ -393,20 +397,19 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="uncertainty-in-estimation">
 <h1>Uncertainty in Estimation<a class="headerlink" href="#uncertainty-in-estimation" title="Link to this heading">#</a></h1>
-<p>In the previous section, we took a detour into the philosophy of science and the logical ground upon which statistical inference is based. For the moment, let us put that discussion to one side and get back to our statistical model. We will see where the problem of induction comes into play when we start discussing null hypothesis significance testing later in the lesson.</p>
-<p>As a reminder, the aim of our statistical model is to estimate <em>population quantities</em> from a sample. Our interest is in the population, not in the specific sample we have available. The sample is simply a <em>proxy</em> for the population. If we have the whole population available, there would be no need for inference and our job would be done. Given that this is almost never practical, we need some method for trying to say something about the population based on the information in the sample.</p>
+<p>In the previous section, we took a detour into the philosophy of science and the logical ground upon which statistical inference is based. For the moment, we will put that discussion to one side and get back to our statistical model. As a reminder, the aim of our statistical model is to estimate <em>population quantities</em> from a sample. Our interest is in the population, not in the specific sample we have available. The sample is simply a <em>proxy</em> for the population. If we have the whole population available, there would be no need for inference and our job would be done. Given that this is almost never practical, we need some method for trying to say something about the population based on the information in the sample.</p>
 <section id="parameter-estimates-as-random-variables">
 <h2>Parameter Estimates as Random Variables<a class="headerlink" href="#parameter-estimates-as-random-variables" title="Link to this heading">#</a></h2>
 <figure class="align-right">
 <a class="reference internal image-reference" href="_images/darts-analogy.png"><img alt="_images/darts-analogy.png" src="_images/darts-analogy.png" style="width: 258.75px; height: 258.75px;" /></a>
 </figure>
-<p>The observation that is key to understanding statistical inference is recognising that our parameter <em>estimates</em> are <em>random variables</em>. Remember that in classical Frequentist inference the population parameters are fixed constants. For every sample we draw from the population, we can use a method such as Maximum Likelihood to <em>estimate</em> those population constants. However, these estimates will change with every new sample we take. You can think of this like throwing darts at a dart board. If the bullseye represents the true population value, every time we take a sample and produce an estimate we are throwing a dart at the board. Sometimes we will hit the bullseyes, other times we might be close and other times we might be far away. Over time, a distribution of darts will emerge. If we are doing well, the hope is that most of our darts are close to the bullseye with fewer of them further away<a class="footnote-reference brackets" href="#jokefoot" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
+<p>One of the key elements for understanding statistical inference is recognising that our parameter <em>estimates</em> are <em>random variables</em>. Remember that we have conceptualised the population parameters are fixed constants. For every sample we draw from the population, we can use a method such as Maximum Likelihood to <em>estimate</em> those population constants. However, these estimates will change with every new sample we take. You can think of this like throwing darts at a dart board. If the bullseye represents the true population value, every time we take a sample and produce an estimate we are throwing a dart at the board. Sometimes we will hit the bullseyes, other times we might be close and other times we might be far away. Over time, a <em>distribution</em> of darts will emerge. If we are doing well, the hope is that most of our darts are close to the bullseye with fewer of them further away<a class="footnote-reference brackets" href="#jokefoot" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
 <p>Remembering back to earlier in this unit, a variables whose value changes every time we measure it is known as a <em>random variable</em>. As such, the parameter estimates can be characterised as random variables, meaning that each estimate is associated with some probability distribution that indicates:</p>
 <ol class="arabic simple">
 <li><p>What the <em>average</em> value of the estimate is across different samples (the expected value)</p></li>
 <li><p>How <em>variable</em> the value of the estimate will be across difference samples (the variance)</p></li>
 </ol>
-<p>Ideally, these distribution would have a variance that is as small as possible so that the estimates do not change much from sample-to-sample. In addition, we would like these distributions to have a mean equal to the population value so that, on average, we are capturing the true value of the parameters. In the dartboard analogy, we hope that most of our throws are clustered on or close to the bullseye, with fewer throws further away. These two conditions are known as <em>efficiency</em> and <em>bias</em>. The best estimates that we can hope for are both <em>efficient</em> (minimal variance) and <em>unbiased</em> (mean is the true value). Unfortunately, there is a tension between these conditions known as the <em>variance-bias trade-off</em>, which we will explore a little later.</p>
+<p>Ideally, these distribution would have a variance that is as small as possible so that the estimates do not change much from sample-to-sample. In addition, we would like these distributions to have a mean equal to the population value so that, on average, we are capturing the true value. In the dartboard analogy, we hope that most of our throws are close to the bullseye, with fewer throws further away. These two conditions are known as <em>efficiency</em> and <em>bias</em>. We desire estimates that are both <em>efficient</em> (minimal variance) and <em>unbiased</em> (mean is the true value). Unfortunately, there is a tension between these conditions known as the <em>variance-bias trade-off</em>, which we will explore later on the course.</p>
 <section id="demonstration-in-r">
 <h3>Demonstration in <code class="docutils literal notranslate"><span class="pre">R</span></code><a class="headerlink" href="#demonstration-in-r" title="Link to this heading">#</a></h3>
 <p>Before getting into more detail, we can illustrate the idea of estimates being random variables in <code class="docutils literal notranslate"><span class="pre">R</span></code>. In the code below, we simulate 1,000 repeats of sampling 100 values from</p>
@@ -414,35 +417,35 @@
 \[
 y \sim \mathcal{N}\left(5,2\right)
 \]</div>
-<p>You can think of this as repeating the same experiment 1,000 times, where each repeat consists of a different sample of 100 subjects. Every time we perform the experiment, we calculate the mean of that sample of 100 subjects to give an estimate of the population mean <span class="math notranslate nohighlight">\(\mu\)</span>. Over the 1,000 repeats, we therefore build a collection of 1,000 values of <span class="math notranslate nohighlight">\(\hat{\mu}\)</span>. Because each sample will result in a different value for <span class="math notranslate nohighlight">\(\hat{\mu}\)</span>, we can use these repeats to view the <em>distribution</em> of <span class="math notranslate nohighlight">\(\hat{\mu}\)</span></p>
+<p>You can think of this as repeating the same experiment 1,000 times, where each repeat consists of a different sample of 100 subjects. Every time we perform the experiment, we calculate the mean of that sample of 100 subjects to give an estimate of the population mean <span class="math notranslate nohighlight">\(\mu\)</span>. Over the repeats, we build a collection of 1,000 estimated means <span class="math notranslate nohighlight">\(\left(\hat{\mu}_{1}, \hat{\mu}_{2}, \dots, \hat{\mu}_{1000}\right)\)</span>. We can then use this collection of estimates to approximate the <em>distribution</em> of <span class="math notranslate nohighlight">\(\hat{\mu}\)</span></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">set.seed</span><span class="p">(</span><span class="m">999</span><span class="p">)</span>
 
 <span class="n">mu</span><span class="w">     </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">5</span><span class="w">             </span><span class="c1"># True mean</span>
 <span class="n">sigma</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">2</span><span class="w">             </span><span class="c1"># True standard deviation</span>
-<span class="n">nsamps</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1000</span><span class="w">          </span><span class="c1"># Consider 1,000 different samples</span>
+<span class="n">n.sims</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1000</span><span class="w">          </span><span class="c1"># Consider 1,000 different samples</span>
 <span class="n">n</span><span class="w">      </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">100</span><span class="w">           </span><span class="c1"># Each sample will consist of 100 observations</span>
-<span class="n">mu.hat</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rep</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="n">nsamps</span><span class="p">)</span><span class="w"> </span><span class="c1"># Array for saving each estimate of mu</span>
+<span class="n">mu.hat</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rep</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="n">n.sims</span><span class="p">)</span><span class="w"> </span><span class="c1"># Array for saving each estimate of mu</span>
 
-<span class="kr">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="kr">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="n">nsamps</span><span class="p">){</span>
+<span class="kr">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="kr">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="n">n.sims</span><span class="p">){</span>
 <span class="w">    </span><span class="n">y</span><span class="w">         </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="n">mu</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="n">sigma</span><span class="p">)</span><span class="w"> </span><span class="c1"># Simulate a sample from the population</span>
 <span class="w">    </span><span class="n">mu.hat</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">mean</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="w">                     </span><span class="c1"># Estimate mu and save it</span>
 <span class="p">}</span>
 
 <span class="c1"># Histogram of the sampling distribution</span>
 <span class="nf">par</span><span class="p">(</span><span class="n">cex.lab</span><span class="o">=</span><span class="m">1.3</span><span class="p">,</span><span class="w"> </span><span class="n">cex.axis</span><span class="o">=</span><span class="m">1.1</span><span class="p">,</span><span class="w"> </span><span class="n">cex</span><span class="o">=</span><span class="m">1.4</span><span class="p">)</span><span class="w"> </span><span class="c1"># plot scaling</span>
-<span class="nf">hist</span><span class="p">(</span><span class="n">mu.hat</span><span class="p">,</span><span class="w"> </span><span class="n">probability</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span><span class="w">  </span>
-<span class="w">     </span><span class="n">main</span><span class="o">=</span><span class="nf">expression</span><span class="p">(</span><span class="s">&quot;Sampling Distribution of &quot;</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nf">hat</span><span class="p">(</span><span class="n">mu</span><span class="p">)),</span><span class="w"> </span>
-<span class="w">     </span><span class="n">xlab</span><span class="o">=</span><span class="nf">expression</span><span class="p">(</span><span class="nf">hat</span><span class="p">(</span><span class="n">mu</span><span class="p">)))</span>
+<span class="nf">hist</span><span class="p">(</span><span class="n">mu.hat</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;skyblue&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">probability</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span>
+<span class="w">    </span><span class="n">main</span><span class="o">=</span><span class="nf">expression</span><span class="p">(</span><span class="s">&quot;Sampling Distribution of &quot;</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nf">hat</span><span class="p">(</span><span class="n">mu</span><span class="p">)),</span><span class="w"> </span>
+<span class="w">    </span><span class="n">xlab</span><span class="o">=</span><span class="nf">expression</span><span class="p">(</span><span class="nf">hat</span><span class="p">(</span><span class="n">mu</span><span class="p">)))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/c9a244086af98aef24ce3c8e0d6fd758f57c5471e314f302ddf9440d9161ae4f.png"><img alt="_images/c9a244086af98aef24ce3c8e0d6fd758f57c5471e314f302ddf9440d9161ae4f.png" src="_images/c9a244086af98aef24ce3c8e0d6fd758f57c5471e314f302ddf9440d9161ae4f.png" style="width: 720px; height: 420px;" /></a>
+<a class="reference internal image-reference" href="_images/ce0dbbd993995d66f31fc45c820d6c570021de61dc48ff5ce2a6813236560fd2.png"><img alt="_images/ce0dbbd993995d66f31fc45c820d6c570021de61dc48ff5ce2a6813236560fd2.png" src="_images/ce0dbbd993995d66f31fc45c820d6c570021de61dc48ff5ce2a6813236560fd2.png" style="width: 720px; height: 420px;" /></a>
 </div>
 </div>
-<p>We can also examine the empirical mean and standard deviation of this sampling distribution</p>
+<p>We can also examine the empirical<a class="footnote-reference brackets" href="#empirfoot" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> mean and standard deviation of this sampling distribution</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="nf">mean</span><span class="p">(</span><span class="n">mu.hat</span><span class="p">))</span>
@@ -457,26 +460,41 @@ y \sim \mathcal{N}\left(5,2\right)
 </div>
 </div>
 </div>
-<p>Notice that the expected value is basically the true value of <span class="math notranslate nohighlight">\(\mu\)</span>, indicating that our estimate of the mean is <em>unbiased</em>. Notice, as well, that the standard deviation of the sampling distribution is <em>much smaller</em> than the standard deviation of the population distribution. This is an important point for inference, as we will discuss below. You may have also noticed that the sampling distribution looks a lot like a normal distribution. In fact, it <em>is</em> a normal distribution! One of the most useful results from assuming that the population distribution is normal is that it makes it easy to work out what the distribution of the estimates will be. We will discuss this in more detail below. For now, just make sure you understand the idea that parameter estimates are random variables with some distribution reflecting how their value will change across different samples.</p>
+<p>Notice that the expected value is basically the true value of <span class="math notranslate nohighlight">\(\mu\)</span>, indicating that our estimate of the mean is <em>unbiased</em>. Notice, as well, that the standard deviation of the sampling distribution is <em>much smaller</em> than the standard deviation of the population distribution. This is an important point for inference, as we will discuss below. You may have also noticed that the sampling distribution looks a lot like a normal distribution. In fact, it <em>is</em> a normal distribution! This is one of the consequences of assuming that the population distribution is normal, as we will discuss a little later.</p>
 </section>
 </section>
-<section id="sampling-distributions-and-the-standard-error">
-<h2>Sampling Distributions and the Standard Error<a class="headerlink" href="#sampling-distributions-and-the-standard-error" title="Link to this heading">#</a></h2>
-<p>The probability distributions of the parameters estimates play a central role in statistical inference and so are given a special names. These distributions are known as <em>sampling distributions</em>. So, we have <em>population distributions</em>, which represent our theoretical data-generating process, and we have <em>sampling distributions</em>, which represent how quantities associated with the data-generating process change with each new sample. In the example above, this was a simple estimate of the mean. However, any value we can calculate that changes with each sample can be characterised as a random variable with some sampling distribution. For our current purpose, knowing the sampling distribution of the estimates is key because it tells us whether the estimate is biased, but also how <em>uncertain</em> we are about our estimated values. Because this characterisation of uncertainty is key for inference, the standard deviation of a sampling distribution is also given a special name. This is known as the <em>standard error</em>. Students often confuse the role and interpretation of the standard error compared to the standard deviation, so make sure this is clear to you. This is explored more in the box below.</p>
+<section id="sampling-distributions">
+<h2>Sampling Distributions<a class="headerlink" href="#sampling-distributions" title="Link to this heading">#</a></h2>
+<p>The probability distributions of parameters estimates play a central role in statistical inference and so are given a special names. These are known as <em>sampling distributions</em>. So, we have <em>population distributions</em>, which represent our theoretical data-generating process, and we have <em>sampling distributions</em>, which represent how quantities associated with the data-generating process change with each new sample. In the example above, this was a simple estimate of the mean. However, any value we can calculate from our sample that will changes with each new sample has a sampling distribution. For our current purpose, knowing the exact form of the sampling distribution is key because it tells us whether our estimate is biased, but also how <em>uncertain</em> we are about our estimated values. Because this characterisation of uncertainty is key for inference, the standard deviation of a sampling distribution is also given a special name. This is known as the <em>standard error</em>.</p>
 <div class="tip admonition">
 <p class="admonition-title">Standard Error vs Standard Deviation</p>
-<p>Understanding what the standard error is, and how it differs from the standard deviation, is crucial. Students often get these muddled, particularly when trying to decide what to use as error bars on a graph. The standard deviation of a set of data represents the <em>raw variability</em> in that data. It is specific to that sample and indicates how far, on average, each data point is from the mean. The <em>standard error</em>, on the other hand, is the theoretical variability of the sampling distribution of some estimate from that sample. This tells us how <em>variable</em> the estimate is likely to be, on average. So the <em>standard deviation</em> tells us about the sample, whereas the <em>standard error</em> tells us about an estimate. We are either trying to represent the average variability of the data we have collected, or how precise one of our estimates is. The standard deviation is therefore more relevant for <em>descriptive statistics</em>, whereas the standard error is more relevant for <em>inferential statistics</em>. If you are ever confused about which to use for error bars in a plot, think about the <em>purpose</em> of the plot. Are you trying to display the sample descriptively, with an indication of how variable those specific subjects are? If so, use the <em>standard deviation</em>. Alternatively, if you are trying to display inferential results, such as significant differences between groups, or if you are trying to indicate the precision of the model estimates, use the <em>standard error</em></p>
+<p>Understanding what the standard error is, and how it differs from the standard deviation, is crucial. Students often get these muddled, particularly when trying to decide what to use as error bars on a graph. The standard deviation of a set of data represents the <em>raw variability</em> in that data. It is specific to that sample and indicates how far, on average, each data point is from the mean. The <em>standard error</em>, on the other hand, is the theoretical variability of the sampling distribution of some estimate from that sample. This tells us how <em>variable</em> the estimate is likely to be, on average. So the <em>standard deviation</em> tells us about the sample, whereas the <em>standard error</em> tells us about an estimate. We are either trying to represent the average variability of the data we have collected, or how precise one of our estimates is. The standard deviation is therefore more relevant for <em>descriptive statistics</em>, whereas the standard error is more relevant for <em>inferential statistics</em>. If you are ever confused about which to use as error bars, think about the <em>purpose</em> of the plot. Are you trying to display the sample descriptively, with an indication of how variable those specific subjects are? If so, use the <em>standard deviation</em>. Alternatively, if you are trying to display inferential results, such as significant differences or the precision of estimates, use the <em>standard error</em>.</p>
 </div>
+<p>The concept of the sampling distribution is illustrated in <a class="reference internal" href="#sampling-dist-fig"><span class="std std-numref">Fig. 1</span></a>. Here, we conceptualise drawing <span class="math notranslate nohighlight">\(k\)</span> samples of size <span class="math notranslate nohighlight">\(n\)</span> from the same population distribution. Each sample provides an estimate of the mean <span class="math notranslate nohighlight">\(\left(\hat{\mu}_{(1)}, \hat{\mu}_{(2)}, \dots, \hat{\mu}_{(k)}\right)\)</span>. Based on this sample of estimates, we can build a distribution of the most probable values for <span class="math notranslate nohighlight">\(\hat{\mu}\)</span> across repeated samples. This distribution is the <em>sampling distribution</em> of the estimate <span class="math notranslate nohighlight">\(\hat{\mu}\)</span>.</p>
+<figure class="align-default" id="sampling-dist-fig">
+<a class="reference internal image-reference" href="_images/sampling-dist.png"><img alt="_images/sampling-dist.png" src="_images/sampling-dist.png" style="width: 700px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 1 </span><span class="caption-text">Illustration of the concept of a sampling distribution.</span><a class="headerlink" href="#sampling-dist-fig" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
 </section>
 <section id="sampling-distributions-of-estimates-from-linear-models">
 <h2>Sampling Distributions of Estimates from Linear Models<a class="headerlink" href="#sampling-distributions-of-estimates-from-linear-models" title="Link to this heading">#</a></h2>
-<p>Because the randomness in the data is a direct consequence of the assumed population distribution, this randomness is “passed-down” to the estimation process. If we use a simple regression model as an example</p>
-<p>statistical theory tells us that, due to the assumption of a normal population distribution, the sampling distribution of the slope estimate will be</p>
+<p>As indicated above, the exact form of the sampling distribution is key for making inference about our estimates. So what form does it take within a linear model? We could derive this empirically using simulations, as shown above. However, this is unnecessary if the assumptions about the population distribution hold. Given that, in the past, there were no computers for running simulations, it was historically essential that the sampling distribution could be derived mathematically. As it turns out, if we assume a normal population distribution, the sampling distributions of the slope and intercept parameters are <em>also</em> normal. This is one of the useful features of the normal distribution and is why it is so ubiquitous in statistics.</p>
+<p>To see how this works, we use the following simple regression model as an example</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+    y_{i} &amp;= \beta_{0} + \beta_{1}x_{i} + \epsilon_{i} \\
+    \epsilon_{i} &amp;\sim \mathcal{N}\left(0,\sigma^{2}\right).
+\end{align*}
+\end{split}\]</div>
+<p>For this model, statistical theory tells us that the sampling distribution of the slope estimate will be</p>
 <div class="math notranslate nohighlight">
 \[
 \hat{\beta}_{1} \sim \mathcal{N}\left(\beta_{1},\frac{\sigma^{2}}{\sum{\left(x_{i} - \bar{x}\right)^{2}}}\right).
 \]</div>
-<p>Importantly, this shows that the estimate from either OLS of MLE is <em>unbiased</em> because <span class="math notranslate nohighlight">\(E\left(\hat{\beta}_{1}\right) = \beta_{1}\)</span>. In other words, on average our estimate will be correct. We leave discussion of the variance term until further below, because this is a little more complex. However, it can be useful here to demonstrate that this derivation is correct using some <code class="docutils literal notranslate"><span class="pre">R</span></code> code.</p>
+<p>So, this is a normal distribution with an expected value of <span class="math notranslate nohighlight">\(\beta_{1}\)</span> (the <em>true</em> slope value), and a variance that is a scaled version of the population variance. We can demonstrate the correctness of this derivation using some <code class="docutils literal notranslate"><span class="pre">R</span></code> code. Here we run some simulations to compare the <em>empirical</em> parameters of the sampling distribution to their <em>theoretical</em> values from the derivation above:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">set.seed</span><span class="p">(</span><span class="m">777</span><span class="p">)</span>
@@ -485,73 +503,100 @@ y \sim \mathcal{N}\left(5,2\right)
 <span class="n">beta.1</span><span class="w">     </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">3</span>
 <span class="n">sigma</span><span class="w">      </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">5</span>
 <span class="n">n</span><span class="w">          </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">50</span>
-<span class="n">n.sims</span><span class="w">     </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1000</span>
+<span class="n">n.sims</span><span class="w">     </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">10000</span>
 <span class="n">x</span><span class="w">          </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">runif</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">10</span><span class="p">)</span>
 <span class="n">beta.1.hat</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rep</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="n">n.sims</span><span class="p">)</span>
 
 <span class="kr">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="kr">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="n">n.sims</span><span class="p">){</span>
 <span class="w">    </span><span class="n">y</span><span class="w">             </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="n">beta.0</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">beta.1</span><span class="o">*</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="n">sigma</span><span class="p">)</span>
-<span class="w">    </span><span class="n">mod</span><span class="w">           </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">x</span><span class="p">)</span>
-<span class="w">    </span><span class="n">beta.1.hat</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">coef</span><span class="p">(</span><span class="n">mod</span><span class="p">)[</span><span class="m">2</span><span class="p">]</span>
+<span class="w">    </span><span class="n">beta.1.hat</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">coef</span><span class="p">(</span><span class="nf">lm</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">x</span><span class="p">))[</span><span class="m">2</span><span class="p">]</span>
 <span class="p">}</span>
 
 <span class="c1"># Compare theoretical and empirical values</span>
-<span class="n">theory.var</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">sigma</span><span class="o">^</span><span class="m">2</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nf">sum</span><span class="p">((</span><span class="n">x</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nf">mean</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="o">^</span><span class="m">2</span><span class="p">)</span>
-<span class="n">theory.mean</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">beta.1</span>
-<span class="n">empiri.var</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">var</span><span class="p">(</span><span class="n">beta.1.hat</span><span class="p">)</span>
-<span class="n">empiri.mean</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">mean</span><span class="p">(</span><span class="n">beta.1.hat</span><span class="p">)</span>
+<span class="n">th.var</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">sigma</span><span class="o">^</span><span class="m">2</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nf">sum</span><span class="p">((</span><span class="n">x</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nf">mean</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="o">^</span><span class="m">2</span><span class="p">)</span>
+<span class="n">th.mean</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">beta.1</span>
+<span class="n">em.var</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">var</span><span class="p">(</span><span class="n">beta.1.hat</span><span class="p">)</span>
+<span class="n">em.mean</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">mean</span><span class="p">(</span><span class="n">beta.1.hat</span><span class="p">)</span>
 
-<span class="n">df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">data.frame</span><span class="p">(</span><span class="n">Derivation</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Theoretical&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Empirical&quot;</span><span class="p">),</span><span class="w"> </span>
-<span class="w">                 </span><span class="n">Mean</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="n">theory.mean</span><span class="p">,</span><span class="w"> </span><span class="n">empiri.mean</span><span class="p">),</span><span class="w"> </span>
-<span class="w">                 </span><span class="n">Var</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="n">theory.var</span><span class="p">,</span><span class="w"> </span><span class="n">empiri.var</span><span class="p">))</span>
+<span class="n">df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">data.frame</span><span class="p">(</span><span class="n">Derivation</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Theoretical&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Empirical&quot;</span><span class="p">),</span><span class="w"> </span><span class="n">Mean</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="n">th.mean</span><span class="p">,</span><span class="n">em.mean</span><span class="p">),</span><span class="w"> </span>
+<span class="w">                 </span><span class="n">Variance</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="n">th.var</span><span class="p">,</span><span class="n">em.var</span><span class="p">))</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   Derivation     Mean        Var
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   Derivation     Mean   Variance
 1 Theoretical 3.000000 0.06241401
-2   Empirical 2.991841 0.06256051
+2   Empirical 2.997817 0.06297099
 </pre></div>
 </div>
 </div>
 </div>
-<p>We can see here that the theoretical values for the mean and standard error of the sampling distribution agree with those calculated through simulation. We can also visualise the theoretical normal sampling distribution on top of the empirical sampling distribution to show their correspondance.</p>
+<p>In principle, these values should converge as the number of simulations increases. But, even with a relatively small number of simulations, we can see that the theoretical values pretty much agree with those calculated through simulation. We can also visualise the theoretical normal sampling distribution on top of the empirical sampling distribution to show their close correspondance.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">par</span><span class="p">(</span><span class="n">cex.lab</span><span class="o">=</span><span class="m">1.3</span><span class="p">,</span><span class="w"> </span><span class="n">cex.axis</span><span class="o">=</span><span class="m">1.1</span><span class="p">,</span><span class="w"> </span><span class="n">cex</span><span class="o">=</span><span class="m">1.4</span><span class="p">)</span><span class="w"> </span><span class="c1"># plot scaling</span>
 
 <span class="c1"># Plot histogram of sampling distribution</span>
 <span class="nf">hist</span><span class="p">(</span><span class="n">beta.1.hat</span><span class="p">,</span><span class="w"> </span><span class="n">probability</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;skyblue&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">1.7</span><span class="p">),</span><span class="w"> </span><span class="n">xlim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">4</span><span class="p">),</span><span class="w"> </span>
-<span class="w">    </span><span class="n">main</span><span class="o">=</span><span class="nf">expression</span><span class="p">(</span><span class="s">&quot;Sampling Distribution of &quot;</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nf">hat</span><span class="p">(</span><span class="n">beta</span><span class="p">)[</span><span class="m">1</span><span class="p">]),</span>
+<span class="w">    </span><span class="n">breaks</span><span class="o">=</span><span class="m">50</span><span class="p">,</span><span class="w"> </span><span class="n">main</span><span class="o">=</span><span class="nf">expression</span><span class="p">(</span><span class="s">&quot;Sampling Distribution of &quot;</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nf">hat</span><span class="p">(</span><span class="n">beta</span><span class="p">)[</span><span class="m">1</span><span class="p">]),</span>
 <span class="w">    </span><span class="n">xlab</span><span class="o">=</span><span class="nf">expression</span><span class="p">(</span><span class="nf">hat</span><span class="p">(</span><span class="n">beta</span><span class="p">)[</span><span class="m">1</span><span class="p">]))</span>
 
 <span class="c1"># Add a normal density curve with the theoretical mean and standard error</span>
-<span class="nf">curve</span><span class="p">(</span><span class="nf">dnorm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="n">theory.mean</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="nf">sqrt</span><span class="p">(</span><span class="n">theory.var</span><span class="p">)),</span><span class="w"> </span>
-<span class="w">      </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="o">=</span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="n">add</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="nf">curve</span><span class="p">(</span><span class="nf">dnorm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="n">th.mean</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="nf">sqrt</span><span class="p">(</span><span class="n">th.var</span><span class="p">)),</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="o">=</span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="n">add</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/66acd22300418e7d297341c34a855d4a262591d6b6e009dddd2299a16a1e21b8.png"><img alt="_images/66acd22300418e7d297341c34a855d4a262591d6b6e009dddd2299a16a1e21b8.png" src="_images/66acd22300418e7d297341c34a855d4a262591d6b6e009dddd2299a16a1e21b8.png" style="width: 720px; height: 420px;" /></a>
+<a class="reference internal image-reference" href="_images/cce9bdeb22ee696e6aa8b849b5fa68cc77e927bee5d8ea912fe1c34e115e6f8e.png"><img alt="_images/cce9bdeb22ee696e6aa8b849b5fa68cc77e927bee5d8ea912fe1c34e115e6f8e.png" src="_images/cce9bdeb22ee696e6aa8b849b5fa68cc77e927bee5d8ea912fe1c34e115e6f8e.png" style="width: 720px; height: 420px;" /></a>
 </div>
 </div>
-<p>So, the main take-away here is that the theory works and that the form of the sampling distribution for <span class="math notranslate nohighlight">\(\hat{\beta}_{1}\)</span> is known and can be derived mathematically. However, it is important to recognise that this depends upon the population distribution being normal<a class="footnote-reference brackets" href="#cltfoot" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>.</p>
+<p>So, the main take-away here is that the theory works and that the form of the sampling distribution for <span class="math notranslate nohighlight">\(\hat{\beta}_{1}\)</span> is known and can be derived mathematically. However, it is important to emphasise that the correctness of this derivation depends upon the population distribution being normal<a class="footnote-reference brackets" href="#cltfoot" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>.</p>
+<section id="understanding-the-expected-value">
+<h3>Understanding the Expected Value<a class="headerlink" href="#understanding-the-expected-value" title="Link to this heading">#</a></h3>
+<p>As already mentioned, the expected value of the sampling distribution is important in order to determine whether our estimation method is <em>biased</em>. For the derivation above, we have</p>
+<div class="math notranslate nohighlight">
+\[
+E\left(\hat{\beta}_{1}\right) = \beta_{1}.
+\]</div>
+<p>As such, we expect that, on average across samples, our estimate will be equal to the population value. Going back to the dartboard analogy, this would be akin to our throws mainly clustering on or around the bullseye, meaning that, on average, we have hit the bullseye<a class="footnote-reference brackets" href="#bullseyefoot" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>. A <em>biased</em> estimate, on the other hand, would be one where our throws are consistently clustering around a point that is <em>not</em> our target. On average, we will therefore get the wrong answer. We have seen this previously when discussing the variance estimate from MLE. As such, our desire is generally for an estimate that is <em>unbiased</em> so that we have some theoretical guarantee that we will be accurately estimating the population value over repeated experimentation. Notice that this implicitly embeds the idea of <em>replication</em> in order to understand an experimental phenomena.</p>
+</section>
 <section id="understanding-the-standard-error">
 <h3>Understanding the Standard Error<a class="headerlink" href="#understanding-the-standard-error" title="Link to this heading">#</a></h3>
-<p>So we are scaling the <em>vertical spread</em> by the <em>horizontal spread</em>.</p>
-<p>A good analogy is how trying to estimate the slope of the hill depends on how far up the hill you walk. If you only take measurements over a very short section, it will be hard to tell how steep the hill really is. However, if you you walk from the base to the top, you will be able to estimate the slope much more reliably. Furthermore, if you take many measurements from the bottom to the top, you will have a much better picture of the steepness of the slope, rather than taking fewer measurements. So the precision of your estimate depends upon both how far you walk (the <em>range</em> of <span class="math notranslate nohighlight">\(x\)</span>) and how many measurements you take along the way (the sample size <span class="math notranslate nohighlight">\(n\)</span>).</p>
-<p>The other element of this is that it depends on the amount of data we have. Notice that the value in the denominator is a <em>sum</em>, rather than an average. As such, it gets bigger the more data we have we can make this more explicit by writing</p>
+<p>As also mentioned above, the standard error is the name given to the standard deviation of the sampling distribution. This quantity is particularly important because it tells us, on average, how much we expect our estimate to differ from the true value. If this is <em>small</em>, then we have confidence that our estimate is likely to be close to the true value. However, if this <em>large</em>, then we have much less confidence when interpreting our estimate, as it may actually be quite far from the true value.</p>
+<p>For the derivation above, the standard error (SE) is</p>
 <div class="math notranslate nohighlight">
 \[
-\text{Var}\left(\hat{\beta}_{1}\right) = \frac{\sigma^{2}}{(n-1)s^{2}_{x}},
+\text{SE}\left(\hat{\beta}_{1}\right) = \sqrt{\text{Var}\left(\hat{\beta}_{1}\right)} =  \sqrt{\frac{\sigma^{2}}{\sum{\left(x_{i} - \bar{x}\right)^{2}}}}.
 \]</div>
-<p>where <span class="math notranslate nohighlight">\(s^{2}_{x}\)</span> indicates the variance of <span class="math notranslate nohighlight">\(x\)</span>. The multiplication of the <span class="math notranslate nohighlight">\((n-1)\)</span> term essentially undoes the averaging when calculating the variance</p>
+<p>This looks a bit complicated, so let us work through the logic. For the moment, ignore the square-root because this just changes the units from squared distances into the original units of the data. The important element of the SE is that we are <em>scaling</em> the error variance by <span class="math notranslate nohighlight">\(\sum{\left(x_{i} - \bar{x}\right)^{2}}\)</span>. This captures the <em>spread</em> of the <span class="math notranslate nohighlight">\(x\)</span>-values. So we are dividing the spread of the data <em>vertically</em> (the error variance) by the spread of the data <em>horizontally</em>. Or, to look at this another way, the ratio of the <em>noise</em> to the <em>signal</em>.</p>
+<section id="why-does-the-spread-of-x-matter">
+<h4>Why Does the Spread of <span class="math notranslate nohighlight">\(x\)</span> Matter?<a class="headerlink" href="#why-does-the-spread-of-x-matter" title="Link to this heading">#</a></h4>
+<p>To get a better idea of why the spread of <span class="math notranslate nohighlight">\(x\)</span>-values is important, we can run some simulations in <code class="docutils literal notranslate"><span class="pre">R</span></code>. In each instance, we simulate data using known population parameters. So, we fix <span class="math notranslate nohighlight">\(n = 30\)</span>, <span class="math notranslate nohighlight">\(\beta_{0} = 0\)</span>, <span class="math notranslate nohighlight">\(\beta_{1} = 2\)</span> and <span class="math notranslate nohighlight">\(\sigma = 5\)</span>. The only difference is that in the <em>low-spread</em> simulations we fix the range of <span class="math notranslate nohighlight">\(x\)</span> to <span class="math notranslate nohighlight">\((9.5,10.5)\)</span>, whereas in the <em>high-spread</em> simulations we fix the range of <span class="math notranslate nohighlight">\(x\)</span> to <span class="math notranslate nohighlight">\((0,20)\)</span>. The results are shown below for 4 repeats of both the <em>low-spread</em> and <em>high-spread</em> situations, where the true regression line is shown as a dashed line and the estimated regression line is shown as a solid blue line.</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/263f275c839c578d9c9848216ce4daf9763a434d7a68878287e457a42a9ff5b6.png"><img alt="_images/263f275c839c578d9c9848216ce4daf9763a434d7a68878287e457a42a9ff5b6.png" src="_images/263f275c839c578d9c9848216ce4daf9763a434d7a68878287e457a42a9ff5b6.png" style="width: 840px; height: 480px;" /></a>
+</div>
+</div>
+<p>Notice that when the spread of <span class="math notranslate nohighlight">\(x\)</span> is very low, the estimate of the regression line is wildly unstable. This is because, with limited information about <span class="math notranslate nohighlight">\(x\)</span>, the fit is mostly influences by small changes in the vertical spread of the data. In other words, there is very little <em>signal</em> relative to the <em>noise</em>. The degree to which our estimate differs from the truth is therefore much larger and the SE will be much bigger. By comparison, when the spread of <span class="math notranslate nohighlight">\(x\)</span> is much higher, the estimate of the regression line is much more stable and corresponds much more closely to the true value. As such, the SE will be much lower. So here we can see why the spread of values in <span class="math notranslate nohighlight">\(x\)</span> matters for the magnitude of the SE.</p>
+<div class="tip admonition">
+<p class="admonition-title">Experimental Optimisation I</p>
+<p>The dependence of the standard error on the range of values for <span class="math notranslate nohighlight">\(x\)</span> provides important information for optimising experiments. Although the predictor variables are not often under our direct control in experimental psychology, considerations should be made about whether a good range of <span class="math notranslate nohighlight">\(x\)</span> values are available. For instance, if we are directly interested in relationships with <code class="docutils literal notranslate"><span class="pre">age</span></code> as a predictor, having a sample that ranges from 20 years old to 21 years old will likely not provide enough information. Sampling more widely and trying to achieve a good spread between 20 years old and 50 years would likely produce much more stable and meaningful estimates.</p>
+</div>
+</section>
+<section id="dependence-on-sample-size">
+<h4>Dependence on Sample Size<a class="headerlink" href="#dependence-on-sample-size" title="Link to this heading">#</a></h4>
+<p>Beyond the importance of the range of <span class="math notranslate nohighlight">\(x\)</span> values, another element of great importance is the <em>amount</em> of data that we have. In the definition of the SE, notice that the value in the denominator is a <em>sum</em>, rather than an average. As such, it gets bigger as we collect more data. Although slightly hidden in the formula above, we can make this more explicit by writing</p>
 <div class="math notranslate nohighlight">
 \[
-(n-1)s^{2}_{x} = (n-1) \frac{\sum{(x_{i} - \bar{x})^{2}}}{n-1} = \sum{(x_{i} - \bar{x})^{2}}
+\text{Var}\left(\hat{\beta}_{1}\right) = \frac{\sigma^{2}}{(n-1)\sigma^{2}_{x}},
 \]</div>
-<p>but writing it this way makes the dependence on the sample size clearer. To put it simply, the <em>bigger</em> the sample size the <em>larger</em> the denominator becomes and the <em>smaller</em> the standard error. To put it even more simply, more data makes our estimate more precise.</p>
+<p>where <span class="math notranslate nohighlight">\(\sigma^{2}_{x}\)</span> indicates the variance of <span class="math notranslate nohighlight">\(x\)</span>. The multiplication of the <span class="math notranslate nohighlight">\((n-1)\)</span> term essentially undoes the averaging when calculating the variance</p>
+<div class="math notranslate nohighlight">
+\[
+(n-1)\sigma^{2}_{x} = (n-1) \frac{\sum{(x_{i} - \bar{x})^{2}}}{n-1} = \sum{(x_{i} - \bar{x})^{2}}
+\]</div>
+<p>but writing it this way makes the dependence on the sample size clearer. To put it simply, the <em>bigger</em> the sample size the <em>larger</em> the denominator becomes and the <em>smaller</em> the standard error. To put it even more simply, <em>more data</em> makes our estimate <em>more precise</em>.</p>
 <p>This makes intuitive sense. The more data we have, the closer we are to having the full population at our disposal and thus the better our estimate of the population value should be. To make our estimate as precise as possible we want both a wide-spread of <span class="math notranslate nohighlight">\(x\)</span> values, as well as more data. Typically only the sample size is under our control and thus our aim is usually for as much data as possible. We can demonstrate this dependance in <code class="docutils literal notranslate"><span class="pre">R</span></code> using simulations. In the code below, we simulate sample sizes of 5, 10, 50, 100, 1000 and 5000. For each sample size we run 1000 simulations of a simple regression model with known population values. We build up a distribution of estimates and then visualise them as histograms. Importantly, we fix the <span class="math notranslate nohighlight">\(x\)</span>-axis range so that these can be accurately compared.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -563,53 +608,117 @@ y \sim \mathcal{N}\left(5,2\right)
 <span class="n">n.sims</span><span class="w">     </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1000</span>
 <span class="n">n</span><span class="w">          </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">5</span><span class="p">,</span><span class="m">10</span><span class="p">,</span><span class="m">50</span><span class="p">,</span><span class="m">100</span><span class="p">,</span><span class="m">1000</span><span class="p">,</span><span class="m">5000</span><span class="p">)</span>
 
-<span class="nf">par</span><span class="p">(</span><span class="n">mfrow</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="m">2</span><span class="p">))</span>
+<span class="c1"># Layout and scaling</span>
+<span class="nf">par</span><span class="p">(</span><span class="n">mfrow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="n">mar</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">4</span><span class="p">,</span><span class="m">4</span><span class="p">,</span><span class="m">3</span><span class="p">,</span><span class="m">1</span><span class="p">))</span>
+<span class="nf">par</span><span class="p">(</span><span class="n">cex.lab</span><span class="o">=</span><span class="m">1.3</span><span class="p">,</span><span class="w"> </span><span class="n">cex.axis</span><span class="o">=</span><span class="m">1.1</span><span class="p">,</span><span class="w"> </span><span class="n">cex</span><span class="o">=</span><span class="m">1.4</span><span class="p">)</span>
 
 <span class="kr">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="kr">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="nf">length</span><span class="p">(</span><span class="n">n</span><span class="p">)){</span>
-<span class="w">    </span><span class="n">x</span><span class="w">          </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">runif</span><span class="p">(</span><span class="n">n</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="m">0</span><span class="p">,</span><span class="m">10</span><span class="p">)</span>
-<span class="w">    </span><span class="n">beta.1.hat</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rep</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="n">n.sims</span><span class="p">)</span>
+<span class="w">    </span><span class="n">x</span><span class="w">       </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">runif</span><span class="p">(</span><span class="n">n</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="m">0</span><span class="p">,</span><span class="m">10</span><span class="p">)</span>
+<span class="w">    </span><span class="n">b.1.hat</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rep</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="n">n.sims</span><span class="p">)</span>
 
 <span class="w">    </span><span class="kr">for</span><span class="w"> </span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="kr">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="n">n.sims</span><span class="p">){</span>
-<span class="w">        </span><span class="n">y</span><span class="w">             </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="n">beta.0</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">beta.1</span><span class="o">*</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="n">sigma</span><span class="p">)</span>
-<span class="w">        </span><span class="n">mod</span><span class="w">           </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">x</span><span class="p">)</span>
-<span class="w">        </span><span class="n">beta.1.hat</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">coef</span><span class="p">(</span><span class="n">mod</span><span class="p">)[</span><span class="m">2</span><span class="p">]</span>
+<span class="w">        </span><span class="n">y</span><span class="w">          </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="n">beta.0</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">beta.1</span><span class="o">*</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="n">sigma</span><span class="p">)</span>
+<span class="w">        </span><span class="n">b.1.hat</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">coef</span><span class="p">(</span><span class="nf">lm</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">x</span><span class="p">))[</span><span class="m">2</span><span class="p">]</span>
 <span class="w">    </span><span class="p">}</span>
 
-<span class="w">    </span><span class="n">SE</span><span class="w">    </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">round</span><span class="p">(</span><span class="nf">sd</span><span class="p">(</span><span class="n">beta.1.hat</span><span class="p">),</span><span class="m">3</span><span class="p">)</span>
-<span class="w">    </span><span class="n">title</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">paste0</span><span class="p">(</span><span class="s">&quot;Sampling Distribution with n = &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="w"> </span><span class="s">&quot;\nSE = &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">SE</span><span class="p">)</span><span class="w">  </span>
-<span class="w">    </span><span class="nf">hist</span><span class="p">(</span><span class="n">beta.1.hat</span><span class="p">,</span><span class="w"> </span><span class="n">xlim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">-1</span><span class="p">,</span><span class="m">7</span><span class="p">),</span><span class="w"> </span><span class="n">main</span><span class="o">=</span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;skyblue&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">SE</span><span class="w">    </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">round</span><span class="p">(</span><span class="nf">sd</span><span class="p">(</span><span class="n">b.1.hat</span><span class="p">),</span><span class="m">3</span><span class="p">)</span>
+<span class="w">    </span><span class="n">title</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">paste0</span><span class="p">(</span><span class="s">&quot;Sampling Distribution with n = &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="w"> </span><span class="s">&quot;\nSE = &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">SE</span><span class="p">)</span>
+<span class="w">    </span><span class="n">lab</span><span class="w">   </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">expression</span><span class="p">(</span><span class="nf">hat</span><span class="p">(</span><span class="n">beta</span><span class="p">)[</span><span class="m">1</span><span class="p">])</span><span class="w">  </span>
+<span class="w">    </span><span class="nf">hist</span><span class="p">(</span><span class="n">b.1.hat</span><span class="p">,</span><span class="w"> </span><span class="n">xlim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">-1</span><span class="p">,</span><span class="m">7</span><span class="p">),</span><span class="w"> </span><span class="n">main</span><span class="o">=</span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;skyblue&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">xlab</span><span class="o">=</span><span class="n">lab</span><span class="p">)</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/0f8ec5981fcd6d2aa06f16e830f8c66a4ccce490cf9a2e83acdd78fade7df095.png"><img alt="_images/0f8ec5981fcd6d2aa06f16e830f8c66a4ccce490cf9a2e83acdd78fade7df095.png" src="_images/0f8ec5981fcd6d2aa06f16e830f8c66a4ccce490cf9a2e83acdd78fade7df095.png" style="width: 840px; height: 600px;" /></a>
+<a class="reference internal image-reference" href="_images/05db14f9f9249f36f75f565ec69763fb7c84c52e3ce3d3aa60721e4196ac09ce.png"><img alt="_images/05db14f9f9249f36f75f565ec69763fb7c84c52e3ce3d3aa60721e4196ac09ce.png" src="_images/05db14f9f9249f36f75f565ec69763fb7c84c52e3ce3d3aa60721e4196ac09ce.png" style="width: 840px; height: 720px;" /></a>
 </div>
 </div>
 <p>The shrinking width of the sampling distribution as <span class="math notranslate nohighlight">\(n\)</span> increases should be very clear. Although each of these distributions are centred on the true value, their variability differs wildly. As such, our confidence in the precision of our estimates changes dramatically as we get more and more data. When <span class="math notranslate nohighlight">\(n = 5\)</span>, we expect our estimate to differ from the true value by an average of 0.996 units. However, when <span class="math notranslate nohighlight">\(n = 5000\)</span>, we expect our estimate to differ from the true value by an average of 0.025 units. It should be clear that we are more likely to trust our estimate to be close to the true value when we have more data.</p>
+<div class="tip admonition">
+<p class="admonition-title">Experimental Optimisation II</p>
+<p>The dependence of the standard error on the sample size provides even more important information for optimising experiments. Although we want a wide-range of values for <span class="math notranslate nohighlight">\(x\)</span>, we also want as much data as possible. A dataset where we only have a single measurement for each value of <span class="math notranslate nohighlight">\(x\)</span> is not going to be as useful as a dataset with 20 measurements for each value of <span class="math notranslate nohighlight">\(x\)</span>. So, ideally, we want <em>both</em> a large sample size and a large spread of <span class="math notranslate nohighlight">\(x\)</span> values. The importance of <em>both</em> these elements is often under-appreciated in practice, where researchers tend to fixate on sample size above everything else. However, a larger sample across a narrow range of <span class="math notranslate nohighlight">\(x\)</span> could end up being equivalent to a smaller sample across a wider range of <span class="math notranslate nohighlight">\(x\)</span> in terms of the value of the SE. Indeed, in the example in the table below, an experiment with <span class="math notranslate nohighlight">\(n=20\)</span> is better than an experiment with <span class="math notranslate nohighlight">\(n=50\)</span>, when coupled with a larger range of values for <span class="math notranslate nohighlight">\(x\)</span>.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Design</p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(n\)</span></p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(\text{Var}\left(x\right)\)</span></p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(n \times \text{Var}\left(x\right)\)</span></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Design A</p></td>
+<td><p>50</p></td>
+<td><p>4</p></td>
+<td><p>200</p></td>
+</tr>
+<tr class="row-odd"><td><p>Design B</p></td>
+<td><p>20</p></td>
+<td><p>15</p></td>
+<td><p>300</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Of course, bigger samples come with other benefits, but it is important to recognise that there is an inherent trade-off here and that bigger samples, as far as the SE is concerned, are not always better.</p>
+</div>
 </section>
-<section id="the-intercept-and-variance">
-<h3>The Intercept and Variance<a class="headerlink" href="#the-intercept-and-variance" title="Link to this heading">#</a></h3>
-<p>What about the sampling distributions of our other estimates, namely <span class="math notranslate nohighlight">\(\hat{\beta}_{0}\)</span> and <span class="math notranslate nohighlight">\(\hat{\sigma}^{2}\)</span>? Like <span class="math notranslate nohighlight">\(\hat{\beta}_{1}\)</span>, under assumptions of population normality, these can be derived mathematically to give:</p>
-<div class="math notranslate nohighlight">
-\[\]</div>
-<p>Because these values are generally of less interest directly for inference, we will not demonstrate the correctness of these results through simulation. However, this could be an exercise if you want to alter the code above to demonstrate how well the theory works.</p>
 </section>
-<section id="example-in-r-with-real-data">
-<h3>Example in <code class="docutils literal notranslate"><span class="pre">R</span></code> with Real Data<a class="headerlink" href="#example-in-r-with-real-data" title="Link to this heading">#</a></h3>
-<p>We can see how <code class="docutils literal notranslate"><span class="pre">R</span></code> reports the standard errors of the estimates in the output from <code class="docutils literal notranslate"><span class="pre">lm()</span></code> by returning to the <code class="docutils literal notranslate"><span class="pre">mtcars</span></code> example.</p>
+</section>
+<section id="estimation-uncertainty-in-r">
+<h2>Estimation Uncertainty in <code class="docutils literal notranslate"><span class="pre">R</span></code><a class="headerlink" href="#estimation-uncertainty-in-r" title="Link to this heading">#</a></h2>
+<p>As a final part to this section, we can see how <code class="docutils literal notranslate"><span class="pre">R</span></code> reports the uncertainty of all the estimates from a multiple regression fit using the <code class="docutils literal notranslate"><span class="pre">lm()</span></code> function. Here, we will return to the <code class="docutils literal notranslate"><span class="pre">mtcars</span></code> example and fit the model <code class="docutils literal notranslate"><span class="pre">mpg</span> <span class="pre">~</span> <span class="pre">wt</span> <span class="pre">+</span> <span class="pre">hp</span> <span class="pre">+</span> <span class="pre">disp</span></code>. The output table is then:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">data</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
+<span class="nf">summary</span><span class="p">(</span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">hp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">disp</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Call:
+lm(formula = mpg ~ wt + hp + disp, data = mtcars)
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+-3.891 -1.640 -0.172  1.061  5.861 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 37.105505   2.110815  17.579  &lt; 2e-16 ***
+wt          -3.800891   1.066191  -3.565  0.00133 ** 
+hp          -0.031157   0.011436  -2.724  0.01097 *  
+disp        -0.000937   0.010350  -0.091  0.92851    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 2.639 on 28 degrees of freedom
+Multiple R-squared:  0.8268,	Adjusted R-squared:  0.8083 
+F-statistic: 44.57 on 3 and 28 DF,  p-value: 8.65e-11
+</pre></div>
+</div>
+</div>
+</div>
+<p>For each one of the slopes (and the intercept) we have a report of the SE. Lets work through each slope and see how we could interpret each estimate in light of its uncertainty. Note that we will see ways of formalising some of this in the next section. However, this should be enough to see how this information can be used in an informal and descriptive fashion to assess the precision of our estimates.</p>
+<p>Starting with <code class="docutils literal notranslate"><span class="pre">wt</span></code>, we can see that, for each unit increase, we have an estimated <em>decrease</em> of 3.80 MPG. The SE is reported as 1.07, meaning that on average we expect this estimate to be around 1.07 MPG off from the true value. The estimate is therefore <em>larger</em> than its uncertainty, suggesting some reasonable degree of precision. This gives a plausible range of slopes within <span class="math notranslate nohighlight">\(\left[-4.88, -2.72\right]\)</span>. This is an informal and descriptive assessment, but does highlight that our degree of uncertainty is quite tight around the estimate. A similar descriptive assessment can be made for <code class="docutils literal notranslate"><span class="pre">hp</span></code>, where the estimate is again <em>larger</em> than its uncertainty, with a plausible range of <span class="math notranslate nohighlight">\(\left[-0.043,-0.020\right]\)</span>. Again, this is quite tight around the estimate. However, a different story emerges with <code class="docutils literal notranslate"><span class="pre">disp</span></code>. Here the estimate is actually <em>smaller</em> than its uncertainty, with a plausible range of <span class="math notranslate nohighlight">\(\left[-0.011, 0.010\right]\)</span>. Importantly, this range includes a <em>reversal</em> of the effect, indicating a clear lack of precision about the true value of this slope.</p>
 <hr class="footnotes docutils" />
 <aside class="footnote-list brackets">
 <aside class="footnote brackets" id="jokefoot" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
 <p>Three statisticians go deer hunting with bows and arrows. They spot a big buck and take aim. One shoots and his arrow flies off three meters to the right. The second shoots and his arrow flies off three meters to the left. The third statistician jumps up and down yelling: “We got him! We got him!”.</p>
 </aside>
-<aside class="footnote brackets" id="cltfoot" role="note">
+<aside class="footnote brackets" id="empirfoot" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>Empirical means that we have derived the values from real data or simulation, as opposed to <em>theoretical</em> values which can be calculated using known formulas.</p>
+</aside>
+<aside class="footnote brackets" id="cltfoot" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">3</a><span class="fn-bracket">]</span></span>
 <p>This reliance on normality is not always needed. As we will explore next week, the central limit theorem indicates that under large-enough sample sizes, the sampling distribution will be normal, even if the population distribution is not.</p>
 </aside>
+<aside class="footnote brackets" id="bullseyefoot" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">4</a><span class="fn-bracket">]</span></span>
+<p>Note - this reasoning will not actually work in a real game of darts.</p>
 </aside>
-</section>
+</aside>
 </section>
 </section>
 
@@ -682,13 +791,17 @@ y \sim \mathcal{N}\left(5,2\right)
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#demonstration-in-r">Demonstration in <code class="docutils literal notranslate"><span class="pre">R</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sampling-distributions-and-the-standard-error">Sampling Distributions and the Standard Error</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sampling-distributions">Sampling Distributions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sampling-distributions-of-estimates-from-linear-models">Sampling Distributions of Estimates from Linear Models</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-the-standard-error">Understanding the Standard Error</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-intercept-and-variance">The Intercept and Variance</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-in-r-with-real-data">Example in <code class="docutils literal notranslate"><span class="pre">R</span></code> with Real Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-the-expected-value">Understanding the Expected Value</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-the-standard-error">Understanding the Standard Error</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#why-does-the-spread-of-x-matter">Why Does the Spread of <span class="math notranslate nohighlight">\(x\)</span> Matter?</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dependence-on-sample-size">Dependence on Sample Size</a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#estimation-uncertainty-in-r">Estimation Uncertainty in <code class="docutils literal notranslate"><span class="pre">R</span></code></a></li>
 </ul>
   </nav></div>
 
