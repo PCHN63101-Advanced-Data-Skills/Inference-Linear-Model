@@ -372,16 +372,12 @@
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#estimates-and-population-values">Estimates and Population Values</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-an-estimate-with-a-hypothesised-value">Comparing an Estimate with a Hypothesised Value</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sampling-distribution-of-delta">Sampling Distribution of <span class="math notranslate nohighlight">\(\delta\)</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-sampling-distribution-of-delta">The Sampling Distribution of <span class="math notranslate nohighlight">\(\delta\)</span></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-null-hypothesis">The Null Hypothesis</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#considerations-of-uncertainty">Considerations of Uncertainty</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#test-statistics">Test Statistics</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-z-statistic">The <span class="math notranslate nohighlight">\(z\)</span>-statistic</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#null-distributions">Null Distributions</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-t-statistic">The <span class="math notranslate nohighlight">\(t\)</span>-statistic</a></li>
 </ul>
 </li>
@@ -401,34 +397,33 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="null-hypothesis-significance-testing-nhst">
 <h1>Null Hypothesis Significance Testing (NHST)<a class="headerlink" href="#null-hypothesis-significance-testing-nhst" title="Link to this heading">#</a></h1>
-<p>In the previous section, we discussed the concept of parameter estimates as random variables and then explored the meaning of their sampling distributions. In particular, we examined the <em>expected value</em> as a measurement of <em>bias</em>, and the <em>standard error</em> as a measurments of <em>uncertainty</em> or <em>precision</em>. We also saw how we could use both these pieces of information to reach rough descriptive conclusions about how much we can trust our estimates, as well as the plausible range of values for the true population parameters. However, this approach can appear quite subjective and imprecise. In this section, we will discuss the most common method used in statistics for reaching more formal conclusions based on this information: <em>null hypothesis significance testing</em> (NHST).</p>
+<p>In the previous section, we discussed the concept of parameter estimates as random variables and then explored the meaning of their sampling distributions. In particular, we examined the <em>expected value</em> as a measurement of <em>bias</em>, and the <em>standard error</em> as a measurments of <em>uncertainty</em>. We also saw how we could use both these pieces of information to reach rough descriptive conclusions about how much we can trust our estimates. However, one problem with this approach is that it can appear quite subjective and imprecise. In this section, we will discuss <em>null hypothesis significance testing</em> (NHST), which is the most common method used in statistics for reaching more formal conclusions based on this information.</p>
 <section id="estimates-and-population-values">
 <h2>Estimates and Population Values<a class="headerlink" href="#estimates-and-population-values" title="Link to this heading">#</a></h2>
-<p>To begin with, we need to understand the NHST is based on the idea of comparing a parameter estimate from our model to some <em>hypothesised</em> population value. The aim is to then assess how compatible the results of our model are with that hypothesised value.</p>
+<p>Remembering that our interest lies in <em>population</em> values rather than estimates, a fundamental idea in NHST is to compare our estimate values to some <em>hypothesised</em> population values. The aim is to assess how compatible the results of our model are with those hypothesised values, in order to reach conclusions about whether we are right or wrong.</p>
 <section id="comparing-an-estimate-with-a-hypothesised-value">
 <h3>Comparing an Estimate with a Hypothesised Value<a class="headerlink" href="#comparing-an-estimate-with-a-hypothesised-value" title="Link to this heading">#</a></h3>
-<p>To make this comaprison clearer, we will focus on a single slope estimate <span class="math notranslate nohighlight">\(\hat{\beta}_{1}\)</span>. We will then denote our hypothesised population value as <span class="math notranslate nohighlight">\(\beta_{1}^{(0)}\)</span>. This should makes it clear that we still do not know what value <span class="math notranslate nohighlight">\(\beta_{1}\)</span> has, but we are simply taking a guess. We can then simply calculate</p>
+<p>To make the idea of comparing an estimate to a hypothesised value clearer, we will focus on a single slope estimate <span class="math notranslate nohighlight">\(\hat{\beta}_{1}\)</span>. We will then denote our hypothesised population value as <span class="math notranslate nohighlight">\(\beta_{1}^{(0)}\)</span>. This should makes it clear that we still do not know what value <span class="math notranslate nohighlight">\(\beta_{1}\)</span> has, but we are simply taking a guess. We can then calculate</p>
 <div class="math notranslate nohighlight">
 \[
 \delta = \hat{\beta}_{1} - \beta_{1}^{(0)}.
 \]</div>
-<p>The magnitude of <span class="math notranslate nohighlight">\(\delta\)</span> therefore tells us how far away our estimate is from our hypothesised population value. Putting aside the issue of deciding what value to choose <span class="math notranslate nohighlight">\(\beta_{1}^{(0)}\)</span>, we would ideally interpret a <em>large</em> <span class="math notranslate nohighlight">\(\delta\)</span> as indicating that our hypothesised value is <em>wrong</em>, and a small <span class="math notranslate nohighlight">\(\delta\)</span> as indicating that our hypothesised value may be <em>correct</em>. This would seem reasonable, however, we need some means of deciding what a <em>large</em> or <em>small</em> difference actually us?</p>
-<p>To answer that question, we could say that <span class="math notranslate nohighlight">\(\delta\)</span> is large if it has a low probability and small if it has a high probability, under the assumption that <span class="math notranslate nohighlight">\(\beta_{1}^{(0)} = \beta_{1}\)</span>. So in effect, we want to calculate</p>
+<p>The magnitude of <span class="math notranslate nohighlight">\(\delta\)</span> tells us how far away our estimate is from our hypothesised population value. Putting aside the issue of deciding what value to choose <span class="math notranslate nohighlight">\(\beta_{1}^{(0)}\)</span>, we would ideally interpret a <em>large</em> <span class="math notranslate nohighlight">\(\delta\)</span> as indicating that our hypothesised value <em>might be wrong</em>, and a small <span class="math notranslate nohighlight">\(\delta\)</span> as indicating that our hypothesised value <em>might be correct</em>.</p>
+<p>In order to define what a <em>large</em> or <em>small</em> value of <span class="math notranslate nohighlight">\(\delta\)</span> means, we can appeal to probability. Under the assumption that <span class="math notranslate nohighlight">\(\beta_{1}^{(0)} = \beta_{1}\)</span>, we could say that <span class="math notranslate nohighlight">\(\delta\)</span> is large if it has a <em>low probability</em> and small if it has a <em>high probability</em>. So, in effect, we want to calculate</p>
 <div class="math notranslate nohighlight">
 \[
-P(\delta|\beta_{1}^{(0)} = \beta_{1}) = P(\delta|\text{Our hypothesis is correct}).
+P(\delta|\text{Our hypothesis is correct}) = P(\delta|\beta_{1}^{(0)} = \beta_{1}).
 \]</div>
-<p>Under this assumption, a <span class="math notranslate nohighlight">\(\delta\)</span> with a <em>low</em> probability suggests we have calculate a difference that is <em>unlikely</em> if our proposed value were equal to the true value. In other words, <span class="math notranslate nohighlight">\(\delta\)</span> is <em>incompatible</em> with the idea that <span class="math notranslate nohighlight">\(\beta_{1}^{(0)} = \beta_{1}\)</span>. Similarly, a <span class="math notranslate nohighlight">\(\delta\)</span> with a <em>high</em> probability suggests we have calculate a difference that is <em>very likely</em> if our proposed value were equal to the true value. This would indicate that <span class="math notranslate nohighlight">\(\delta\)</span> is <em>compatible</em> with the idea that <span class="math notranslate nohighlight">\(\beta_{1}^{(0)} = \beta_{1}\)</span>.</p>
-<p>This seems a reasonable approach and allows us to use probability as our metric for determining the evidence for/against our proposed population value. However, in order to calculate these probabilities, we need to know the <em>sampling distribution</em> of <span class="math notranslate nohighlight">\(\delta\)</span>.</p>
+<p>A <span class="math notranslate nohighlight">\(\delta\)</span> with a <em>low</em> probability suggests we have calculate a difference that is <em>unlikely</em> if our hypothesised value were correct. In other words, <span class="math notranslate nohighlight">\(\delta\)</span> is <em>incompatible</em> with the idea that <span class="math notranslate nohighlight">\(\beta_{1}^{(0)} = \beta_{1}\)</span>. Similarly, a <span class="math notranslate nohighlight">\(\delta\)</span> with a <em>high</em> probability suggests we have calculated a difference that is <em>very likely</em>, if our hypothesised value were correct. This would indicate that <span class="math notranslate nohighlight">\(\delta\)</span> is <em>compatible</em> with the idea that <span class="math notranslate nohighlight">\(\beta_{1}^{(0)} = \beta_{1}\)</span>. Notice, however, that these are probability statements about <span class="math notranslate nohighlight">\(\delta\)</span> <em>not</em> about the hypothesis itself. As such, we cannot conclude anything about how probable our hypothesised value is, only how compatible our data are. This is actually a very important distinction that we will return to later.</p>
 </section>
-<section id="sampling-distribution-of-delta">
-<h3>Sampling Distribution of <span class="math notranslate nohighlight">\(\delta\)</span><a class="headerlink" href="#sampling-distribution-of-delta" title="Link to this heading">#</a></h3>
-<p>Importantly, because <span class="math notranslate nohighlight">\(\delta\)</span> is calculated from a random variable (<span class="math notranslate nohighlight">\(\hat{\beta}_{1}\)</span>), it is <em>also</em> a random variable. If the value of <span class="math notranslate nohighlight">\(\beta_{1}^{(0)}\)</span> is <em>correct</em> then, on average, <span class="math notranslate nohighlight">\(\delta\)</span> will be 0. In this situation, <span class="math notranslate nohighlight">\(\beta_{1}^{(0)} = \beta_{1}\)</span> and</p>
+<section id="the-sampling-distribution-of-delta">
+<h3>The Sampling Distribution of <span class="math notranslate nohighlight">\(\delta\)</span><a class="headerlink" href="#the-sampling-distribution-of-delta" title="Link to this heading">#</a></h3>
+<p>Using probability as our metric for determining the compatibility of our data with the proposed population value seems quite reasonable. This application of probability make sense because <span class="math notranslate nohighlight">\(\delta\)</span> is a random variable. Because <span class="math notranslate nohighlight">\(\delta\)</span> is calculated from <span class="math notranslate nohighlight">\(\hat{\beta}_{1}\)</span>, the randomness in <span class="math notranslate nohighlight">\(\delta\)</span> is passed down from the randomness of <span class="math notranslate nohighlight">\(\hat{\beta}_{1}\)</span>. Even if we keep <span class="math notranslate nohighlight">\(\beta_{1}^{(0)}\)</span> constant over different samples, the value of <span class="math notranslate nohighlight">\(\hat{\beta}_{1}\)</span> will change and therefore the value of <span class="math notranslate nohighlight">\(\delta\)</span> will change. As such, <span class="math notranslate nohighlight">\(\delta\)</span> has some sampling distribution that we can use to calculate the probability of different values of <span class="math notranslate nohighlight">\(\delta\)</span> occurring across different samples. Focussing on the situation where we are <em>correct</em> about the population value, the expected value of <span class="math notranslate nohighlight">\(\delta\)</span> will be 0:</p>
 <div class="math notranslate nohighlight">
 \[
 E(\delta) = E\left(\hat{\beta}_{1} - \beta_{1}^{(0)}\right) = E\left(\hat{\beta}_{1}\right) - \beta_{1}^{(0)} = \beta_{1} - \beta_{1} = 0.
 \]</div>
-<p>This means the distribution of <span class="math notranslate nohighlight">\(\delta\)</span> will be centred on 0, with the same SE as <span class="math notranslate nohighlight">\(\hat{\beta}_{1}\)</span>. This is shown in the plot below, derived from running a simulation of this situation in <code class="docutils literal notranslate"><span class="pre">R</span></code></p>
+<p>This means the distribution of <span class="math notranslate nohighlight">\(\delta\)</span> will be centred on 0. This distribution will be normal and, if the sample is large enough, will have the same SE as <span class="math notranslate nohighlight">\(\hat{\beta}_{1}\)</span>. This is shown in the plot below, which was derived from running simulation in <code class="docutils literal notranslate"><span class="pre">R</span></code>. The code is hidden, but can be viewed if you want to understand this derivation more.</p>
 <div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -476,116 +471,68 @@ E(\delta) = E\left(\hat{\beta}_{1} - \beta_{1}^{(0)}\right) = E\left(\hat{\beta}
 <a class="reference internal image-reference" href="_images/68c466e3d610bd23f3abfef1ceabcd53ef652b466d5aa5172bb563366cf7f8db.png"><img alt="_images/68c466e3d610bd23f3abfef1ceabcd53ef652b466d5aa5172bb563366cf7f8db.png" src="_images/68c466e3d610bd23f3abfef1ceabcd53ef652b466d5aa5172bb563366cf7f8db.png" style="width: 720px; height: 420px;" /></a>
 </div>
 </div>
-<p>However, if we are <em>not</em> correct about the value of <span class="math notranslate nohighlight">\(\beta_{1}^{(0)}\)</span> then, on average, <span class="math notranslate nohighlight">\(\delta\)</span> will not be 0. Instead, <span class="math notranslate nohighlight">\(E(\delta)\)</span> will equal the <em>difference</em> between the true value of <span class="math notranslate nohighlight">\(\beta_{1}\)</span> and our hypothesised value</p>
-<div class="math notranslate nohighlight">
-\[
-E(\delta) = E\left(\hat{\beta}_{1} - \beta_{1}^{(0)}\right) = E\left(\hat{\beta}_{1}\right) - \beta_{1}^{(0)} = \beta_{1} - \beta_{1}^{(0)} \neq 0.
-\]</div>
-<p>As an example, the plot below comes from a simulation where the hypothesised value is different from the true value by 2 units.</p>
-<div class="cell tag_hide-input docutils container">
-<details class="hide above-input">
-<summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell source</span>
-<span class="expanded">Hide code cell source</span>
-</summary>
-<div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">set.seed</span><span class="p">(</span><span class="m">666</span><span class="p">)</span>
-
-<span class="n">beta.0</span><span class="w">   </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">2</span>
-<span class="n">beta.1</span><span class="w">   </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">3</span>
-<span class="n">beta.1.0</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="c1"># Hypothesised value is incorrect</span>
-<span class="n">sigma</span><span class="w">    </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">5</span>
-<span class="n">n</span><span class="w">        </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">50</span>
-<span class="n">n.sims</span><span class="w">   </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">10000</span>
-<span class="n">x</span><span class="w">        </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">runif</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">10</span><span class="p">)</span>
-<span class="n">delta</span><span class="w">    </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rep</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="n">n.sims</span><span class="p">)</span>
-
-<span class="kr">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="kr">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="n">n.sims</span><span class="p">){</span>
-<span class="w">    </span><span class="n">y</span><span class="w">          </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="n">beta.0</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">beta.1</span><span class="o">*</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="n">sigma</span><span class="p">)</span>
-<span class="w">    </span><span class="n">beta.1.hat</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">coef</span><span class="p">(</span><span class="nf">lm</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">x</span><span class="p">))[</span><span class="m">2</span><span class="p">]</span>
-<span class="w">    </span><span class="n">delta</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w">   </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">beta.1.hat</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">beta.1.0</span>
-<span class="p">}</span>
-
-<span class="c1"># Compare theoretical and empirical values</span>
-<span class="n">th.var</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">sigma</span><span class="o">^</span><span class="m">2</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nf">sum</span><span class="p">((</span><span class="n">x</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nf">mean</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="o">^</span><span class="m">2</span><span class="p">)</span>
-<span class="n">th.mean</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">2</span>
-<span class="n">em.var</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">var</span><span class="p">(</span><span class="n">delta</span><span class="p">)</span>
-<span class="n">em.mean</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">mean</span><span class="p">(</span><span class="n">delta</span><span class="p">)</span>
-
-<span class="nf">par</span><span class="p">(</span><span class="n">cex.lab</span><span class="o">=</span><span class="m">1.3</span><span class="p">,</span><span class="w"> </span><span class="n">cex.axis</span><span class="o">=</span><span class="m">1.1</span><span class="p">,</span><span class="w"> </span><span class="n">cex</span><span class="o">=</span><span class="m">1.4</span><span class="p">)</span><span class="w"> </span><span class="c1"># plot scaling</span>
-
-<span class="c1"># Plot histogram of theta</span>
-<span class="nf">hist</span><span class="p">(</span><span class="n">delta</span><span class="p">,</span><span class="w"> </span><span class="n">probability</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;skyblue&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">xlim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">3</span><span class="p">),</span>
-<span class="w">    </span><span class="n">breaks</span><span class="o">=</span><span class="m">50</span><span class="p">,</span><span class="w"> </span><span class="n">main</span><span class="o">=</span><span class="nf">expression</span><span class="p">(</span><span class="s">&quot;Empirical vs Theoretical Sampling Distribution of &quot;</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">delta</span><span class="p">),</span>
-<span class="w">    </span><span class="n">xlab</span><span class="o">=</span><span class="nf">expression</span><span class="p">(</span><span class="n">delta</span><span class="p">))</span>
-
-<span class="c1"># Add a normal density curve with the theoretical mean and standard error</span>
-<span class="nf">curve</span><span class="p">(</span><span class="nf">dnorm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="n">th.mean</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="nf">sqrt</span><span class="p">(</span><span class="n">th.var</span><span class="p">)),</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="o">=</span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="n">add</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
-</pre></div>
+<p>Here we can see how the probability statements about <span class="math notranslate nohighlight">\(\delta\)</span> play out in terms of its distribution:</p>
+<ul class="simple">
+<li><p>A <em>large</em> <span class="math notranslate nohighlight">\(\delta\)</span> corresponds to the tails of the distribution and thus is associated with a <em>low</em> probability</p></li>
+<li><p>A <em>small</em> <span class="math notranslate nohighlight">\(\delta\)</span> corresponds to the body of the distribution and thus is associated with a <em>high</em> probability</p></li>
+</ul>
+<p>We would therefore interpret a large <span class="math notranslate nohighlight">\(\delta\)</span> as having observed an unusual discrepancy between our estimated parameter and the hypothesised parameter. If this happens, we can say that our data is <em>incompatible</em> with the hypothesis that the population value is the same as our proposed value. Similarly, we would interpret a <em>small</em> <span class="math notranslate nohighlight">\(\delta\)</span> as having observed a discrepancy that is typical of what we would expect across samples. If this happens, we can say that our data is <em>compatible</em> with the hypothesis that the population value is the same as our proposed value. So, our question here is really whether the magnitude of <span class="math notranslate nohighlight">\(\delta\)</span> is consistent with <em>sampling error</em>, or whether it is so large that it suggests that something more systematic is going on.</p>
+<div class="warning admonition">
+<p class="admonition-title">The Logic of <span class="math notranslate nohighlight">\(\delta\)</span></p>
+<p>Before continuing, make sure that the logic of what <span class="math notranslate nohighlight">\(\delta\)</span> means, particularly in terms of the relationship with <em>probability</em>, is clear to you. This logic is <em>fundamental</em> for understanding NHST, so if you are currently confused, spend some time studying the details above until it makes sense.</p>
 </div>
-</div>
-</details>
-<div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/76c971f7e998db686eb5baae2e75ea4f3949dcb4f9c73ba98f0bae76ecfbac11.png"><img alt="_images/76c971f7e998db686eb5baae2e75ea4f3949dcb4f9c73ba98f0bae76ecfbac11.png" src="_images/76c971f7e998db686eb5baae2e75ea4f3949dcb4f9c73ba98f0bae76ecfbac11.png" style="width: 720px; height: 420px;" /></a>
-</div>
-</div>
-<p>This all seems fine, expect that we hit another issue. In order to calculate probabilities from these distributions, we need to know their parameter values. The variance is easy, because it is the same as the variance of the sampling distribution of the estimate (i.e. the square of the standard error). However, the mean depends upon whether we are <em>correct</em> or <em>incorrect</em>. If we are correct then the mean has a fixed value of 0, so we can easily calculate probabilities under the assumption that our proposed value is right. However, if we are incorrect, calculating probabilities would require us to know how far off our estimate is from the true value, which obviously we do not know. As such, we are limited to only calculating the probability of <span class="math notranslate nohighlight">\(\delta\)</span>, under the assumption that we are correct. This is fine, because this is all we wanted to do in the first place. However, it brings us back to the unanswered question about what value to choose for <span class="math notranslate nohighlight">\(\beta_{1}^{(0)}\)</span>?</p>
 </section>
 <section id="the-null-hypothesis">
 <h3>The Null Hypothesis<a class="headerlink" href="#the-null-hypothesis" title="Link to this heading">#</a></h3>
 <p>Once we have accepted this idea of comparing our parameter estimate to some proposed population value, the next most obvious question is what value to pick? In most experimental situations, there is no clear answer to this. Indeed, it is rare for us to have any idea what singular specific parameter value we are interested in. For instance, when considering a simple regression model, what value of the slope are we interested in? What single value is meaningful to answer our experimental question? Typically, this is a meaningless consideration, as it would be a rare situation where only a single specific value of the slope was interesting, with all slope values, both <em>smaller</em> and *larger, being uninteresting. So it appears we have hit a bit of a dead end with this idea.</p>
-<p>Fisher’s insight was that we need not focus on the ill-defined values of interest. Instead, we can more precisely define what parameter value would indicated <em>no effect</em>.</p>
-<p>As we saw above, in order to work with the distribution of <span class="math notranslate nohighlight">\(\delta\)</span> we need to know the degree of discrepancy between our proposed value and the true value, which of course we <em>do not know</em>. So the only practical way to work with this distribution is to assume <span class="math notranslate nohighlight">\(E(\delta) = 0\)</span>. This defines a distribution based on assuming that our hypothesised value is <em>correct</em>. Given the reasoning above for our hypothesised value to be based on the null hypothesis, this is therefore the <em>null distribution of no effect</em>.</p>
-<p>Our choice of proposed population value is therefore the value <em>under the null hypothesis of no effect</em>.</p>
-<p>If we assume the null hypothesis is true, and we have an unbiased estimator, then NHST is testing how compatible our data are with the assertion that the <em>expected value of the numerator is 0</em>. In the context of the regression slope, this would be a test of</p>
+<p>The core insight provided by <a class="reference external" href="https://en.wikipedia.org/wiki/Ronald_Fisher">Ronald Fisher</a>, father of modern statistics, was that we need not focus on ill-defined values of interest. Instead, we can more precisely define what parameter value would indicated <em>no effect</em>. If we do so, we can then determine whether the effect we have calculated is <em>compatible</em> or <em>incompatible</em> with there being no effect in the population. The more incompatible the data is, the more we suspect that the idea of <em>no effect</em> is, infact, incorrect. This specification of <em>no effect</em> is known as the <em>null hypothesis</em>.</p>
+<p>As an example, if we had a simple regression model, then the null hypothesis would be that <span class="math notranslate nohighlight">\(\beta_{1} = 0\)</span>. A slope of 0 is just a horizontal line, indicating no relationship between our predictor and outcome. We will see a similar example later in the units when comparing <em>group means</em>, as a mean difference of 0 would indicate that the groups were <em>identical</em>. In both cases, our proposed population value is 0. So, in the example used so far, we would specify <span class="math notranslate nohighlight">\(\beta_{1}^{(0)} = 0\)</span>, meaning that <span class="math notranslate nohighlight">\(\delta\)</span> becomes</p>
 <div class="math notranslate nohighlight">
 \[
-E\left(\hat{\beta}_{1} - \beta_{1}^{(0)}\right) = E\left(\hat{\beta}_{1}\right) - \beta_{1}^{(0)} = \beta_{1} - \beta_{1}^{(0)} = 0,
+\delta = \hat{\beta}_{1} - \beta_{1}^{(0)} = \hat{\beta}_{1} - 0 = \hat{\beta}_{1},
 \]</div>
-<p>NHST if therefore assessing how compatible our actual data is with this assertion. If this assertaion is true, then we would expect this effect to be 0 on average across samples. So the magnitude of this different in our particular sample indicates how far away from 0 our effect is. The question is then how much we would expect a discrepancy from 0 that large, if the null hypothesis were true?</p>
-<p>If our calculated effect is very close to 0, then this would seem a fairly reasonable deviation from 0 that remains within what we would expect, given that random sampling will rarely result in an effect of <em>precisely 0</em>. However, if our calculated effect is very far away from 0, then this is a less reasonable deviation from 0 and goes against our expectation, if the null were true.</p>
-<div class="tip admonition">
-<p class="admonition-title">Why Focus on the Null?</p>
-<p>… The main justification for focussing on the null is that it is <em>precise</em> and can be easily defined. Consider the calculation of a regression slope. A value of 0 for the slope is unambiguous in defining <em>no relationship</em>. But what would the alternative be? In the vast majority of cases, we do not have a specific slope value in mind that we want to check against. So we would be unable to specify a reasonable alternative hypothesis. Indeed, even if we did, incompatibility of the data with that precise value is ambiguous. It could mean that the slope is much <em>smaller</em> in the population, but could also mean that the slope is much <em>larger</em>. Testing a precise alternative value is therefore not very meaningful in most situations. As such, focus on the null is the more practical alternative for most cases of hypothesis testing.</p>
+<p>which is just the raw parameter estimate. Assuming the null hypothesis of no effect is true (i.e. that <span class="math notranslate nohighlight">\(\beta_{1} = 0\)</span>), the distribution of <span class="math notranslate nohighlight">\(\delta\)</span> remains the same as we saw earlier, as its expected value would be</p>
+<div class="math notranslate nohighlight">
+\[
+E\left(\delta\right) = E\left(\hat{\beta}_{1} - \beta_{1}^{(0)}\right) = E\left(\hat{\beta}_{1}\right) - 0 = \beta_{1} - 0 = 0.
+\]</div>
+<p>So we could still calculate probabilities using a distribution centred around 0. Our question is then about how far from 0 our slope estimate is, and whether this means it is <em>compatible</em> or <em>incompatible</em> with the null hypothesis</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{H}_{0} : \beta_{1} = 0.
+\]</div>
+<p>Importantly, the proposed population value need not be 0. Although a typical choice, the null hypothesis is not defined by the proposed value being 0 (though this is a common confusion). Instead, it is defined by testing the compatibility of the data with <span class="math notranslate nohighlight">\(E\left(\delta|\mathcal{H}_{0}\right) = 0\)</span>. So the proposed value is simply <em>whatever value the parameter would have if the null hypothesis were true</em>.</p>
+<p>As an example, if our null hypothesis was that there was <em>no difference</em> in average IQ between our sample and the general population, we would want to set <span class="math notranslate nohighlight">\(\text{IQ}^{(0)} = 100\)</span>, not 0. We would then have</p>
+<div class="math notranslate nohighlight">
+\[
+\delta = \widehat{\text{IQ}} - \text{IQ}^{(0)} = \widehat{\text{IQ}} - 100.
+\]</div>
+<p>So <span class="math notranslate nohighlight">\(\delta\)</span> now represents how far off our estimated average IQ is from 100. Importantly, under the null hypothesis that <span class="math notranslate nohighlight">\(\text{IQ} = 100\)</span>, the distribution of <span class="math notranslate nohighlight">\(\delta\)</span> is <em>still centred around 0</em> because</p>
+<div class="math notranslate nohighlight">
+\[
+E\left(\delta\right) = E\left(\widehat{\text{IQ}} - \text{IQ}^{(0)}\right) = E\left(\widehat{\text{IQ}}\right) - 100 = \text{IQ} - 100 = 0.
+\]</div>
+<p>The only difference is that the value of <span class="math notranslate nohighlight">\(\delta\)</span> is now interpreted as the <em>discrepancy from 100</em>, rather than the <em>discrepancy from 0</em>. The proposed value simply provides our <em>baseline</em> for comparison, which then becomes 0 when we perform the subtraction. We can see this flexibility in the <code class="docutils literal notranslate"><span class="pre">R</span></code> function for a one-sample <span class="math notranslate nohighlight">\(t\)</span>-test, as it takes the form</p>
+<div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="nf">t.test</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">mu</span><span class="o">=</span><span class="n">some_alternative_value</span><span class="p">)</span>
+</pre></div>
 </div>
-<hr class="docutils" />
-<p>The Null Hypothesis (denoted <span class="math notranslate nohighlight">\(\mathcal{H}_{0}\)</span>) can be more precisely thought of as the hypothesis that the <em>numerator of the test statistic is 0</em>. In other words, that the <em>difference</em> between the estimated value and the proposed value is 0. This distinction is important because the proposed value can be 0, but it can also be <em>any value we want</em>. The null hypothesis is simply that the estimated value and the hypothesised value are <em>the same</em>.</p>
-<p>This simplifies the calculation of the test statistic greatly, because our hypothesised value is then 0 and disappears from the calculation.</p>
-<p>Importantly, the null value does not have to be 0. But the test will always compare the <em>difference</em> to 0. For instance, if we did use <span class="math notranslate nohighlight">\(\beta_{1}^{(0)} = 0\)</span> then</p>
-<div class="math notranslate nohighlight">
-\[
-z = \frac{\hat{\beta}_{1} - \beta_{1}^{(0)}}{} = \frac{\hat{\beta}_{1} - 0}{} = \frac{\hat{\beta}_{1}}{}.
-\]</div>
-<p>By dividing the parameter estimate by the standard error, we are <em>implicitly</em> comparing the <em>difference</em> between <span class="math notranslate nohighlight">\(\hat{\beta}_{1}\)</span> and <span class="math notranslate nohighlight">\(0\)</span>. Alternatively, if we used <span class="math notranslate nohighlight">\(\beta_{1}^{(0)} = 5\)</span> then</p>
-<div class="math notranslate nohighlight">
-\[
-z = \frac{\hat{\beta}_{1} - \beta_{1}^{(0)}}{} = \frac{\hat{\beta}_{1} - 5}{}
-\]</div>
-<p>and we are comparing the <em>difference</em> between <span class="math notranslate nohighlight">\(\hat{\beta}_{1}\)</span> and <span class="math notranslate nohighlight">\(5\)</span> to <span class="math notranslate nohighlight">\(0\)</span>. So, in every case, the numerator represents an offset from 0, whether that is the value of the parameter itself, or a difference with some other proposed value. In other words, the null is always that that <em>magnitude of the difference is 0</em>, but that difference can be defined in lots of different ways.</p>
-<hr class="docutils" />
+<p>So here we can choose any value we like for the comparison. Using <code class="docutils literal notranslate"><span class="pre">mu=0</span></code> is fairly meaningless in the example of IQ, but using <code class="docutils literal notranslate"><span class="pre">mu=100</span></code> produces a legitimate and meaningfull null hypothesis.</p>
 <div class="tip admonition">
 <p class="admonition-title">Null Comparisons in Software</p>
-<p>Generally speaking, we do not always have control over what value is used for the proposed value in software. For instance, within the context of a linear model, we will automatically get test statistics that use an implicit proposed value of 0, as the software will simply divide the estimate by the standard error. For regression slopes, this is fine because a slope of 0 indicates <em>no relationship</em> and thus is sensible. However, for the intercept, the test is asking whether <span class="math notranslate nohighlight">\(\beta_{0}^{(0)} = 0\)</span>. In other words, could the population slope be a regression through the origin? For many problems, this is not a very sensible or meaningful question and thus the test on the intercept is largely ignored. This highlights the importance of considering what <em>question</em> tests are asking when they are produced automatically.</p>
+<p>Although the example above highlighted how we can, in principle, specify any null value we like, we do not always have this level of control in software. Although the <code class="docutils literal notranslate"><span class="pre">t.test()</span></code> function does allow this, within the context of a linear model, we will always automatically get comparisons that use an implicit proposed value of 0. For regression slopes, this is fine because a slope of 0 indicates <em>no relationship</em> and thus is sensible. However, for the intercept, the test is asking whether <span class="math notranslate nohighlight">\(\beta_{0} = 0\)</span>. In other words, could the population slope be a regression through the origin? For many problems, this is not a very sensible or meaningful question and thus the test on the intercept is largely ignored. This highlights the importance of considering what <em>questions</em> tests are asking when they are produced automatically.</p>
 </div>
-</section>
-<section id="considerations-of-uncertainty">
-<h3>Considerations of Uncertainty<a class="headerlink" href="#considerations-of-uncertainty" title="Link to this heading">#</a></h3>
-<p>But what do <em>large</em> or <em>small</em> discrepancies actually mean? … This is where the SE comes in. Remembering that the SE quantifies the <em>average</em> discrepany from the mean, we can use this to assess the magnitude of our calculated effect. If we have calculated a discrepancy that is much larger than the SE, then we may consider that to be unusal, given what we expect. However, if the discrepancy is smaller or similar to the SE, then this is less unsual and is within the range of discrepancies that we would expect. As such, it is the effect <em>relative</em> to its standard error that is most important.</p>
-<p>… In order to combine our estimated effect with its uncertainty, we caluclate what are known as <em>test statistics</em>.</p>
 </section>
 </section>
 <section id="test-statistics">
 <h2>Test Statistics<a class="headerlink" href="#test-statistics" title="Link to this heading">#</a></h2>
-<p>Re-expressing <span class="math notranslate nohighlight">\(\delta\)</span> as a test-statistic has a number of useful properties:</p>
-<p>So, rather than working with the sampling distribution of <span class="math notranslate nohighlight">\(\delta\)</span> directly, we instead <em>standardise</em> this value into a test statistic and then work with distribution of that test statistic.</p>
-<p>We can think of this as either dividing an estimate by its uncertainty, <em>or</em> scaling an estimate by its precision.</p>
+<p>We have no reached a point where most of the logic of NHST has been established. To review, we begin by determining what value our parameter of interest would have under the null hypothesis of no effect. We can then compare that value to the actual value we have calculated. Using the theoretical sampling distribution of this difference, we can establish the probability of that value having occurred <em>if</em> the null hypothesis were true. The smaller this probability is, the less compatible our data is with the proposed null value. If the probability gets small enough, we can take this as evidence <em>against</em> the null hypothesis.</p>
+<p>Although we have yet to define precisely how to use probability in the method above, we first need to discuss some practical limitations of calculating probability directly from the distribution of <span class="math notranslate nohighlight">\(\delta\)</span>. To begin with, …</p>
+<p>…</p>
+<p>For all these reasons, we typically transform <span class="math notranslate nohighlight">\(\delta\)</span> into a standardised value known as a <em>test statistic</em>.</p>
 <section id="the-z-statistic">
 <h3>The <span class="math notranslate nohighlight">\(z\)</span>-statistic<a class="headerlink" href="#the-z-statistic" title="Link to this heading">#</a></h3>
 <p>Dividing a normal random variable by a constant simply <em>scales</em> that random variable and so the shape of the distribution does not change, only the units.</p>
 </section>
-</section>
-<section id="null-distributions">
-<h2>Null Distributions<a class="headerlink" href="#null-distributions" title="Link to this heading">#</a></h2>
 <section id="the-t-statistic">
 <h3>The <span class="math notranslate nohighlight">\(t\)</span>-statistic<a class="headerlink" href="#the-t-statistic" title="Link to this heading">#</a></h3>
 <p>In the previous section, we saw that the standard error of the sampling distribution of <span class="math notranslate nohighlight">\(\hat{\beta}_{1}\)</span> depends upon <span class="math notranslate nohighlight">\(\sigma^{2}\)</span>. However, in practise, we do not known <span class="math notranslate nohighlight">\(\sigma^{2}\)</span>. Instead, we have an estimate derived from the residuals <span class="math notranslate nohighlight">\(\hat{\sigma}^{2}\)</span>. So how does that change things? We can plug-in our estimate like so</p>
@@ -765,16 +712,12 @@ disp        -0.01141544  0.009541424
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#estimates-and-population-values">Estimates and Population Values</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-an-estimate-with-a-hypothesised-value">Comparing an Estimate with a Hypothesised Value</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sampling-distribution-of-delta">Sampling Distribution of <span class="math notranslate nohighlight">\(\delta\)</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-sampling-distribution-of-delta">The Sampling Distribution of <span class="math notranslate nohighlight">\(\delta\)</span></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-null-hypothesis">The Null Hypothesis</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#considerations-of-uncertainty">Considerations of Uncertainty</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#test-statistics">Test Statistics</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-z-statistic">The <span class="math notranslate nohighlight">\(z\)</span>-statistic</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#null-distributions">Null Distributions</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-t-statistic">The <span class="math notranslate nohighlight">\(t\)</span>-statistic</a></li>
 </ul>
 </li>

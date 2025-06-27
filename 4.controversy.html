@@ -397,6 +397,85 @@
 <h2>Problems with NHST<a class="headerlink" href="#problems-with-nhst" title="Link to this heading">#</a></h2>
 <section id="the-null-hypothesis-is-implausible">
 <h3>The Null Hypothesis is Implausible<a class="headerlink" href="#the-null-hypothesis-is-implausible" title="Link to this heading">#</a></h3>
+<p>… Although we saw in the previous section that the null does not have to be 0, the point still remains for any alternative value that we select. In effect, the problem is with <em>point estimation</em> of any real-world phenomena. No matter what value we choose, it is incredibly unlikely that the true population value is <em>exactly</em> the value we have chosen, down to every possible decimal place. As such, the null hypothesis is <em>never true</em>. All the <span class="math notranslate nohighlight">\(p\)</span>-value tells us is that we did not have enough data to see this. Even if the difference if very slight, in principle we just need enough data. So, in reality, a <span class="math notranslate nohighlight">\(p\)</span>-value is simply a point on a power curve.</p>
+<p>We can easily demonstrate this in <code class="docutils literal notranslate"><span class="pre">R</span></code> using correlation. If the true correlation in the population was very small, say <span class="math notranslate nohighlight">\(\rho = 0.06\)</span>, how much data would be needed for the <span class="math notranslate nohighlight">\(p\)</span>-value to be significant?</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">MASS</span><span class="p">)</span><span class="w">  </span><span class="c1"># for mvrnorm</span>
+
+<span class="nf">set.seed</span><span class="p">(</span><span class="m">123</span><span class="p">)</span>
+
+<span class="c1"># Parameters</span>
+<span class="n">rho</span><span class="w">   </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">0.06</span>
+<span class="n">max_n</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">4000</span>
+<span class="n">step</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">50</span>
+<span class="n">reps</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">500</span>
+
+<span class="c1"># Covariance matrix for bivariate normal</span>
+<span class="n">Sigma</span><span class="w">        </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">matrix</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="n">rho</span><span class="p">,</span><span class="n">rho</span><span class="p">,</span><span class="m">1</span><span class="p">),</span><span class="m">2</span><span class="p">,</span><span class="m">2</span><span class="p">)</span>
+<span class="n">sample_sizes</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">seq</span><span class="p">(</span><span class="n">step</span><span class="p">,</span><span class="w"> </span><span class="n">max_n</span><span class="p">,</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">step</span><span class="p">)</span>
+
+<span class="c1"># Store mean p-values</span>
+<span class="n">mean_pvals</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">numeric</span><span class="p">(</span><span class="nf">length</span><span class="p">(</span><span class="n">sample_sizes</span><span class="p">))</span>
+
+<span class="kr">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="kr">in</span><span class="w"> </span><span class="nf">seq_along</span><span class="p">(</span><span class="n">sample_sizes</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">n</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">sample_sizes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="n">pvals</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">numeric</span><span class="p">(</span><span class="n">reps</span><span class="p">)</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="kr">for</span><span class="w"> </span><span class="p">(</span><span class="n">r</span><span class="w"> </span><span class="kr">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="n">reps</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">dat</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">mvrnorm</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">mu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">),</span><span class="w"> </span><span class="n">Sigma</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Sigma</span><span class="p">)</span>
+<span class="w">    </span><span class="n">test</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">cor.test</span><span class="p">(</span><span class="n">dat</span><span class="p">[,</span><span class="w"> </span><span class="m">1</span><span class="p">],</span><span class="w"> </span><span class="n">dat</span><span class="p">[,</span><span class="w"> </span><span class="m">2</span><span class="p">])</span>
+<span class="w">    </span><span class="n">pvals</span><span class="p">[</span><span class="n">r</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">test</span><span class="o">$</span><span class="n">p.value</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="n">mean_pvals</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">mean</span><span class="p">(</span><span class="n">pvals</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="nf">par</span><span class="p">(</span><span class="n">cex.lab</span><span class="o">=</span><span class="m">1.3</span><span class="p">,</span><span class="w"> </span><span class="n">cex.axis</span><span class="o">=</span><span class="m">1.1</span><span class="p">,</span><span class="w"> </span><span class="n">cex</span><span class="o">=</span><span class="m">1.4</span><span class="p">)</span><span class="w"> </span><span class="c1"># plot scaling</span>
+
+<span class="c1"># Plot</span>
+<span class="nf">plot</span><span class="p">(</span><span class="n">sample_sizes</span><span class="p">,</span><span class="w"> </span><span class="n">mean_pvals</span><span class="p">,</span><span class="w"> </span>
+<span class="w">    </span><span class="n">type</span><span class="o">=</span><span class="s">&quot;l&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;blue&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">1e-4</span><span class="p">,</span><span class="m">0.6</span><span class="p">),</span>
+<span class="w">     </span><span class="n">xlab</span><span class="o">=</span><span class="s">&quot;Sample Size (n)&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylab</span><span class="o">=</span><span class="s">&quot;Average p-value&quot;</span><span class="p">,</span>
+<span class="w">     </span><span class="n">main</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">expression</span><span class="p">(</span><span class="nf">paste</span><span class="p">(</span><span class="s">&quot;Mean p-value vs Sample Size for &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">rho</span><span class="p">,</span><span class="w"> </span><span class="s">&quot; = 0.06&quot;</span><span class="p">)))</span>
+
+<span class="nf">abline</span><span class="p">(</span><span class="n">h</span><span class="o">=</span><span class="m">0.05</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lty</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="o">=</span><span class="m">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/fb68dbc8a90752c7071b363d26c85007ed073c2e556bc3eb032238347fb95a2e.png"><img alt="_images/fb68dbc8a90752c7071b363d26c85007ed073c2e556bc3eb032238347fb95a2e.png" src="_images/fb68dbc8a90752c7071b363d26c85007ed073c2e556bc3eb032238347fb95a2e.png" style="width: 720px; height: 420px;" /></a>
+</div>
+</div>
+<p>So we would need around 2,000 subjects for this correlation to be significant. Now, this sounds like a lot. However, considering the availability of big data (such as the UK BioBank), <span class="math notranslate nohighlight">\(n = 2000\)</span> is not entirely unreasonable. Although you could argue that the necessary sample size alone should indicate a problem, this implies that there is some limit for <span class="math notranslate nohighlight">\(n\)</span>, above which we can no longer trust <span class="math notranslate nohighlight">\(p\)</span>-values. So what is this limit? The very fact that there is an implied limit suggests that there is something funamentally wrong with using <span class="math notranslate nohighlight">\(p\)</span>-values as evidence. However, it is important here to recognise that the <span class="math notranslate nohighlight">\(p\)</span>-value is <em>not wrong</em>. The null hypothesis is that <span class="math notranslate nohighlight">\(\rho = 0\)</span>, but we know that this incorrect because <span class="math notranslate nohighlight">\(\rho = 0.06\)</span>. So the test is doing excactly what it is supposed to. The issue is that <em>statistical significance</em> does not mean <em>practical significance</em>. If we know that the null hypothesis is always going to be false (i.e. a correlation is never really going to be <em>exactly</em> 0), then all a <span class="math notranslate nohighlight">\(p\)</span>-value tells us is that we do not have enough data. In this example, we do not have enough data until we reach <span class="math notranslate nohighlight">\(n \approx 2000\)</span>.</p>
+<p>Just to drive this home, consider what a correlation of <span class="math notranslate nohighlight">\(\rho = 0.06\)</span> actually looks like.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">set.seed</span><span class="p">(</span><span class="m">666</span><span class="p">)</span>
+<span class="n">corr.data</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">mvrnorm</span><span class="p">(</span><span class="m">1000</span><span class="p">,</span><span class="w"> </span><span class="n">mu</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">),</span><span class="w"> </span><span class="n">Sigma</span><span class="o">=</span><span class="n">Sigma</span><span class="p">)</span>
+<span class="nf">par</span><span class="p">(</span><span class="n">cex.lab</span><span class="o">=</span><span class="m">1.3</span><span class="p">,</span><span class="w"> </span><span class="n">cex.axis</span><span class="o">=</span><span class="m">1.1</span><span class="p">,</span><span class="w"> </span><span class="n">cex</span><span class="o">=</span><span class="m">1.4</span><span class="p">)</span><span class="w"> </span><span class="c1"># plot scaling</span>
+<span class="nf">plot</span><span class="p">(</span><span class="n">corr.data</span><span class="p">[,</span><span class="m">1</span><span class="p">],</span><span class="w"> </span><span class="n">corr.data</span><span class="p">[,</span><span class="m">2</span><span class="p">],</span><span class="w"> </span><span class="n">xlab</span><span class="o">=</span><span class="s">&quot;x1&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylab</span><span class="o">=</span><span class="s">&quot;x2&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/9496dc25e22530e2fa9501c73f348a36fb3ae2876991543111a4a6cead36f037.png"><img alt="_images/9496dc25e22530e2fa9501c73f348a36fb3ae2876991543111a4a6cead36f037.png" src="_images/9496dc25e22530e2fa9501c73f348a36fb3ae2876991543111a4a6cead36f037.png" style="width: 720px; height: 420px;" /></a>
+</div>
+</div>
+<p>Now imagine that this was presented to you as evidence of some effect, because <span class="math notranslate nohighlight">\(p &lt; 0.05\)</span>. Would you be convinced? If not, then you are agreeing that the <span class="math notranslate nohighlight">\(p\)</span>-value cannot be trusted here. Of course, if you saw <span class="math notranslate nohighlight">\(\rho = 0.06\)</span> reported, you would immediately see that this is a vanishingly small correlation. But clearly you are not using the <span class="math notranslate nohighlight">\(p\)</span>-value here. Instead, you are admitting that the only useful measure is the <em>effect size</em>.</p>
 </section>
 <section id="dichotomisation-of-evidence">
 <h3>Dichotomisation of Evidence<a class="headerlink" href="#dichotomisation-of-evidence" title="Link to this heading">#</a></h3>
