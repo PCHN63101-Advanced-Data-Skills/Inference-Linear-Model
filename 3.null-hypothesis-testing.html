@@ -563,6 +563,36 @@ E\left(\delta\right|\mathcal{H}_{0}) = E\left(\widehat{\text{IQ}} - \text{IQ}^{(
 <section id="the-z-statistic">
 <h3>The <span class="math notranslate nohighlight">\(z\)</span>-statistic<a class="headerlink" href="#the-z-statistic" title="Link to this heading">#</a></h3>
 <p>Dividing a normal random variable by a constant simply <em>scales</em> that random variable and so the shape of the distribution does not change, only the units.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">par</span><span class="p">(</span><span class="n">mfrow</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="m">2</span><span class="p">))</span>
+<span class="nf">set.seed</span><span class="p">(</span><span class="m">666</span><span class="p">)</span>
+
+<span class="nf">for </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">6</span><span class="p">){</span>
+<span class="w">    </span><span class="n">rand.mu</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">runif</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">min</span><span class="o">=</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">max</span><span class="o">=</span><span class="m">100</span><span class="p">)</span>
+<span class="w">    </span><span class="n">rand.sd</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">runif</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">min</span><span class="o">=</span><span class="m">5</span><span class="p">,</span><span class="w">  </span><span class="n">max</span><span class="o">=</span><span class="m">50</span><span class="p">)</span>
+<span class="w">    </span><span class="n">rand.y</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="m">1000</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="n">rand.mu</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="n">rand.sd</span><span class="p">)</span>
+<span class="w">    </span><span class="n">z.dist</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="p">(</span><span class="n">rand.y</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nf">mean</span><span class="p">(</span><span class="n">rand.y</span><span class="p">))</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nf">sd</span><span class="p">(</span><span class="n">rand.y</span><span class="p">)</span>
+<span class="w">    </span><span class="n">title</span><span class="w">   </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">paste0</span><span class="p">(</span><span class="s">&quot;Original = N(&quot;</span><span class="p">,</span><span class="nf">round</span><span class="p">(</span><span class="n">rand.mu</span><span class="p">,</span><span class="m">2</span><span class="p">),</span><span class="s">&quot;,&quot;</span><span class="p">,</span><span class="nf">round</span><span class="p">(</span><span class="n">rand.sd</span><span class="p">,</span><span class="m">2</span><span class="p">),</span><span class="s">&quot;)&quot;</span><span class="p">)</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="nf">hist</span><span class="p">(</span><span class="n">z.dist</span><span class="p">,</span><span class="w"> </span><span class="n">main</span><span class="o">=</span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="n">probability</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">0.4</span><span class="p">),</span><span class="w"> </span><span class="n">xlim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">-4</span><span class="p">,</span><span class="m">4</span><span class="p">))</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="c1"># Add a standard normal density curve</span>
+<span class="w">    </span><span class="nf">curve</span><span class="p">(</span><span class="nf">dnorm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="o">=</span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="n">add</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span><span class="w">  </span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/12f7e433762232ea584386d9942a1135fa62667a5c471ef6322b323c1fc1d2e2.png"><img alt="_images/12f7e433762232ea584386d9942a1135fa62667a5c471ef6322b323c1fc1d2e2.png" src="_images/12f7e433762232ea584386d9942a1135fa62667a5c471ef6322b323c1fc1d2e2.png" style="width: 840px; height: 720px;" /></a>
+</div>
+</div>
 </section>
 <section id="the-t-statistic">
 <h3>The <span class="math notranslate nohighlight">\(t\)</span>-statistic<a class="headerlink" href="#the-t-statistic" title="Link to this heading">#</a></h3>
