@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Null Hypothesis Significance Testing (NHST) &#8212; Linear Models II: Statistical Inference for Linear Models</title>
+    <title>NHST I: The Null Hypothesis &#8212; Linear Models II: Statistical Inference for Linear Models</title>
   
   
   
@@ -63,10 +63,10 @@
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = '3.null-hypothesis-testing';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '3.null-hypothesis-testing-I';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="The Controversy of NHST" href="4.controversy.html" />
+    <link rel="next" title="NHST II: Test Statistics" href="4.null-hypothesis-testing-II.html" />
     <link rel="prev" title="Uncertainty in Estimation" href="2.estimation-uncertainty.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -174,9 +174,10 @@
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="1.purpose-of-inference.html">The Purpose of Statistical Inference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="2.estimation-uncertainty.html">Uncertainty in Estimation</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Null Hypothesis Significance Testing (NHST)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="4.controversy.html">The Controversy of NHST</a></li>
-<li class="toctree-l1"><a class="reference internal" href="5.alternatives.html">What Can We Do?</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">NHST I: The Null Hypothesis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4.null-hypothesis-testing-II.html">NHST II: Test Statistics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5.null-hypothesis-testing-III.html">NHST III: Statistical Significance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6.controversy.html">The Controversy of NHST</a></li>
 <li class="toctree-l1"><a class="reference internal" href="summary.html">Summary</a></li>
 </ul>
 
@@ -254,7 +255,7 @@
       
       
       
-      <li><a href="https://github.com/PCHN63101-Advanced-Data-Skills/Inference-Linear-Model/issues/new?title=Issue%20on%20page%20%2F3.null-hypothesis-testing.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/PCHN63101-Advanced-Data-Skills/Inference-Linear-Model/issues/new?title=Issue%20on%20page%20%2F3.null-hypothesis-testing-I.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -284,7 +285,7 @@
       
       
       
-      <li><a href="_sources/3.null-hypothesis-testing.ipynb" target="_blank"
+      <li><a href="_sources/3.null-hypothesis-testing-I.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -360,7 +361,7 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Null Hypothesis Significance Testing (NHST)</h1>
+    <h1>NHST I: The Null Hypothesis</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -376,15 +377,6 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-null-hypothesis">The Null Hypothesis</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#test-statistics">Test Statistics</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-z-statistic">The <span class="math notranslate nohighlight">\(z\)</span>-statistic</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-t-statistic">The <span class="math notranslate nohighlight">\(t\)</span>-statistic</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#other-test-statistics">Other Test Statistics</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-p-value">The <span class="math notranslate nohighlight">\(p\)</span>-value</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#confidence-intervals">Confidence Intervals</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nhst-in-r">NHST in <code class="docutils literal notranslate"><span class="pre">R</span></code></a></li>
 </ul>
             </nav>
         </div>
@@ -396,9 +388,9 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="null-hypothesis-significance-testing-nhst">
-<h1>Null Hypothesis Significance Testing (NHST)<a class="headerlink" href="#null-hypothesis-significance-testing-nhst" title="Link to this heading">#</a></h1>
-<p>In the previous section, we discussed the concept of parameter estimates as random variables and then explored the meaning of their sampling distributions. In particular, we examined the <em>expected value</em> as a measurement of <em>bias</em>, and the <em>standard error</em> as a measurments of <em>uncertainty</em>. We also saw how we could use both these pieces of information to reach rough descriptive conclusions about how much we can trust our estimates. However, one problem with this approach is that it can appear quite subjective and imprecise. In this section, we will discuss <em>null hypothesis significance testing</em> (NHST), which is the most common method used in statistics for reaching more formal conclusions based on this information.</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="nhst-i-the-null-hypothesis">
+<h1>NHST I: The Null Hypothesis<a class="headerlink" href="#nhst-i-the-null-hypothesis" title="Link to this heading">#</a></h1>
+<p>In the previous section, we discussed the concept of parameter estimates as random variables and then explored the meaning of their sampling distributions. In particular, we examined the <em>expected value</em> as a measurement of <em>bias</em>, and the <em>standard error</em> as a measurments of <em>uncertainty</em>. We also saw how we could use both these pieces of information to reach rough descriptive conclusions about how much we can trust our estimates. However, one problem with this approach is that it can appear quite subjective and imprecise. In this part of the lesson, and the next, we will discuss <em>null hypothesis significance testing</em> (NHST). This is the most common method used in statistics for reaching more formal conclusions based on this information.</p>
 <section id="estimates-and-population-values">
 <h2>Estimates and Population Values<a class="headerlink" href="#estimates-and-population-values" title="Link to this heading">#</a></h2>
 <p>Remembering that our interest lies in <em>population</em> values rather than estimates, a fundamental idea in NHST is to compare our estimate values to some <em>hypothesised</em> population values. The aim is to assess how compatible the results of our model are with those hypothesised values. If our results appear compatible, this provides evidence in favour of the hypothesised values, whereas incompatible results provide evidence against the hypothesised values.</p>
@@ -534,213 +526,6 @@ E\left(\delta\right|\mathcal{H}_{0}) = E\left(\widehat{\text{IQ}} - \text{IQ}^{(
 <p class="admonition-title">Null Comparisons in Software</p>
 <p>Although the example above highlighted how we can, in principle, specify any null value we like, we do not always have this level of control in software. Although the <code class="docutils literal notranslate"><span class="pre">t.test()</span></code> function does allow this, within the context of a linear model, we will always automatically get comparisons that use an implicit proposed value of 0. For regression slopes, this is fine because a slope of 0 indicates <em>no relationship</em> and thus is sensible. However, for the intercept, the test is asking whether <span class="math notranslate nohighlight">\(\beta_{0} = 0\)</span>. In other words, could the population slope be a regression through the origin? For many problems, this is not a very sensible or meaningful question and thus the test on the intercept is largely ignored. This highlights the importance of considering what <em>questions</em> tests are asking when they are produced automatically.</p>
 </div>
-</section>
-</section>
-<section id="test-statistics">
-<h2>Test Statistics<a class="headerlink" href="#test-statistics" title="Link to this heading">#</a></h2>
-<p>We have now reached a point where most of the logic of NHST has been established. To review, we begin by determining what value our parameter of interest would have under the null hypothesis of no effect. We can then compare that value to the actual value we have calculated to produce a <em>difference</em> that we have called <span class="math notranslate nohighlight">\(\delta\)</span>. Using the theoretical sampling distribution of <span class="math notranslate nohighlight">\(\delta\)</span>, we can establish the probability of this value having occurred <em>if the null hypothesis were true</em>. The smaller this probability, the less compatible our data is with the proposed null value. If the probability gets small enough, we can take this as evidence <em>against</em> the null hypothesis.</p>
-<p>Although we have yet to define precisely how to use probability in the method above, we first need to discuss some practical limitations of calculating probability directly from the distribution of <span class="math notranslate nohighlight">\(\delta\)</span>:</p>
-<ul class="simple">
-<li><p>With our current method, we need to construct a new null distribution for every data analysis because the distribution of <span class="math notranslate nohighlight">\(\delta\)</span> depends upon both the units of our measurements and the standard error. Because of this, the procedure is not very <em>generalisable</em>, because we have to start from scratch with each new analysis.</p></li>
-<li><p>We also cannot compare values of <span class="math notranslate nohighlight">\(\delta\)</span> across diffeerent studies, because <span class="math notranslate nohighlight">\(\delta\)</span> is only interpretable within the context of the current analysis. As such, <span class="math notranslate nohighlight">\(\delta\)</span> on its own is not very meaningful.</p></li>
-<li><p>In terms of making the process practical, we would require the probabilities associated with unique distributions of <span class="math notranslate nohighlight">\(\delta\)</span> to be calculated manually each time. Although less problematic now with computers, in the past this would have been quite an impractical recommendation.</p></li>
-</ul>
-<p>For all these reasons, it is typical to transform <span class="math notranslate nohighlight">\(\delta\)</span> into a standardised value known as a <em>test statistic</em>. In doing so, we are able to turn a messy and context-specific procedure into a universally interpretable and theoretically grounded process for inference.</p>
-<section id="the-z-statistic">
-<h3>The <span class="math notranslate nohighlight">\(z\)</span>-statistic<a class="headerlink" href="#the-z-statistic" title="Link to this heading">#</a></h3>
-<p>Dividing a normal random variable by a constant simply <em>scales</em> that random variable and so the shape of the distribution does not change, only the units.</p>
-<div class="cell tag_hide-input docutils container">
-<details class="hide above-input">
-<summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell source</span>
-<span class="expanded">Hide code cell source</span>
-</summary>
-<div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">par</span><span class="p">(</span><span class="n">mfrow</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="m">2</span><span class="p">))</span>
-<span class="nf">set.seed</span><span class="p">(</span><span class="m">666</span><span class="p">)</span>
-
-<span class="kr">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="kr">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">6</span><span class="p">){</span>
-<span class="w">    </span><span class="n">rand.mu</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">runif</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">min</span><span class="o">=</span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">max</span><span class="o">=</span><span class="m">100</span><span class="p">)</span>
-<span class="w">    </span><span class="n">rand.sd</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">runif</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">min</span><span class="o">=</span><span class="m">5</span><span class="p">,</span><span class="w">  </span><span class="n">max</span><span class="o">=</span><span class="m">50</span><span class="p">)</span>
-<span class="w">    </span><span class="n">rand.y</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="m">1000</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="n">rand.mu</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="n">rand.sd</span><span class="p">)</span>
-<span class="w">    </span><span class="n">z.dist</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="p">(</span><span class="n">rand.y</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nf">mean</span><span class="p">(</span><span class="n">rand.y</span><span class="p">))</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nf">sd</span><span class="p">(</span><span class="n">rand.y</span><span class="p">)</span>
-<span class="w">    </span><span class="n">title</span><span class="w">   </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">paste0</span><span class="p">(</span><span class="s">&quot;y ~ N(&quot;</span><span class="p">,</span><span class="nf">round</span><span class="p">(</span><span class="n">rand.mu</span><span class="p">,</span><span class="m">2</span><span class="p">),</span><span class="s">&quot;,&quot;</span><span class="p">,</span><span class="nf">round</span><span class="p">(</span><span class="n">rand.sd</span><span class="p">,</span><span class="m">2</span><span class="p">),</span><span class="s">&quot;)&quot;</span><span class="p">)</span>
-
-<span class="w">    </span><span class="c1"># plot scaling  </span>
-<span class="w">    </span><span class="nf">par</span><span class="p">(</span><span class="n">cex.lab</span><span class="o">=</span><span class="m">1.1</span><span class="p">,</span><span class="w"> </span><span class="n">cex.axis</span><span class="o">=</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">cex</span><span class="o">=</span><span class="m">1.2</span><span class="p">)</span><span class="w"> </span>
-<span class="w">    </span>
-<span class="w">    </span><span class="c1"># Histogram of z-transformed data</span>
-<span class="w">    </span><span class="nf">hist</span><span class="p">(</span><span class="n">z.dist</span><span class="p">,</span><span class="w"> </span><span class="n">main</span><span class="o">=</span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="n">probability</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">0.4</span><span class="p">),</span><span class="w"> </span><span class="n">xlim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">-4</span><span class="p">,</span><span class="m">4</span><span class="p">))</span>
-<span class="w">    </span>
-<span class="w">    </span><span class="c1"># Add a standard normal density curve</span>
-<span class="w">    </span><span class="nf">curve</span><span class="p">(</span><span class="nf">dnorm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="o">=</span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="n">add</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span><span class="w">  </span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</div>
-</details>
-<div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/546ccec01615050e2a91e01d5ad711292cb6b08736c996565690c342dfc548f2.png"><img alt="_images/546ccec01615050e2a91e01d5ad711292cb6b08736c996565690c342dfc548f2.png" src="_images/546ccec01615050e2a91e01d5ad711292cb6b08736c996565690c342dfc548f2.png" style="width: 840px; height: 720px;" /></a>
-</div>
-</div>
-</section>
-<section id="the-t-statistic">
-<h3>The <span class="math notranslate nohighlight">\(t\)</span>-statistic<a class="headerlink" href="#the-t-statistic" title="Link to this heading">#</a></h3>
-<p>In the previous section, we saw that the standard error of the sampling distribution of <span class="math notranslate nohighlight">\(\hat{\beta}_{1}\)</span> depends upon <span class="math notranslate nohighlight">\(\sigma^{2}\)</span>. However, in practise, we do not known <span class="math notranslate nohighlight">\(\sigma^{2}\)</span>. Instead, we have an estimate derived from the residuals <span class="math notranslate nohighlight">\(\hat{\sigma}^{2}\)</span>. So how does that change things? We can plug-in our estimate like so</p>
-<div class="math notranslate nohighlight">
-\[
-\widehat{\text{Var}}\left(\hat{\beta}_{1}\right) = \frac{\hat{\sigma}^{2}}{(n-1)\sigma^{2}_{x}}
-\]</div>
-<p>and we have a value for the variance from which we can take the square-root to give the standard error. However, what we have done here is replaced a <em>constant</em> (<span class="math notranslate nohighlight">\(\sigma^{2}\)</span>) with a <em>random variable</em> (<span class="math notranslate nohighlight">\(\hat{\sigma}^{2}\)</span>). This means we have introduced randomness into this calculation. In other words, the standard error will change with each sample. In fact, what we have created is an <em>estimate</em> of the variance of <span class="math notranslate nohighlight">\(\hat{\beta}_{1}\)</span>. So, we now have an estimate of the variance of an estimate. This means that the denominator of our test statistic is no longer a constant that simple scales the distribution. Rather, we are now dividing a <em>random variable</em> by <em>another random variable</em>.</p>
-<p>This estimation of the SE actually has a direct consequence for using the sampling distribution of <span class="math notranslate nohighlight">\(\delta\)</span> for inference, because this is based on assuming that the standard error is known. However, in small samples, our estimate will be too imprecise for this to be accurate. As the sample size grows, our estimate of the SE will get better and using it as an approximation for the true value will make less practical difference. So this adds another reason for using a <span class="math notranslate nohighlight">\(t\)</span>-statistic over the sampling distribution of the raw estimate: the <span class="math notranslate nohighlight">\(t\)</span>-statistic automatically takes the uncertainty in the estimation of the SE into account by changing its shape.</p>
-<p>So what happens when you divide one random variable by another? You end up with a distribution that changes shape dynamically. … For the <span class="math notranslate nohighlight">\(t\)</span>-distribution, this dynamic reshaping is controlled by a single parameter denoted <span class="math notranslate nohighlight">\(\nu\)</span> and known more generally as the <em>degrees of freedom</em>. The value of <span class="math notranslate nohighlight">\(\nu\)</span> is directly informed by the sampling distribution of the standard error. So, rather than having a fixed shape like a standard normal distribution, the <span class="math notranslate nohighlight">\(t\)</span>-distribution can grow fatter or thinner, depending upon the properties of the denominator. This is illustrated below.</p>
-<div class="cell tag_hide-input docutils container">
-<details class="hide above-input">
-<summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell source</span>
-<span class="expanded">Hide code cell source</span>
-</summary>
-<div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set up the x-axis range</span>
-<span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">seq</span><span class="p">(</span><span class="m">-4</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="n">length.out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">500</span><span class="p">)</span>
-
-<span class="c1"># Define degrees of freedom to compare</span>
-<span class="n">dfs</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">30</span><span class="p">,</span><span class="w"> </span><span class="m">100</span><span class="p">)</span>
-
-<span class="nf">par</span><span class="p">(</span><span class="n">cex.lab</span><span class="o">=</span><span class="m">1.3</span><span class="p">,</span><span class="w"> </span><span class="n">cex.axis</span><span class="o">=</span><span class="m">1.1</span><span class="p">,</span><span class="w"> </span><span class="n">cex</span><span class="o">=</span><span class="m">1.4</span><span class="p">)</span><span class="w"> </span><span class="c1"># plot scaling</span>
-
-<span class="c1"># Set up plot</span>
-<span class="nf">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="nf">dt</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;n&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylim</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">0.4</span><span class="p">),</span>
-<span class="w">     </span><span class="n">xlab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;t value&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylab</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Density&quot;</span><span class="p">,</span>
-<span class="w">     </span><span class="n">main</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;t-Distributions with Varying Degrees of Freedom&quot;</span><span class="p">)</span>
-
-<span class="c1"># Define a color palette</span>
-<span class="n">colors</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rainbow</span><span class="p">(</span><span class="nf">length</span><span class="p">(</span><span class="n">dfs</span><span class="p">))</span>
-
-<span class="c1"># Add lines for each t-distribution</span>
-<span class="kr">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="kr">in</span><span class="w"> </span><span class="nf">seq_along</span><span class="p">(</span><span class="n">dfs</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nf">lines</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="nf">dt</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dfs</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">colors</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="w"> </span><span class="n">lwd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">)</span>
-<span class="p">}</span>
-
-<span class="c1"># Add standard normal distribution for reference</span>
-<span class="nf">lines</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="nf">dnorm</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;black&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">lty</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">)</span>
-
-<span class="c1"># Add legend</span>
-<span class="n">labels</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">paste0</span><span class="p">(</span><span class="s">&quot;nu == &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">dfs</span><span class="p">)</span>
-<span class="nf">legend</span><span class="p">(</span><span class="s">&quot;topright&quot;</span><span class="p">,</span><span class="w"> </span>
-<span class="w">      </span><span class="n">legend</span><span class="o">=</span><span class="nf">parse</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">labels</span><span class="p">),</span>
-<span class="w">      </span><span class="n">col</span><span class="o">=</span><span class="n">colors</span><span class="p">,</span><span class="w"> </span>
-<span class="w">      </span><span class="n">lwd</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="w"> </span>
-<span class="w">      </span><span class="n">bty</span><span class="o">=</span><span class="s">&quot;n&quot;</span><span class="p">)</span>
-
-<span class="nf">legend</span><span class="p">(</span><span class="s">&quot;topleft&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">legend</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Standard Normal&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;black&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lty</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">bty</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;n&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</details>
-<div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/1feac461f7209042a3b178b3c93aff4825cb7fa5cfbd4cdcc4dac0224f238f3e.png"><img alt="_images/1feac461f7209042a3b178b3c93aff4825cb7fa5cfbd4cdcc4dac0224f238f3e.png" src="_images/1feac461f7209042a3b178b3c93aff4825cb7fa5cfbd4cdcc4dac0224f238f3e.png" style="width: 720px; height: 420px;" /></a>
-</div>
-</div>
-<p>An important result here is that as <span class="math notranslate nohighlight">\(n \rightarrow \infty\)</span>, the <span class="math notranslate nohighlight">\(t\)</span>-distribution converges on the normal distribution. This is because the scaling introduced by the degrees of freedom becomes so large that it has basically no effect. If we therefore wanted to ignore the fact that <span class="math notranslate nohighlight">\(\hat{\sigma}^{2}\)</span> was an estimate, we could say that our test statistic is <em>asymptotically</em> normally distributed. In other words, as <span class="math notranslate nohighlight">\(n\)</span> approaches infinity, this is correct. Of course, this is only sensible mathematically, as we will never have an <em>infinite</em> sample size. However, for practical purposes, this just means that the <em>larger</em> the sample size, the more we can trust this simplification. As we can see above, when <span class="math notranslate nohighlight">\(\nu &gt; 100\)</span> the <span class="math notranslate nohighlight">\(t\)</span>-distribution becomes practically indistinguishable from the standard normal distribution. Although this may seem unnecessary, later in the course we will be exmaining mixed-effects models where the concepts of degrees of freedom can break-down. In this situation, one option is to rely on test statistics that do not depend upon the degrees of freedom and just assume an asymptotically correct distribution.</p>
-</section>
-<section id="other-test-statistics">
-<h3>Other Test Statistics<a class="headerlink" href="#other-test-statistics" title="Link to this heading">#</a></h3>
-<p>There are many more test statistics in the world beyond the <span class="math notranslate nohighlight">\(z\)</span>-statistic and the <span class="math notranslate nohighlight">\(t\)</span>-statistic. As we move forward on this course, we will see other test statistics introducted. In all cases, the logic of using the statistic is the same. For some, the interpretability criteria does not always hold. However, this is usually a compromise to allow the procedure to remain efficient, generalisable and practical. Remember, whatever our question about the model may be, we want to remove the original units and place the answer on a scale that can be understood by anyone and compared across different models, with a known null distribution to calculate probabilities from.</p>
-</section>
-</section>
-<section id="the-p-value">
-<h2>The <span class="math notranslate nohighlight">\(p\)</span>-value<a class="headerlink" href="#the-p-value" title="Link to this heading">#</a></h2>
-<p>This level is referred to as <span class="math notranslate nohighlight">\(\alpha\)</span>.</p>
-<p>Fisher vs Neyman-Pearson</p>
-<p>Fisher actually viewed <span class="math notranslate nohighlight">\(p\)</span>-values as continuous evidence against the null, rather than as a threshold value for declaring significance. In fact, although the criterion of 0.05 is attributed to Fisher, it is insightful to see what he <em>actually</em> said about it:</p>
-<blockquote class="epigraph">
-<div><p>The value for which <span class="math notranslate nohighlight">\(p = 0.05\)</span>, or 1 in 20, is convenient to use in practice if we want to draw a line beyond which we say that the deviation is significant, but it must not be forgotten that we shall often draw such a line when there is nothing there but chance.</p>
-<p class="attribution">—Ronald Fisher</p>
-</div></blockquote>
-<p>So, Fisher viewed this criterion as a convenient heuristic, but fully acknowledged its limitations and did not ever state that we should <em>reject</em> the null hypothesis when <span class="math notranslate nohighlight">\(p &lt; 0.05\)</span>. Indeed, Fisher strongly disagreed with the Neyman-Pearson concept of rejecting or failing to reject the null</p>
-<blockquote class="epigraph">
-<div><p>It is a mistake to speak of the null hypothesis as though it were a thing we are testing, or as though we were trying to accept or reject it.</p>
-<p class="attribution">—Ronald Fisher</p>
-</div></blockquote>
-<p>Indeed, in Fisher’s conceptualising a small <span class="math notranslate nohighlight">\(p\)</span>-value simply means that the data are surpring under the null, whereas a large <span class="math notranslate nohighlight">\(p\)</span>-value means that the data are not surprising under the null. Smaller <span class="math notranslate nohighlight">\(p\)</span>-values present more evidence against the null, but only so far as we make the logical leap of saying that very suprising data make it less likely that the null is correct. However, we would not <em>reject</em> the null, because it still remains possible that the null is correct. All we are saying is that the data we have are less compatible with the null. Nothing more.</p>
-</section>
-<section id="confidence-intervals">
-<h2>Confidence Intervals<a class="headerlink" href="#confidence-intervals" title="Link to this heading">#</a></h2>
-<p>What we were actually looking at here were 68% confidence intervals.</p>
-<p>Notice that this depends upon assuming normality.</p>
-</section>
-<section id="nhst-in-r">
-<h2>NHST in <code class="docutils literal notranslate"><span class="pre">R</span></code><a class="headerlink" href="#nhst-in-r" title="Link to this heading">#</a></h2>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">data</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
-
-<span class="n">mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">hp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">disp</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
-<span class="nf">summary</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Call:
-lm(formula = mpg ~ wt + hp + disp, data = mtcars)
-
-Residuals:
-   Min     1Q Median     3Q    Max 
--3.891 -1.640 -0.172  1.061  5.861 
-
-Coefficients:
-             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept) 37.105505   2.110815  17.579  &lt; 2e-16 ***
-wt          -3.800891   1.066191  -3.565  0.00133 ** 
-hp          -0.031157   0.011436  -2.724  0.01097 *  
-disp        -0.000937   0.010350  -0.091  0.92851    
----
-Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-
-Residual standard error: 2.639 on 28 degrees of freedom
-Multiple R-squared:  0.8268,	Adjusted R-squared:  0.8083 
-F-statistic: 44.57 on 3 and 28 DF,  p-value: 8.65e-11
-</pre></div>
-</div>
-</div>
-</div>
-<p>We can also produce confidence intervals using the <code class="docutils literal notranslate"><span class="pre">confint()</span></code> function</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="nf">confint</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span><span class="w"> </span><span class="n">level</span><span class="o">=</span><span class="m">0.95</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                  2.5 %       97.5 %
-(Intercept) 32.78169625 41.429314293
-wt          -5.98488310 -1.616898063
-hp          -0.05458171 -0.007731388
-disp        -0.02213750  0.020263482
-</pre></div>
-</div>
-</div>
-</div>
-<p>Notably, other confidence interval levels can be produced. For instance, the intervals we used previous of <span class="math notranslate nohighlight">\(\pm 1 \times \text{SE}\)</span> correspond to an approximate 68% CI, as shown below.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="nf">confint</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span><span class="w"> </span><span class="n">level</span><span class="o">=</span><span class="m">0.68</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                   16 %         84 %
-(Intercept) 34.96844420 39.242566342
-wt          -4.88033821 -2.721442954
-hp          -0.04273454 -0.019578564
-disp        -0.01141544  0.009541424
-</pre></div>
-</div>
-</div>
-</div>
-<p>Note, however, that we do not need to prescribe to the theory of CIs in order to interpret our parameters in terms of <span class="math notranslate nohighlight">\(\pm 1 \times \text{SE}\)</span> or <span class="math notranslate nohighlight">\(\pm 2 \times \text{SE}\)</span> or whatever we want. The interpretation remains valid. The part that theory of CIs adds is the <em>probabilistic</em> information about the interval. So, the 68% part or the 95% part. These percentages are only valid under the assumptions of CIs. So we can interpret any interval around the estimates we like, however, we need to make further assumptions in order to make any probabilistic claims about the interval’s behaviour over reapeated sampling.</p>
-<p>However, it is not very typical to do this as 95% CIs are considered the standard due to their compatibility with <span class="math notranslate nohighlight">\(\alpha = 0.05\)</span>.</p>
 <hr class="footnotes docutils" />
 <aside class="footnote-list brackets">
 <aside class="footnote brackets" id="expectfoot" role="note">
@@ -748,6 +533,7 @@ disp        -0.01141544  0.009541424
 <p>The reason why the expectation disappears from <span class="math notranslate nohighlight">\(\beta_{1}^{(0)}\)</span> is because our hypothesised value is <em>not</em> a random variable, it is a <em>constant</em>. In other words, it is a single number that will not change if we repeat the same experiment over and over again. As such, its average value across samples is just its original value. This is a basic result of using the expectation operator with a constant <span class="math notranslate nohighlight">\(c\)</span>, giving <span class="math notranslate nohighlight">\(E(c) = c\)</span>.</p>
 </aside>
 </aside>
+</section>
 </section>
 </section>
 
@@ -791,11 +577,11 @@ disp        -0.01141544  0.009541424
       </div>
     </a>
     <a class="right-next"
-       href="4.controversy.html"
+       href="4.null-hypothesis-testing-II.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">The Controversy of NHST</p>
+        <p class="prev-next-title">NHST II: Test Statistics</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -822,15 +608,6 @@ disp        -0.01141544  0.009541424
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-null-hypothesis">The Null Hypothesis</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#test-statistics">Test Statistics</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-z-statistic">The <span class="math notranslate nohighlight">\(z\)</span>-statistic</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-t-statistic">The <span class="math notranslate nohighlight">\(t\)</span>-statistic</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#other-test-statistics">Other Test Statistics</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-p-value">The <span class="math notranslate nohighlight">\(p\)</span>-value</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#confidence-intervals">Confidence Intervals</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nhst-in-r">NHST in <code class="docutils literal notranslate"><span class="pre">R</span></code></a></li>
 </ul>
   </nav></div>
 
