@@ -16,22 +16,20 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
-  <!--
-    this give us a css class that will be invisible only if js is disabled
-  -->
-  <noscript>
-    <style>
-      .pst-js-only { display: none !important; }
-
-    </style>
-  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b76e3c8a" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
@@ -39,11 +37,10 @@
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="_static/test.css?v=90b7ad94" />
   
-  <!-- So that users can add custom icons -->
-  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
     <script src="_static/documentation_options.js?v=9eb32ce0"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
@@ -70,7 +67,6 @@
     <link rel="prev" title="NHST II: Test Statistics" href="4.null-hypothesis-testing-II.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -86,8 +82,19 @@
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <dialog id="pst-search-dialog">
-    
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
 <form class="bd-search d-flex align-items-center"
       action="search.html"
       method="get">
@@ -95,6 +102,7 @@
   <input type="search"
          class="form-control"
          name="q"
+         id="search-input"
          placeholder="Search this book..."
          aria-label="Search this book..."
          autocomplete="off"
@@ -102,8 +110,8 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form>
-  </dialog>
+</form></div>
+  </div>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
@@ -119,8 +127,7 @@
       
       
       
-      <dialog id="pst-primary-sidebar-modal"></dialog>
-      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+      <div class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -150,17 +157,21 @@
     
     
     <img src="_static/logo.png" class="logo__image only-light" alt="Linear Models II: Statistical Inference for Linear Models - Home"/>
-    <img src="_static/logo.png" class="logo__image only-dark pst-js-only" alt="Linear Models II: Statistical Inference for Linear Models - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Linear Models II: Statistical Inference for Linear Models - Home"/>`);</script>
   
   
 </a></div>
         <div class="sidebar-primary-item">
 
-<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
- <i class="fa-solid fa-magnifying-glass"></i>
- <span class="search-button__default-text">Search</span>
- <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-</button></div>
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
@@ -187,14 +198,9 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
-      <div class="sidebar-primary-item">
-<div id="ethical-ad-placement"
-      class="flat"
-      data-ea-publisher="readthedocs"
-      data-ea-type="readthedocs-sidebar"
-      data-ea-manual="true">
-</div></div>
   </div>
+  
+  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -338,16 +344,24 @@
 
 
 
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button>
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
 
 
-<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-</button>
+  </button>
+`);
+</script>
 <button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
@@ -376,10 +390,7 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fisher-s-concept-of-the-p-value">Fisher’s Concept of the <span class="math notranslate nohighlight">\(p\)</span>-value</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#neyman-pearson-nhst">Neyman-Pearson NHST</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#confidence-intervals">Confidence Intervals</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#neyman-pearson-nhst">Neyman-Pearson NHST</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modern-interpretation-of-nhst">Modern Interpretation of NHST</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fisher-vs-neyman-pearson">Fisher vs Neyman-Pearson</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modern-nhst">Modern NHST</a></li>
@@ -527,15 +538,6 @@ p = P(t|\mathcal{H}_{0}),
 <p>where the <code class="docutils literal notranslate"><span class="pre">qt()</span></code> function will calculate a <span class="math notranslate nohighlight">\(t\)</span>-value from a probability (whereas <code class="docutils literal notranslate"><span class="pre">pt()</span></code> calculated a probability from a <span class="math notranslate nohighlight">\(t\)</span>-value). If the null is true, we should only calculate a <span class="math notranslate nohighlight">\(t\)</span>-value <em>larger</em> than <span class="math notranslate nohighlight">\(1.725\)</span> around 5% of the time. Thus, over repeated experiments, if the null is true then we will only make a Type I error around 5% of the time. The Type I error rate has therefore been <em>controlled</em> at the given <span class="math notranslate nohighlight">\(\alpha\)</span>-level. Any value of <span class="math notranslate nohighlight">\(t &gt; 1.725\)</span> therefore falls within a <em>rejection-region</em>. In other words, a region of values of <span class="math notranslate nohighlight">\(t\)</span> which are so large that we will reject the null.</p>
 <p>Finally, based on the value of <span class="math notranslate nohighlight">\(t\)</span> calculated from the data, we either <em>reject the null hypothesis</em> when <span class="math notranslate nohighlight">\(t &gt; t_{\text{crit}}\)</span>, or <em>fail to reject the null</em> when <span class="math notranslate nohighlight">\(t &lt; t_{\text{crit}}\)</span>. If we stick rigidly to these rejection regions then then probability of false-positives is controlled at the desired <span class="math notranslate nohighlight">\(\alpha\)</span>-level.</p>
 <p>Notice here that there is no contiuous assessment of the evidence against the null hypothesis, we simply <em>reject</em> or <em>accept</em> based on a strict threshold. Because of this, the <span class="math notranslate nohighlight">\(p\)</span>-value has <em>no role</em> in thsi procedure. The critical value of the test-statistic is determined <em>a priori</em> and we simply make a binary decision depending on what we calculate from the data. The precise control of the error rates requires a black-and-white decision. If our evidence shifts around and our decisions can be flexible, then we lose this control. For Neyman-Pearson, making a decision that controls long-term error <em>is the point</em> of statistical inference and a <span class="math notranslate nohighlight">\(p\)</span>-value is <em>unnecessary</em> for this purpose.</p>
-<section id="confidence-intervals">
-<h3>Confidence Intervals<a class="headerlink" href="#confidence-intervals" title="Link to this heading">#</a></h3>
-<p>… These were derived <em>directly</em> from the rejection regions indicated above. … The interval contains every parameter value that would lead us to <em>fail to reject the null hypothesis</em>, given our current data. If we set our proposed value to anything within this interval, the test-statistic will be below the critical value and we will <em>fail to reject</em> the null. So this gives us a range of proposed values where, if we set any of them to the null value, would lead to us failing to reject the null. As such, any proposed value <em>outside</em> the interval is far enough away from our estimated value that it would lead to us <em>rejecting the null</em>. So, if our null value of interest is <em>inside</em> the interval, then we fail to reject the null. If it is <em>outside</em> the interval, then we do reject the null.</p>
-<ul class="simple">
-<li><p>Proposed value <em>outside</em> the interval = reject the null</p></li>
-<li><p>Proposed value <em>inside</em> the interval = fail to reject the null</p></li>
-</ul>
-<p>So then we can consider our <em>null</em> proposed value. If it is inside the interval then it is close enough to our estimated value and we fail to reject the null. If it is outside the interval then it is far enough away that we will reject the null. In practice, if we use a null value of 0, we end up seeing if 0 is <em>inside</em> or <em>outside</em> the confidence interval.</p>
-</section>
 </section>
 <section id="modern-interpretation-of-nhst">
 <h2>Modern Interpretation of NHST<a class="headerlink" href="#modern-interpretation-of-nhst" title="Link to this heading">#</a></h2>
@@ -579,10 +581,10 @@ p = P(t|\mathcal{H}_{0}),
 </section>
 <section id="nhst-in-r">
 <h2>NHST in <code class="docutils literal notranslate"><span class="pre">R</span></code><a class="headerlink" href="#nhst-in-r" title="Link to this heading">#</a></h2>
+<p>Despite all the issues highlighted above (with more to come in the final part of this lesson), NHST remains a core element of modern statistical inference. As such, we need to at least see how this is used within <code class="docutils literal notranslate"><span class="pre">R</span></code>. First, let us look at the output table that results from the multiple regression model <code class="docutils literal notranslate"><span class="pre">mpg</span> <span class="pre">~</span> <span class="pre">wt</span> <span class="pre">+</span> <span class="pre">hp</span> <span class="pre">+</span> <span class="pre">disp</span></code>, again using the <code class="docutils literal notranslate"><span class="pre">mtcars</span></code> data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">data</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
-
 <span class="n">mod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">hp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">disp</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">)</span>
 <span class="nf">summary</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
 </pre></div>
@@ -612,42 +614,13 @@ F-statistic: 44.57 on 3 and 28 DF,  p-value: 8.65e-11
 </div>
 </div>
 </div>
-<p>We can also produce confidence intervals using the <code class="docutils literal notranslate"><span class="pre">confint()</span></code> function</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="nf">confint</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span><span class="w"> </span><span class="n">level</span><span class="o">=</span><span class="m">0.95</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                  2.5 %       97.5 %
-(Intercept) 32.78169625 41.429314293
-wt          -5.98488310 -1.616898063
-hp          -0.05458171 -0.007731388
-disp        -0.02213750  0.020263482
-</pre></div>
-</div>
-</div>
-</div>
-<p>Notably, other confidence interval levels can be produced. For instance, the intervals we used previous of <span class="math notranslate nohighlight">\(\pm 1 \times \text{SE}\)</span> correspond to an approximate 68% CI, as shown below.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="nf">confint</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span><span class="w"> </span><span class="n">level</span><span class="o">=</span><span class="m">0.68</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                   16 %         84 %
-(Intercept) 34.96844420 39.242566342
-wt          -4.88033821 -2.721442954
-hp          -0.04273454 -0.019578564
-disp        -0.01141544  0.009541424
-</pre></div>
-</div>
-</div>
-</div>
-<p>Note, however, that we do not need to prescribe to the theory of CIs in order to interpret our parameters in terms of <span class="math notranslate nohighlight">\(\pm 1 \times \text{SE}\)</span> or <span class="math notranslate nohighlight">\(\pm 2 \times \text{SE}\)</span> or whatever we want. The interpretation remains valid. The part that theory of CIs adds is the <em>probabilistic</em> information about the interval. So, the 68% part or the 95% part. These percentages are only valid under the assumptions of CIs. So we can interpret any interval around the estimates we like, however, we need to make further assumptions in order to make any probabilistic claims about the interval’s behaviour over reapeated sampling.</p>
-<p>However, it is not very typical to do this as 95% CIs are considered the standard due to their compatibility with <span class="math notranslate nohighlight">\(\alpha = 0.05\)</span>.</p>
+<p>Here we can see that each parameter estimate is listed, alongside the standard error estimate, the <span class="math notranslate nohighlight">\(t\)</span>-statistic and the associated two-tailed <span class="math notranslate nohighlight">\(p\)</span>-value. For each estimte, the <span class="math notranslate nohighlight">\(t\)</span>-statistic is constructed by dividing the estimate by the standard error. As such, each test is an implicit test that the parameter is 0 in the population. For each slope, this is a reasonable null, but for the intercept the utility of the test is somewhat questionable.</p>
+<p>To take a single example of the slope associated with <code class="docutils literal notranslate"><span class="pre">wt</span></code>, the <span class="math notranslate nohighlight">\(t\)</span>-statistic is</p>
+<div class="math notranslate nohighlight">
+\[
+t = \frac{-3.80}{1.066} = -3.565.
+\]</div>
+<p>This tells us that the difference between our estimated slope and 0 is around 3 1/2 standard errors. The associated <span class="math notranslate nohighlight">\(p\)</span>-value is <span class="math notranslate nohighlight">\(0.0013\)</span>, indicating that, if this slope were 0 in the population then the probability of calculating a <span class="math notranslate nohighlight">\(t\)</span>-statistic of -3.565 is about 1%. Fisher would say that this value is significant because <span class="math notranslate nohighlight">\(p &lt; 0.05\)</span>, but would also emphasise that such a small <span class="math notranslate nohighlight">\(p\)</span>-value suggests that are data are very <em>inconsistent</em> with a null slope of 0 in the population. If we are using <span class="math notranslate nohighlight">\(\alpha = 0.05\)</span>, Neyman-Pearson would tell us to <em>reject</em> the null hypothesis that the slope is 0. In doing so, we would ignore the magnitude of the <span class="math notranslate nohighlight">\(p\)</span>-value because only the decision rule matters. If we are doing an inconsistent modern incarnation of NHST, we would probably do both these things.</p>
 <hr class="footnotes docutils" />
 <aside class="footnote-list brackets">
 <aside class="footnote brackets" id="probfoot" role="note">
@@ -713,8 +686,7 @@ disp        -0.01141544  0.009541424
             
             
               
-                <dialog id="pst-secondary-sidebar-modal"></dialog>
-                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
   <div class="sidebar-secondary-item">
@@ -728,10 +700,7 @@ disp        -0.01141544  0.009541424
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fisher-s-concept-of-the-p-value">Fisher’s Concept of the <span class="math notranslate nohighlight">\(p\)</span>-value</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#neyman-pearson-nhst">Neyman-Pearson NHST</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#confidence-intervals">Confidence Intervals</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#neyman-pearson-nhst">Neyman-Pearson NHST</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modern-interpretation-of-nhst">Modern Interpretation of NHST</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fisher-vs-neyman-pearson">Fisher vs Neyman-Pearson</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#modern-nhst">Modern NHST</a></li>
@@ -786,8 +755,8 @@ By Dr George Farmer & Dr Martyn McFarquhar
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
-<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
   <footer class="bd-footer">
   </footer>
