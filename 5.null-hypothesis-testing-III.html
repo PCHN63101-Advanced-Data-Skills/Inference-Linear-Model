@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>NHST III: Statistical Significance &#8212; Linear Models II: Statistical Inference for Linear Models</title>
+    <title>NHST III: Statistical Significance &#8212; Linear Models II: Statistical Inference</title>
   
   
   
@@ -16,20 +16,22 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-  
-  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
-
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b76e3c8a" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
@@ -37,10 +39,11 @@
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="_static/test.css?v=90b7ad94" />
   
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
-  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="_static/documentation_options.js?v=9eb32ce0"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
@@ -67,6 +70,7 @@
     <link rel="prev" title="NHST II: Test Statistics" href="4.null-hypothesis-testing-II.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -82,19 +86,8 @@
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-primary-sidebar-checkbox"/>
-  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
-  
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-secondary-sidebar-checkbox"/>
-  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
-  
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
+  <dialog id="pst-search-dialog">
+    
 <form class="bd-search d-flex align-items-center"
       action="search.html"
       method="get">
@@ -102,7 +95,6 @@
   <input type="search"
          class="form-control"
          name="q"
-         id="search-input"
          placeholder="Search this book..."
          aria-label="Search this book..."
          autocomplete="off"
@@ -110,8 +102,8 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
-  </div>
+</form>
+  </dialog>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
@@ -127,7 +119,8 @@
       
       
       
-      <div class="bd-sidebar-primary bd-sidebar">
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -156,22 +149,18 @@
       
     
     
-    <img src="_static/logo.png" class="logo__image only-light" alt="Linear Models II: Statistical Inference for Linear Models - Home"/>
-    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Linear Models II: Statistical Inference for Linear Models - Home"/>`);</script>
+    <img src="_static/logo.png" class="logo__image only-light" alt="Linear Models II: Statistical Inference - Home"/>
+    <img src="_static/logo.png" class="logo__image only-dark pst-js-only" alt="Linear Models II: Statistical Inference - Home"/>
   
   
 </a></div>
         <div class="sidebar-primary-item">
 
- <script>
- document.write(`
-   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script></div>
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
@@ -198,9 +187,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -344,24 +338,16 @@
 
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
-  </button>
-`);
-</script>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-  </button>
-`);
-</script>
+</button>
 <button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
@@ -539,31 +525,30 @@ p = P(t|\mathcal{H}_{0}),
 </div>
 </div>
 <p>where the <code class="docutils literal notranslate"><span class="pre">qt()</span></code> function will calculate a <span class="math notranslate nohighlight">\(t\)</span>-value from a probability (whereas <code class="docutils literal notranslate"><span class="pre">pt()</span></code> calculated a probability from a <span class="math notranslate nohighlight">\(t\)</span>-value). If the null is true, we should only calculate a <span class="math notranslate nohighlight">\(t\)</span>-value <em>larger</em> than <span class="math notranslate nohighlight">\(1.725\)</span> around 5% of the time. Thus, over repeated experiments, if the null is true then we will only make a Type I error around 5% of the time. The Type I error rate has therefore been <em>controlled</em> at the given <span class="math notranslate nohighlight">\(\alpha\)</span>-level. Any value of <span class="math notranslate nohighlight">\(t &gt; 1.725\)</span> therefore falls within a <em>rejection-region</em>. In other words, a region of values of <span class="math notranslate nohighlight">\(t\)</span> which are so large that we will reject the null.</p>
-<p>Finally, based on the value of <span class="math notranslate nohighlight">\(t\)</span> calculated from the data, we either <em>reject the null hypothesis</em> when <span class="math notranslate nohighlight">\(t &gt; t_{\text{crit}}\)</span>, or <em>fail to reject the null</em> when <span class="math notranslate nohighlight">\(t &lt; t_{\text{crit}}\)</span>. If we stick rigidly to these rejection regions then then probability of false-positives is controlled at the desired <span class="math notranslate nohighlight">\(\alpha\)</span>-level.</p>
-<p>Notice here that there is no contiuous assessment of the evidence against the null hypothesis, we simply <em>reject</em> or <em>accept</em> based on a strict threshold. Because of this, the <span class="math notranslate nohighlight">\(p\)</span>-value has <em>no role</em> in thsi procedure. The critical value of the test-statistic is determined <em>a priori</em> and we simply make a binary decision depending on what we calculate from the data. The precise control of the error rates requires a black-and-white decision. If our evidence shifts around and our decisions can be flexible, then we lose this control. For Neyman-Pearson, making a decision that controls long-term error <em>is the point</em> of statistical inference and a <span class="math notranslate nohighlight">\(p\)</span>-value is <em>unnecessary</em> for this purpose.</p>
+<p>Finally, based on the value of <span class="math notranslate nohighlight">\(t\)</span> calculated from the data, we either <em>reject the null hypothesis</em> when <span class="math notranslate nohighlight">\(t &gt; t_{\text{crit}}\)</span>, or <em>fail to reject the null</em> when <span class="math notranslate nohighlight">\(t &lt; t_{\text{crit}}\)</span>. If we stick rigidly to these rejection regions then then probability of false-positives is controlled at the desired <span class="math notranslate nohighlight">\(\alpha\)</span>-level. Notice here that there is no contiuous assessment of the evidence against the null hypothesis, we simply <em>reject</em> or <em>accept</em> based on a strict threshold. Because of this, the <span class="math notranslate nohighlight">\(p\)</span>-value has <em>no role</em> in this procedure. The critical value of the test-statistic is determined <em>a priori</em> and we simply make a binary decision depending on what we calculate from the data. The precise control of the error rates requires a black-and-white decision. If our evidence shifts around and our decisions can be flexible, then we lose this control. For Neyman-Pearson, making a decision that controls long-term error <em>is the point</em> of statistical inference and a <span class="math notranslate nohighlight">\(p\)</span>-value is <em>unnecessary</em> for this purpose.</p>
 </section>
 <section id="modern-interpretation-of-nhst">
 <h2>Modern Interpretation of NHST<a class="headerlink" href="#modern-interpretation-of-nhst" title="Link to this heading">#</a></h2>
-<p>As we can see from the discussions above, the history of NHST is rather tangled and often misunderstood. This is largely because its modern incarnation is a hybrid of both Fisheian and Neyman-Pearsonian NHST. However, these are two <em>fundamentally different</em> statistical philosophies. These two frameworks were severly opposed by the other side, with major disagreements on the fundamental purpose of statistical inference and how evidence can be used. These two approaches were never meant to be combined. Indeed, both Fisher and Neyman-Pearson would probably agree that they <em>cannot</em> be combined in any meaningful way, due to their philosophical disagreement. And yet, modern NHST <em>has</em> merged these different ideas into a confused mishmash that neither side would have endorsed.</p>
+<p>As we can see from the discussions above, the history of NHST is rather tangled and has often been misunderstood. This is largely because its modern incarnation is a hybrid of both Fisherian and Neyman-Pearsonian NHST. However, these are two <em>fundamentally different</em> statistical philosophies. Each framework were severly opposed by the other side, with major disagreements on the fundamental purpose of statistical inference and how evidence can be used. These two approaches were never meant to be combined. Indeed, both Fisher and Neyman-Pearson would probably agree that they <em>cannot</em> be combined in any meaningful way. And yet, modern NHST <em>has</em> merged these different ideas into a confused mish-mash that neither Fisher nor Neyman-Pearson would have endorsed.</p>
 <section id="fisher-vs-neyman-pearson">
 <h3>Fisher vs Neyman-Pearson<a class="headerlink" href="#fisher-vs-neyman-pearson" title="Link to this heading">#</a></h3>
-<p>Fisher vehemently opposed Neyman-Pearson’s approach to NHST. As we saw above, Fisher believed in a continuous assessment of the evidence against the null, using heuristics to <em>guide</em> interpretation, rather than creating strict thresholds. Nature does not “yes” or “no, rather it provides evidence that should be interpreted by science. Turning statistical inference into a simple binary decisions makes the process robotic, automated and incapable of any nuance, which goes against how nature actually operates. Fisher emphasised that a null hypothesis might never actually be true in reality. Instead, it is a simplifying assumption. The goal is therefore not to “accept” or “reject” it, but to see how well it can explain the data. In his own words, Fisher said:</p>
+<p>Fisher vehemently opposed Neyman-Pearson’s approach to NHST. As we saw above, Fisher believed in a continuous assessment of the evidence against the null, using heuristics to <em>guide</em> interpretation, rather than creating strict thresholds. Nature does not say “yes” or “no, rather it provides evidence that should be interpreted by science. Turning statistical inference into a simple binary decision makes the process robotic, automated and incapable of any nuance. For Fisher, this went against how nature actually operates. It is interesting to note that a common criticism of NHST is that it creates an unrealistic dichotomisiation of evidence<a class="footnote-reference brackets" href="#evidencefoot" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>, yet this is something that Fisher never endorsed. Fisher emphasised that a null hypothesis might never actually be true in reality. Instead, it is a simplifying assumption. The goal is therefore not to “accept” or “reject” it, but to see how well it can explain the data. In his own words, Fisher said:</p>
 <blockquote class="epigraph">
 <div><p>It is a mistake to speak of the null hypothesis as though it were a thing we are testing, or as though we were trying to accept or reject it.</p>
 <p class="attribution">—Fisher, <em>Statistical Methods and Scientific Inference</em> (1956)</p>
 </div></blockquote>
 <p>In opposition, Neyman-Pearson were of the view that one cannot sit and ponder the meaning of a <span class="math notranslate nohighlight">\(p\)</span>-value forever. Eventually, some decision must be reached</p>
 <ul class="simple">
-<li><p>“Is this treatment effective enough to consider offering it to patients on masse?”</p></li>
+<li><p>“Is this treatment effective enough to consider offering it to patients?”</p></li>
 <li><p>“Is the quality control of this product good enough to enter production?”</p></li>
-<li><p>“Are the side-effects of this drug severe enough in this one group that the medication should be banned?”</p></li>
+<li><p>“Are the side-effects of this drug severe enough that the medication should be banned?”</p></li>
 </ul>
 <p>In all these cases a clear decision must be made. For this to happen, we need rules for reaching decisions in the face of uncertainty that <em>minimise the probability of severe mistakes</em>. Indeed, Neyman was very critical of the seemingly subjective way a <span class="math notranslate nohighlight">\(p\)</span>-value could be used to reason about a hypothesis, particularly when a <span class="math notranslate nohighlight">\(p\)</span>-value is a statement about a <em>single set of data</em></p>
 <blockquote class="epigraph">
 <div><p>The test of a hypothesis is a rule which tells us whether to reject or not to reject a given hypothesis in the light of observed data. It is not a method of reasoning which we can apply at will to interpret a particular set of data.</p>
 <p class="attribution">—Neyman, <em>“Inductive Behavior” as a Basic Concept of Philosophy of Science</em> (1957)</p>
 </div></blockquote>
-<p>Because of this, Neyman-Pearson fundamentally rejected the <span class="math notranslate nohighlight">\(p\)</span>-value as having any utility in their approach to inference. Because a <span class="math notranslate nohighlight">\(p\)</span>-value is <em>data dependant</em> it goes against the Neyman-Pearson philosophy of defining an error-control procedure that is divorced from the data itself. If we tie the <span class="math notranslate nohighlight">\(p\)</span>-value to a pre-specified <span class="math notranslate nohighlight">\(\alpha\)</span> (such as <span class="math notranslate nohighlight">\(\alpha = 0.05\)</span>), then it can be used as a decision rule, but the <em>actual value of p does not matter</em>. At which point, we may as well just use the critical value of the test statistic. The <span class="math notranslate nohighlight">\(p\)</span>-value adds nothing to this procedure. Neyman-Pearson would likely claim that the <span class="math notranslate nohighlight">\(p\)</span>-value is just a <em>post-hoc description of how surprising the data is</em>. To them, this is just a description of the data, not <em>inference</em>. The only reason to calculate a <span class="math notranslate nohighlight">\(p\)</span>-value is to consider how captible our particular data set is with the null hypothesis. But Neyman-Pearson were not interested in this. For them, statistical inference is simply a yes/no question with no grey areas.</p>
+<p>Because of this, Neyman-Pearson fundamentally rejected the <span class="math notranslate nohighlight">\(p\)</span>-value as having any utility in their approach to inference. Because a <span class="math notranslate nohighlight">\(p\)</span>-value is <em>data dependant</em> it goes against the Neyman-Pearson philosophy of defining an error-control procedure that is divorced from the data itself. If we tie the <span class="math notranslate nohighlight">\(p\)</span>-value to a pre-specified <span class="math notranslate nohighlight">\(\alpha\)</span> (such as <span class="math notranslate nohighlight">\(\alpha = 0.05\)</span>), then it can be used as a decision rule, but the <em>actual value of p does not matter</em>. At which point, we may as well just use the critical value of the test statistic. The <span class="math notranslate nohighlight">\(p\)</span>-value adds nothing to this procedure. Neyman-Pearson would likely claim that the <span class="math notranslate nohighlight">\(p\)</span>-value is just a <em>post-hoc description of how surprising the data is</em>. To them, this is just a description of the data, not <em>inference</em>. The only reason to calculate a <span class="math notranslate nohighlight">\(p\)</span>-value is to consider how compatible our data is with the null hypothesis. But Neyman-Pearson were not interested in this. For them, statistical inference is simply a yes/no question with no grey areas.</p>
 </section>
 <section id="modern-nhst">
 <h3>Modern NHST<a class="headerlink" href="#modern-nhst" title="Link to this heading">#</a></h3>
@@ -571,21 +556,21 @@ p = P(t|\mathcal{H}_{0}),
 <p>Fisher would hate to see his <span class="math notranslate nohighlight">\(p\)</span>-values being used as a decision making tool for rejecting hypotheses, rather than as a measure of evidence. Neyman-Pearson would hate to see statistical software reporting <span class="math notranslate nohighlight">\(p\)</span>-values, rather than simply stating whether a test passed the critical threshold for rejection. Our modern approach to NHST bleeds decision making and thresholds into Fisher’s continuous measures of evidence, and bleeds continuous measures of evidence and the term “significance” into Neyman-Pearson’s strict decision making approach. We are trying to <a class="reference external" href="https://en.wikipedia.org/wiki/You_can%27t_have_your_cake_and_eat_it">have our cake, and eat it</a>.</p>
 <p>To see more clearly why the modern mish-mash of these ideas is philosophically inconsistent, consider the situation where we calculate <span class="math notranslate nohighlight">\(p = 0.001\)</span>:</p>
 <ul class="simple">
-<li><p>If we simply <em>reject</em> the null because <span class="math notranslate nohighlight">\(p &lt; 0.05\)</span> then we are doing Neyman-Pearson NHST with <span class="math notranslate nohighlight">\(\alpha = 0.05\)</span>, but using Fisher’s <span class="math notranslate nohighlight">\(p\)</span>-values to do so. There is nothing fundamentally wrong with this, as long as we are only using the <span class="math notranslate nohighlight">\(p\)</span>-value as a <em>binary indicator</em>. However, this begs the question what the point of the <span class="math notranslate nohighlight">\(p\)</span>-value is? We could reach the same conclusion using the critical value of the test-statistic, which is how Neyman-Pearson designed their approach.</p></li>
-<li><p>If we interpret this as strong evidence aginst the null, because the <span class="math notranslate nohighlight">\(p\)</span>-value is quite small, then we are doing Fisher’s NHST. We may use a heuristic of <span class="math notranslate nohighlight">\(p &lt; 0.05\)</span> as some marker of “significance”, but this is not a binary rule to accept or reject anything. We simply say that the data is quite surprising, if the null hypothesis were true.</p></li>
-<li><p>If we mash these two approaches together by rejecting the null hypothesis because <span class="math notranslate nohighlight">\(p &lt; 0.05\)</span>, but also (whether explicitly or implicitly) take the magnitude of the <span class="math notranslate nohighlight">\(p\)</span>-value as stronger evidence than another <span class="math notranslate nohighlight">\(p\)</span>-value in our output table (say <span class="math notranslate nohighlight">\(p = 0.048\)</span>), then we are doing an incoherent muddling of these two approaches.</p></li>
+<li><p>If we simply <em>reject</em> the null because <span class="math notranslate nohighlight">\(p &lt; 0.05\)</span> then we are doing Neyman-Pearson NHST but using Fisher’s <span class="math notranslate nohighlight">\(p\)</span>-values to implement it. There is nothing fundamentally wrong with this, as long as we are only using the <span class="math notranslate nohighlight">\(p\)</span>-value as a <em>binary indicator</em>. However, this begs the question what the point of the <span class="math notranslate nohighlight">\(p\)</span>-value is? We could reach the same conclusion using the critical value of the test-statistic, which is how Neyman-Pearson designed their approach. By looking at the <span class="math notranslate nohighlight">\(p\)</span>-value, the temptation is there to interpret its magnitude.</p></li>
+<li><p>If we interpret this as strong evidence aginst the null, because the <span class="math notranslate nohighlight">\(p\)</span>-value is quite small, then we are doing Fisher’s NHST. We may use a heuristic of <span class="math notranslate nohighlight">\(p &lt; 0.05\)</span> as some marker of “significance”, but this is not a binary rule to accept or reject anything. We simply say that the data is quite surprising, if the null hypothesis were true. What we do <em>not</em> do is reject the null hypothesis on this basis, because it still remains possible that we have witnessed a rare event. Also, the null may never <em>actually</em> be true, so all we can really say is that these data seem incompatible with this simplifying device.</p></li>
+<li><p>If we squash these two approaches together by rejecting the null hypothesis because <span class="math notranslate nohighlight">\(p &lt; 0.05\)</span>, but also (whether explicitly or implicitly) take the magnitude of the <span class="math notranslate nohighlight">\(p\)</span>-value as stronger evidence than another <span class="math notranslate nohighlight">\(p\)</span>-value in our output table (say <span class="math notranslate nohighlight">\(p = 0.048\)</span>), then we are doing the modern incoherent muddling of these two approaches.</p></li>
 </ul>
-<p>Although it <em>feels</em> like we should be able to combine these methods, this causes problems. For instance, it feels like we should be able to pre-specify a level of error-control, reject the null based on this level and then use the magnitude of the <span class="math notranslate nohighlight">\(p\)</span>-value to indicate our confidence in that deicison. However, what happens quite often is that researchers will treat values <em>close</em> to <span class="math notranslate nohighlight">\(p = 0.05\)</span> as <em>marginally significant</em>, or move their criteria for significance based on the calculated <span class="math notranslate nohighlight">\(p\)</span>-values. If we start moving the goalposts based on the <span class="math notranslate nohighlight">\(p\)</span>-values, then the whole principle of fixing error rates before collecting the data goes out the window. Furthermore, treating <span class="math notranslate nohighlight">\(p\)</span>-values as <em>both</em> a binary indicator and a continuous measure of evidence is inconsistent. For instance, consider calculating <span class="math notranslate nohighlight">\(p = 0.06\)</span>. Neyman-Pearson would say that you have failed to reject the null hypothesis. It does not matter if <span class="math notranslate nohighlight">\(p = 0.06\)</span> or <span class="math notranslate nohighlight">\(p = 0.6\)</span>, the decision rule is final. Fisher would say that the data are somewhat surpring under the null. Although the value is not below our heuristic of <span class="math notranslate nohighlight">\(p &lt; 0.05\)</span>, it is suggestive of moderate evidence against the null. This may imply that more data is needed to fully understand what is going on, but there is certainly a hint that the null may not be true. So we reach two different conclusions depending on how we treat the <span class="math notranslate nohighlight">\(p\)</span>-value.</p>
+<p>Although it <em>feels</em> like we should be able to combine these methods, this causes problems. For instance, it feels like we should be able to pre-specify a level of error-control, reject the null based on this level and then use the magnitude of the <span class="math notranslate nohighlight">\(p\)</span>-value to indicate our confidence in that deicison. However, what happens quite often is that researchers will treat values <em>close</em> to <span class="math notranslate nohighlight">\(p = 0.05\)</span> as <em>marginally significant</em>, or move their criteria for significance based on the calculated <span class="math notranslate nohighlight">\(p\)</span>-values. If we start moving the goalposts based on the <span class="math notranslate nohighlight">\(p\)</span>-values, then the whole principle of fixing error rates before collecting the data goes out the window. Furthermore, treating <span class="math notranslate nohighlight">\(p\)</span>-values as both a binary indicator <em>and</em> a continuous measure of evidence is inconsistent. For instance, consider calculating <span class="math notranslate nohighlight">\(p = 0.06\)</span>. Neyman-Pearson would say that you have <em>failed to reject the null</em>. It does not matter if <span class="math notranslate nohighlight">\(p = 0.06\)</span> or <span class="math notranslate nohighlight">\(p = 0.6\)</span>, the decision rule is final. Fisher would say that the data are somewhat surpring under the null. Although the value is not below our heuristic of <span class="math notranslate nohighlight">\(p &lt; 0.05\)</span>, it is suggestive of moderate evidence <em>against the null</em>. This may imply that more data is needed to fully understand what is going on, but there is certainly a hint that the null may not be true. So we reach two different conclusions depending on how we treat the <span class="math notranslate nohighlight">\(p\)</span>-value.</p>
 <figure class="align-left">
 <a class="reference internal image-reference" href="_images/pvaluepumpkin.jpg"><img alt="_images/pvaluepumpkin.jpg" src="_images/pvaluepumpkin.jpg" style="width: 320.0px; height: 288.0px;" /></a>
 </figure>
-<p>Anyone who has used NHST for long enough knows the pains of grappling with a <span class="math notranslate nohighlight">\(p\)</span>-value that is <em>nearly significant</em>. In these situations, the inherent conflict between a strict decision rule and a continuous measure of evidence becomes clear. We see a value that tells us that we cannot reject the null, yet the value is so close to our cutoff that it feels as if it should <em>mean something</em>. This is especially true when we get a value like <span class="math notranslate nohighlight">\(p = 0.051\)</span> versus <span class="math notranslate nohighlight">\(p = 0.96\)</span>. In these situations, we want to be Fisher but have been taught to be Neyman-Pearson. We are trying to adhere to a yes/no decision-making framework, yet have been presented with a continuous metric of evidence. When this happens, researchers often try to find a way out by claiming “marginal significance”, which is another way of saying “yes, we know we have failed to reject the null here, but it is really close!” So is this meaningful or not? This use of NHST claims that a result with <span class="math notranslate nohighlight">\(p = 0.051\)</span> is simultaneously <em>meaningful</em> and <em>not meaningful</em>. We are trying to adhere to a strict threshold that maintains long-run error rates, but also move our goalposts around in terms of what we want to conclude based on how close the <span class="math notranslate nohighlight">\(p\)</span>-value is to that threshold. Logically, we cannot be doing both. We cannot both reject a result to maintain a long-term error rate <em>and</em> include it in our discussion because it is really close to the threshold.</p>
+<p>Anyone who has used NHST for long enough knows the pains of grappling with a <span class="math notranslate nohighlight">\(p\)</span>-value that is <em>nearly significant</em>. In these situations, the inherent conflict between a strict decision rule and a continuous measure of evidence becomes clear. We see a value that tells us that we cannot reject the null, yet the value is so close to the threshold that it feels as if it should <em>mean something</em>. This is especially true when we get a value like <span class="math notranslate nohighlight">\(p = 0.051\)</span> versus <span class="math notranslate nohighlight">\(p = 0.96\)</span>. In these situations, we want to be Fisher but have been taught to be Neyman-Pearson. We are trying to adhere to a yes/no decision-making framework, yet have been presented with a continuous metric of evidence. When this happens, researchers often try to find a way out by claiming “marginal significance”, which is another way of saying “yes, we know we have failed to reject the null here, but it is really close!” So is this meaningful or not? This use of NHST claims that a result with <span class="math notranslate nohighlight">\(p = 0.051\)</span> is simultaneously <em>meaningful</em> and <em>not meaningful</em>. We are trying to adhere to a strict threshold that maintains long-run error rates, but also move our goalposts around in terms of what we want to conclude based on how close the <span class="math notranslate nohighlight">\(p\)</span>-value is to that threshold. Logically, we cannot be doing both. We cannot both reject a result to maintain a long-term error rate <em>and</em> include it in our discussion because it is really close to the threshold. Given this, it is not really suprising that when faced with such a logical conflict, unscrupulous researchers will find means to <em>nudge</em> a <span class="math notranslate nohighlight">\(p\)</span>-value under the threshold and resolve their dilemma.</p>
 <p>In reality, if we really want to adhere to the Neyman-Pearson framework, we should remove <span class="math notranslate nohighlight">\(p\)</span>-value columns from software. Instead, software should simply state whether to “reject” or “fail to reject” a result based on the critical value. No more information is given because no more information is needed and the conflict above is resolved. Alternatively, if we want to adhere to Fisher’s framework, we keep <span class="math notranslate nohighlight">\(p\)</span>-values but remove strict decision rules, as well as concepts of error rates and power. We simply see the <span class="math notranslate nohighlight">\(p\)</span>-value as a continuous metric of evidence and interpret it with certain heuristics in mind. Again, this resolves the conflict. What we cannot really do is have all these elements and remain logically consistent…and yet, here we are.</p>
 </section>
 </section>
 <section id="nhst-in-r">
 <h2>NHST in <code class="docutils literal notranslate"><span class="pre">R</span></code><a class="headerlink" href="#nhst-in-r" title="Link to this heading">#</a></h2>
-<p>Despite all the issues highlighted above (with more to come in the final part of this lesson), NHST remains a core element of modern statistical inference. As such, we need to at least see how this is used within <code class="docutils literal notranslate"><span class="pre">R</span></code>. First, let us look at the output table that results from the multiple regression model <code class="docutils literal notranslate"><span class="pre">mpg</span> <span class="pre">~</span> <span class="pre">wt</span> <span class="pre">+</span> <span class="pre">hp</span> <span class="pre">+</span> <span class="pre">disp</span></code>:</p>
+<p>Despite the philosophical issues highlighted above, NHST remains a core element of modern statistical inference. We can muse about why this is from a historical perspective and complain about its inconsistencies, but that does not stop it from being used. As such, we need to at least see how NHST is implemented within <code class="docutils literal notranslate"><span class="pre">R</span></code>. First, let us look again at the output table that results from the multiple regression model <code class="docutils literal notranslate"><span class="pre">mpg</span> <span class="pre">~</span> <span class="pre">wt</span> <span class="pre">+</span> <span class="pre">hp</span> <span class="pre">+</span> <span class="pre">disp</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">data</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
@@ -609,7 +594,7 @@ wt          -3.800891   1.066191  -3.565  0.00133 **
 hp          -0.031157   0.011436  -2.724  0.01097 *  
 disp        -0.000937   0.010350  -0.091  0.92851    
 ---
-Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
 Residual standard error: 2.639 on 28 degrees of freedom
 Multiple R-squared:  0.8268,	Adjusted R-squared:  0.8083 
@@ -619,16 +604,31 @@ F-statistic: 44.57 on 3 and 28 DF,  p-value: 8.65e-11
 </div>
 </div>
 <p>Here we can see that each parameter estimate is listed, alongside the standard error estimate, the <span class="math notranslate nohighlight">\(t\)</span>-statistic and the associated two-tailed <span class="math notranslate nohighlight">\(p\)</span>-value. Each <span class="math notranslate nohighlight">\(t\)</span>-statistic is constructed by dividing the estimate by the standard error. As such, each test is an implicit comparison with a proposed population parameter of 0. This is a reasonable null for each slope, as it captures the idea of <em>no relationship</em> in the population. For the intercept, the utility of testing for a regression through the origin can be somewhat questionable and is dependent upon context.</p>
-<p>To take a single example of the slope associated with <code class="docutils literal notranslate"><span class="pre">wt</span></code>, the <span class="math notranslate nohighlight">\(t\)</span>-statistic is</p>
+<p>To take a single example, consider the <code class="docutils literal notranslate"><span class="pre">wt</span></code> predictor. The estimates are <span class="math notranslate nohighlight">\(\hat{\beta}_{1} = -3.80\)</span> and <span class="math notranslate nohighlight">\(\text{SE}\left(\hat{\beta}_{1}\right) = 1.066\)</span>. The <span class="math notranslate nohighlight">\(t\)</span>-statistic is then</p>
 <div class="math notranslate nohighlight">
 \[
-t = \frac{-3.80}{1.066} = -3.565.
+t = \frac{\hat{\beta}_{1} - 0}{\text{SE}\left(\hat{\beta}_{1}\right)} = \frac{-3.80}{1.066} = -3.565.
 \]</div>
-<p>This tells us that the difference between our estimated slope and 0 is around 3.565 standard errors. Because the estimated slope is <em>negative</em> the <span class="math notranslate nohighlight">\(t\)</span>-statistic is <em>also</em> negative. So this is 3.565 standard errors <em>below</em> 0. The associated <span class="math notranslate nohighlight">\(p\)</span>-value is <span class="math notranslate nohighlight">\(0.0013\)</span>, indicating that, if this slope were 0 in the population, the probability of calculating a <span class="math notranslate nohighlight">\(t\)</span>-statistic of -3.565 is about 0.13% (around a <em>tenth</em> of 1%, or 1 out of 1,000). Fisher would say that this value is significant because <span class="math notranslate nohighlight">\(p &lt; 0.05\)</span>, but would also emphasise that such a small <span class="math notranslate nohighlight">\(p\)</span>-value suggests that are data are <em>very inconsistent</em> with a null slope of 0 in the population. If we are using <span class="math notranslate nohighlight">\(\alpha = 0.05\)</span>, Neyman-Pearson would tell us to <em>reject</em> the null hypothesis that the slope is 0. In doing so, we would ignore the magnitude of the <span class="math notranslate nohighlight">\(p\)</span>-value because only the decision rule matters. As we can see, <code class="docutils literal notranslate"><span class="pre">R</span></code> tells us both. We have the <span class="math notranslate nohighlight">\(p\)</span>-values listed from Fisher, with stars next to them to indicate the Neyman-Pearson decision rule for different values of <span class="math notranslate nohighlight">\(\alpha\)</span> (as listed under <code class="docutils literal notranslate"><span class="pre">Signif.</span> <span class="pre">codes</span></code>). So, as is our custom, we can use a logically inconsistent merging of both these approaches.</p>
+<p>This tells us that the difference between our estimated slope and 0 is -3.80 in the original units of MPG, which is equivalent to 3.565 standard errors. Because the estimated slope is <em>negative</em> the <span class="math notranslate nohighlight">\(t\)</span>-statistic is <em>also</em> negative. So this is 3.565 standard errors <em>below</em> 0. The associated <span class="math notranslate nohighlight">\(p\)</span>-value is <span class="math notranslate nohighlight">\(0.0013\)</span>, which we can also calculate manually in <code class="docutils literal notranslate"><span class="pre">R</span></code> using</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">t</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">summary</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span><span class="o">$</span><span class="n">coefficients</span><span class="p">[</span><span class="m">2</span><span class="p">,</span><span class="s">&quot;t value&quot;</span><span class="p">]</span><span class="w"> </span><span class="c1"># t-statsitic for wt</span>
+<span class="n">df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mod</span><span class="o">$</span><span class="n">df.residual</span>
+<span class="n">p</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nf">pt</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="nf">abs</span><span class="p">(</span><span class="n">t</span><span class="p">),</span><span class="w"> </span><span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">,</span><span class="w"> </span><span class="n">lower.tail</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span><span class="w"> </span><span class="c1"># absolute value of t for upper-tail</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1] 0.001330991
+</pre></div>
+</div>
+</div>
+</div>
+<p>This indicates that, if this slope were 0 in the population, the probability of calculating a <span class="math notranslate nohighlight">\(t\)</span>-statistic of -3.565 is about 0.13% (around a <em>tenth</em> of 1%, or 1 out of 1,000). Fisher would say that this value is significant because <span class="math notranslate nohighlight">\(p &lt; 0.05\)</span>, but would also emphasise that such a small <span class="math notranslate nohighlight">\(p\)</span>-value suggests that are data are <em>very inconsistent</em> with a null slope of 0 in the population. If we are using <span class="math notranslate nohighlight">\(\alpha = 0.05\)</span>, Neyman-Pearson would tell us to <em>reject</em> the null hypothesis that the slope is 0. In doing so, we would ignore the magnitude of the <span class="math notranslate nohighlight">\(p\)</span>-value because only the decision rule matters. As we can see, <code class="docutils literal notranslate"><span class="pre">R</span></code> tells us both. We have the <span class="math notranslate nohighlight">\(p\)</span>-values listed from Fisher, with stars next to them to indicate the Neyman-Pearson decision rule for different values of <span class="math notranslate nohighlight">\(\alpha\)</span> (as listed under <code class="docutils literal notranslate"><span class="pre">Signif.</span> <span class="pre">codes</span></code>).</p>
 <section id="practical-implications">
 <h3>Practical Implications<a class="headerlink" href="#practical-implications" title="Link to this heading">#</a></h3>
-<p>In this example, the <em>practical</em> implications of adhering to either approach are minimal. For both <code class="docutils literal notranslate"><span class="pre">wt</span></code> and <code class="docutils literal notranslate"><span class="pre">hp</span></code>, Fisher would say there was strong evidence against the null (though moreso for <code class="docutils literal notranslate"><span class="pre">wt</span></code> than <code class="docutils literal notranslate"><span class="pre">hp</span></code>) and Neyman-Pearson would tell us to reject the null for both tests. For <code class="docutils literal notranslate"><span class="pre">disp</span></code>, Fisher would say that there was very strong evidence <em>in favour</em> of the null or, more precisely, that the data are very <em>compatible</em> or <em>well-explained</em> by the null. Similarly, Neyman-Pearson would tell us that we have failed to reject the null here. So though these two concepts are philosophically at-odds, their practical application in this setting has led to similar conclusions. Where the issues appear are not in the extremes, but around the margins of the threshold. In other words, when we get <span class="math notranslate nohighlight">\(p = 0.049\)</span>, <span class="math notranslate nohighlight">\(p = 0.051\)</span> or (heaven forbid) <span class="math notranslate nohighlight">\(p = 0.050\)</span>. We already discussed how the problem of induction has largely been side-stepped by science on the grounds of <em>pragmatism</em> and here we see the same phenomena occurring. Because <em>practically</em> the conclusions are very similar across these approaches a lot of the time, we are happy to push forward mushing these approaches together, despite their phiolosophical grounding being at-odds with each other. However, this conflict does get in the way sometimes and it feels rather unsatisfying to use a method with principles that do not make sense when examined closely, even if we can justify it pragmatically.</p>
-<p>As with many things, there is no one answer here and so it comes down to <em>your own</em> feelings about this situation, in order to justify how you will act in future. Stick with the status quo, despite the philosophical problems? Be fully Fisherian? Be full Nyman-Pearsonian? Or, just abandon the whole enterprise altogether?</p>
+<p>In this example, the <em>practical</em> implication of adhering to either The Fisher or Neyman-Pearson approach is minimal. For both <code class="docutils literal notranslate"><span class="pre">wt</span></code> and <code class="docutils literal notranslate"><span class="pre">hp</span></code>, Fisher would say there was strong evidence against the null (though moreso for <code class="docutils literal notranslate"><span class="pre">wt</span></code> than <code class="docutils literal notranslate"><span class="pre">hp</span></code>) and Neyman-Pearson would tell us to reject the null for both tests. For <code class="docutils literal notranslate"><span class="pre">disp</span></code>, Fisher would say that there was very strong evidence <em>in favour</em> of the null or, more precisely, that the data are very <em>compatible</em> or <em>well-explained</em> by the null. Similarly, Neyman-Pearson would tell us that we have failed to reject the null. So, although these two concepts are philosophically at-odds, their practical application in this setting has led to similar conclusions. Where the issues appear are not in the extremes, but around the margins of the threshold. In other words, when we get <span class="math notranslate nohighlight">\(p = 0.049\)</span>, <span class="math notranslate nohighlight">\(p = 0.051\)</span> or (heaven help us) <span class="math notranslate nohighlight">\(p = 0.050\)</span>. We already discussed how the problem of induction has largely been side-stepped by science on the grounds of <em>pragmatism</em> and here we see the same phenomena occurring. Because <em>practically</em> the conclusions are very similar a lot of the time, we are happy to push forward mashing these approaches together. However, this conflict does get in the way sometimes and it feels rather unsatisfying to use a method with principles that do not make sense when examined closely, even if we can justify it pragmatically.</p>
 <aside class="topic">
 <p class="topic-title">What do you now know?</p>
 <p>In this section, we have explored the concept of <span class="math notranslate nohighlight">\(p\)</span>-values and the use of NHST from different perspectives. After reading this section, you should have a good sense of:</p>
@@ -642,6 +642,10 @@ t = \frac{-3.80}{1.066} = -3.565.
 <aside class="footnote brackets" id="probfoot" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
 <p>Technically, the probability of a single exact value from a continuous probability distribution is 0. This is not to say it is <em>impossible</em>, rather it cannot be calculated because a single point has no area under the distribution curve. It has a height, given by the probability density at that point, but its width is 0.</p>
+</aside>
+<aside class="footnote brackets" id="evidencefoot" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>This is also true of alternative methods that use cut-off values, even if they are <em>supposed</em> to guide interpretation rather than being <em>rules</em>. For instance, using “small”, “medium” or “large” to categorise effect sizes serves only to <em>trichotomise</em> evidence. Similarly, more recent applications of Bayes Factors as an alternative to NHST suffer from the same issue of catgorising results into “weak evidence”, “moderate evidence”, “strong evidence” etc. In all cases, the danger comes from an “interpretational device” turning into blind application of a rule, which is exactly what happened to Fisher’s heuristic of <span class="math notranslate nohighlight">\(p=0.05\)</span>.</p>
 </aside>
 </aside>
 </section>
@@ -703,7 +707,8 @@ t = \frac{-3.80}{1.066} = -3.565.
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
   <div class="sidebar-secondary-item">
@@ -775,8 +780,8 @@ By Dr George Farmer & Dr Martyn McFarquhar
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
-<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
   </footer>
