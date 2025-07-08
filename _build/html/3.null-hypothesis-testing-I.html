@@ -526,6 +526,17 @@ E\left(\delta\right|\mathcal{H}_{0}) = E\left(\widehat{\text{IQ}} - \text{IQ}^{(
 <p class="admonition-title">Null Comparisons in Software</p>
 <p>Although the example above highlighted how we can, in principle, specify any null value we like, we do not always have this level of control in software. Although the <code class="docutils literal notranslate"><span class="pre">t.test()</span></code> function does allow this, within the context of a linear model, we will always automatically get comparisons that use an implicit proposed value of 0. For regression slopes, this is fine because a slope of 0 indicates <em>no relationship</em> and thus is sensible. However, for the intercept, the test is asking whether <span class="math notranslate nohighlight">\(\beta_{0} = 0\)</span>. In other words, could the population slope be a regression through the origin? For many problems, this is not a very sensible or meaningful question and thus the test on the intercept is largely ignored. This highlights the importance of considering what <em>questions</em> tests are asking when they are produced automatically.</p>
 </div>
+<aside class="topic">
+<p class="topic-title">What do you now know?</p>
+<p>In this section, we have explored the first part of NHST in terms of defining the null hypothesis. After reading this section, you should have a good sense of:</p>
+<ul class="simple">
+<li><p>The principle of comparing our estimated value to some proposed population value and calling the difference <span class="math notranslate nohighlight">\(\delta\)</span>.</p></li>
+<li><p>The idea that if we are <em>correct</em> about the population value, then the distribution of <span class="math notranslate nohighlight">\(\delta\)</span> will be centred on 0. Under the assumption that we are correct, larger values of <span class="math notranslate nohighlight">\(\delta\)</span> are therefore less probable than smaller values.</p></li>
+<li><p>The principle that, when selecting a proposed population value, NHST tells us to choose a value that indicates <em>no effect</em>. This defines the <em>null hypothesis</em>.</p></li>
+<li><p>The fact that the null value does not <em>have</em> to be 0, but often is (especially when tests are automatically generated in software).</p></li>
+<li><p>The idea that we can combined the concept of the <em>null hypothesis</em> with the distribution of <span class="math notranslate nohighlight">\(\delta\)</span> when we are correct to calculate how likely our calculated value of <span class="math notranslate nohighlight">\(\delta\)</span> would be, if the null were true.</p></li>
+</ul>
+</aside>
 <hr class="footnotes docutils" />
 <aside class="footnote-list brackets">
 <aside class="footnote brackets" id="expectfoot" role="note">
