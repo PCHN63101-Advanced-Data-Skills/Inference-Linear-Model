@@ -406,7 +406,7 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="uncertainty-in-estimation">
 <h1>Uncertainty in Estimation<a class="headerlink" href="#uncertainty-in-estimation" title="Link to this heading">#</a></h1>
-<p>In the previous section, we took a detour into the philosophy of science and the logical ground upon which statistical inference is based. For the moment, we will put that discussion to one side and get back to our statistical model. As a reminder, the aim of our statistical model is to estimate <em>population quantities</em> from a sample. If we had the whole population available, there would be no need for inference and our job would be done. Given that this is almost never practical, we need some method for trying to say something about the population based on the information in the sample (even if this desire is a logically flawed inductive aim). In order to do so, we need to understand more about our estimates and, crucially, their uncertainty. This will allow us to judge whether we can <em>trust</em> the values we have calculated as good approximations of the population, allowing us to reach conclusions that we can generalise beyond this sample.</p>
+<p>In the previous section, we took a detour into the philosophy of science and the logical ground upon which statistical inference is based. For the moment, we will put that discussion to one side and get back to our statistical model. As a reminder, the aim of our statistical model is to estimate <em>population quantities</em> from a sample. If we had the whole population available, there would be no need for inference and our job would be done. Given that this is almost never practical, we need some method for trying to say something about the population based on the information in the sample (even if this desire is logically flawed). In order to do so, we need to understand more about our estimates and, crucially, their uncertainty. This will allow us to judge whether we can <em>trust</em> the values we have calculated as good approximations of the population, allowing us to reach conclusions that we can try to generalise beyond this sample.</p>
 <section id="parameter-estimates-as-random-variables">
 <h2>Parameter Estimates as Random Variables<a class="headerlink" href="#parameter-estimates-as-random-variables" title="Link to this heading">#</a></h2>
 <figure class="align-right">
@@ -544,15 +544,15 @@ y \sim \mathcal{N}\left(5,2\right)
 
 <span class="n">df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">data.frame</span><span class="p">(</span><span class="n">Derivation</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Theoretical&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Empirical&quot;</span><span class="p">),</span><span class="w"> </span><span class="n">Mean</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="n">th.mean</span><span class="p">,</span><span class="n">em.mean</span><span class="p">),</span><span class="w"> </span>
 <span class="w">                 </span><span class="n">Variance</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="n">th.var</span><span class="p">,</span><span class="n">em.var</span><span class="p">))</span>
-<span class="nf">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">df</span><span class="p">,</span><span class="n">row.names</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </details>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   Derivation     Mean   Variance
-1 Theoretical 3.000000 0.06241401
-2   Empirical 2.997817 0.06297099
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  Derivation     Mean   Variance
+ Theoretical 3.000000 0.06241401
+   Empirical 2.997817 0.06297099
 </pre></div>
 </div>
 </div>
@@ -763,13 +763,17 @@ E\left(\hat{\beta}_{1}\right) = \beta_{1}.
 </section>
 <section id="what-about-multiple-rgression">
 <h3>What About Multiple Rgression?<a class="headerlink" href="#what-about-multiple-rgression" title="Link to this heading">#</a></h3>
-<p>We have seen the sampling distributions in <em>simple</em> regression, but what about <em>multiple</em> regression? The good news is that most of the theory stays the same, the only element that differs is the standard error. This is a consequence of the discussion we had last week about multiple regression coefficients represents the variance of a predictor <em>after</em> taking all other predictors into account.</p>
-<p>…</p>
+<p>We have seen the sampling distributions in <em>simple</em> regression, but what about <em>multiple</em> regression? The good news is that most of the theory stays the same. The only element that differs is the standard error. This is a consequence of the discussion we had last week about multiple regression coefficients represents the variance of a predictor <em>after</em> taking all other predictors into account. The sampling distribution for the slope estimate <span class="math notranslate nohighlight">\(j\)</span> in multiple regression is</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{\beta}_{j} \sim \mathcal{N}\left(\beta_{j},\frac{\sigma^{2}}{\sum{\left(x_{ij} - \bar{x}_{j}\right)^{2} \cdot \left(1 - R^{2}_{j}\right)}}\right).
+\]</div>
+<p>This is largely the same as before, except that the spread in <span class="math notranslate nohighlight">\(x_{j}\)</span> is now multiplied by the term <span class="math notranslate nohighlight">\((1 - R^{2}_{j})\)</span>. For now, we can think of this as an adjustment for how correlated predictor <span class="math notranslate nohighlight">\(j\)</span> is with all other predictors in the model. The bigger this is, the smaller <span class="math notranslate nohighlight">\((1 - R^{2}_{j})\)</span> becomes and the more that the spread of <span class="math notranslate nohighlight">\(x_{j}\)</span> is made <em>smaller</em>. As such, the greater the correlation, the <em>larger</em> the standard error. We will discuss the intuition behind this when we cover <em>multicollinearity</em> next week.</p>
 </section>
 </section>
 <section id="estimation-uncertainty-in-r">
 <h2>Estimation Uncertainty in <code class="docutils literal notranslate"><span class="pre">R</span></code><a class="headerlink" href="#estimation-uncertainty-in-r" title="Link to this heading">#</a></h2>
-<p>As a final part to this section, we can see how <code class="docutils literal notranslate"><span class="pre">R</span></code> reports the uncertainty of all the estimates from a multiple regression fit using the <code class="docutils literal notranslate"><span class="pre">lm()</span></code> function. Here, we will return to the <code class="docutils literal notranslate"><span class="pre">mtcars</span></code> example and fit the model <code class="docutils literal notranslate"><span class="pre">mpg</span> <span class="pre">~</span> <span class="pre">wt</span> <span class="pre">+</span> <span class="pre">hp</span> <span class="pre">+</span> <span class="pre">disp</span></code>. We display just a subset of the output table below:</p>
+<p>As a final part to this section, we can see how <code class="docutils literal notranslate"><span class="pre">R</span></code> reports the uncertainty of all the estimates from a multiple regression fit using the <code class="docutils literal notranslate"><span class="pre">lm()</span></code> function. Here, we will return to the <code class="docutils literal notranslate"><span class="pre">mtcars</span></code> example and fit the model <code class="docutils literal notranslate"><span class="pre">mpg</span> <span class="pre">~</span> <span class="pre">wt</span> <span class="pre">+</span> <span class="pre">hp</span> <span class="pre">+</span> <span class="pre">disp</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">data</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
@@ -897,11 +901,14 @@ F-statistic: 44.57 on 3 and 28 DF,  p-value: 8.65e-11
 </div>
 <aside class="topic">
 <p class="topic-title">What do you now know?</p>
-<p>In this section, we have explored … After reading this section, you should have a good sense of:</p>
+<p>In this section, we have explored how uncertainty in the estimation of population parameters can be quantified. After reading this section, you should have a good sense of:</p>
 <ul class="simple">
-<li><p>…</p></li>
-<li><p>…</p></li>
-<li><p>…</p></li>
+<li><p>The concept that parameter <em>estimates</em> are random variables with some sampling distribution.</p></li>
+<li><p>How the <em>mean</em> and <em>variance</em> of these sampling distributions characterise the <em>bias</em> and <em>variance</em> of our estimates (thinking of the dartboard analogy).</p></li>
+<li><p>How the standard deviation of a sampling distribution is known as the <em>standard error</em>, and why this differs from the raw standard deviation of a dataset.</p></li>
+<li><p>How the sampling distributions of the estimates in linear models are known, as a consequence of assuming a normal population distribution.</p></li>
+<li><p>Why the estimates in linear model are considered <em>unbiased</em>.</p></li>
+<li><p>How the standard error of the estimates scales with both the spread of <span class="math notranslate nohighlight">\(x\)</span> and the sample size.</p></li>
 </ul>
 </aside>
 <hr class="footnotes docutils" />
