@@ -396,7 +396,7 @@
 <p>In our previous weeks, we have established a very general framework for statistical modelling and have examined one particular case in the form of simple/multiple regression. Throughout all of this, our aim was to say something about a <em>population</em> on the basis of a <em>sample</em>. At the end of the previous lesson, we were left with an estimated model that we visualised and interpreted in a very general sense. However, it is important to remind ourseleves that we are not really interested in the <em>estimates</em> per-se. What we are interested in is the <em>population values</em>. We may well have a slope estimate of <span class="math notranslate nohighlight">\(\hat{\beta}_{1} = -3.80\)</span>, but our real question is whether the <em>real</em> slope is equal to <span class="math notranslate nohighlight">\(-3.80\)</span>, or whether <span class="math notranslate nohighlight">\(-3.80\)</span> is even close to the real value? In general saying something about only a single specific group of measurements is not very useful scientifically. However, saying something much more general <em>is</em> very useful because we can make predictions about the future, allowing us to implement changes that have real-world consequences and develop theories that apply to the population as a whole. Our desire is therefore to go from results in one specific sample and generalise much more widely. This seems a noble aim. However, there are some deep philosophical issues with attempting to do this.</p>
 <section id="deductive-vs-inductive-reasoning">
 <h2>Deductive vs Inductive Reasoning<a class="headerlink" href="#deductive-vs-inductive-reasoning" title="Link to this heading">#</a></h2>
-<p>Deductive and inductive reasoning are two different approaches to reaching conclusions on the basis of logic. Deductive reasoning is based on starting with a general premise and then reaching a conclusion as a logical consequence. For instance:</p>
+<p>Deductive and inductive reasoning are two different approaches to reaching conclusions on the basis of logic. Deductive reasoning is based on starting with a general premise and then reaching a specific conclusion as a logical consequence. For instance:</p>
 <ol class="arabic simple">
 <li><p>All humans are mortal.</p></li>
 <li><p>George is a human.</p></li>
@@ -409,13 +409,13 @@
 <li><p>The ground is not wet.</p></li>
 <li><p>Therefore, it is not raining.</p></li>
 </ol>
-<p>There is no way around this. If a logic consequence of rain is that the ground is wet, then the ground being dry <em>must</em> indicate that it is <em>not</em> raining. The only way this could not be wrong is if our premise is wrong. This is what makes mathematics so powerful, because <em>every</em> result is a deductive consequence of its axioms<a class="footnote-reference brackets" href="#axiom-foot" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>. Mathematics is the most powerful deductive force in the world. So long as the axioms are true, everything else <em>has</em> to be true.</p>
-<p>Inductive reasoning, on the other hand, goes from the <em>specific</em> to the <em>general</em>. It involves generalising from what we have observed so far, and assuming that all cases we will ever observe in the future will be the same. For instance:</p>
+<p>There is no way around this. If a logic consequence of rain is that the ground is wet, then the ground being dry <em>must</em> indicate that it is <em>not</em> raining. The only way this could be wrong is if our premise is wrong. This is what makes mathematics so powerful. Because <em>every</em> result is a deductive consequence of its axioms<a class="footnote-reference brackets" href="#axiom-foot" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>, mathematics is the most powerful deductive force in the world. So long as the axioms are true, everything else <em>has</em> to be true.</p>
+<p>Inductive reasoning, on the other hand, goes from the <em>specific</em> to the <em>general</em>. It involves generalising from what we have observed so far, and assuming that all cases we will observe in the future will be the same. For instance:</p>
 <ol class="arabic simple">
 <li><p>All life forms so far discovered are composed of cells.</p></li>
 <li><p>Therefore, all life forms are composed of cells.</p></li>
 </ol>
-<p>This is exactly the form of reasoning that typifies scientific investigation. Unfortunately, unlike deductive reasoning, this is <em>not logically valid</em>.</p>
+<p>This is exactly the form of reasoning that typifies scientific investigation. We conduct experiments and then generalise to all future observations. If we do an experiment enough times and get the same result, we assume all future attempts will lead to the same result. Unfortunately, unlike deductive reasoning, this is <em>not logically valid</em>.</p>
 </section>
 <section id="the-problem-of-induction">
 <h2>The Problem of Induction<a class="headerlink" href="#the-problem-of-induction" title="Link to this heading">#</a></h2>
