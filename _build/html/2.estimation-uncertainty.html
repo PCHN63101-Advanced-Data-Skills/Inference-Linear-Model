@@ -16,20 +16,22 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-  
-  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
-
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b76e3c8a" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
@@ -37,10 +39,11 @@
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="_static/test.css?v=90b7ad94" />
   
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
-  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="_static/documentation_options.js?v=9eb32ce0"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
@@ -67,6 +70,7 @@
     <link rel="prev" title="The Purpose of Statistical Inference" href="1.purpose-of-inference.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -82,19 +86,8 @@
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-primary-sidebar-checkbox"/>
-  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
-  
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-secondary-sidebar-checkbox"/>
-  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
-  
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
+  <dialog id="pst-search-dialog">
+    
 <form class="bd-search d-flex align-items-center"
       action="search.html"
       method="get">
@@ -102,7 +95,6 @@
   <input type="search"
          class="form-control"
          name="q"
-         id="search-input"
          placeholder="Search this book..."
          aria-label="Search this book..."
          autocomplete="off"
@@ -110,8 +102,8 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
-  </div>
+</form>
+  </dialog>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
@@ -127,7 +119,8 @@
       
       
       
-      <div class="bd-sidebar-primary bd-sidebar">
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -157,21 +150,17 @@
     
     
     <img src="_static/logo.png" class="logo__image only-light" alt="Linear Models II: Statistical Inference - Home"/>
-    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Linear Models II: Statistical Inference - Home"/>`);</script>
+    <img src="_static/logo.png" class="logo__image only-dark pst-js-only" alt="Linear Models II: Statistical Inference - Home"/>
   
   
 </a></div>
         <div class="sidebar-primary-item">
 
- <script>
- document.write(`
-   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script></div>
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
@@ -198,9 +187,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -344,24 +338,16 @@
 
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
-  </button>
-`);
-</script>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-  </button>
-`);
-</script>
+</button>
 <button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
@@ -397,8 +383,6 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dependence-on-sample-size">Dependence on Sample Size</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-about-the-intercept-and-variance">What About the Intercept and Variance?</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-about-multiple-rgression">What About Multiple Rgression?</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#estimation-uncertainty-in-r">Estimation Uncertainty in <code class="docutils literal notranslate"><span class="pre">R</span></code></a><ul class="nav section-nav flex-column">
@@ -420,14 +404,14 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="uncertainty-in-estimation">
 <h1>Uncertainty in Estimation<a class="headerlink" href="#uncertainty-in-estimation" title="Link to this heading">#</a></h1>
-<p>In the previous section, we took a detour into the philosophy of science and the logical ground upon which statistical inference is based. For the moment, we will put that discussion to one side and get back to our statistical model. As a reminder, the aim of our statistical model is to estimate <em>population quantities</em> from a sample. If we had the whole population available, there would be no need for inference and our job would be done. Given that this is almost never practical, we need some method for trying to say something about the population based on the information in the sample (even if this desire is logically flawed). In order to do so, we need to understand more about our estimates and, crucially, their uncertainty. This will allow us to judge whether we can <em>trust</em> the values we have calculated as good approximations of the population, allowing us to reach conclusions that we can try to generalise beyond this sample.</p>
+<p>In the previous section, we took a detour into the philosophy of science and the logical ground upon which statistical inference is based. For the moment, we will put that discussion to one side and get back to our statistical model. As a reminder, the aim of our statistical model is to estimate <em>population quantities</em> from a sample. If we had the whole population available, there would be no need for inference and our job would be done. Given that this is almost never practical, we need some method for trying to say something about the population based on the information in the sample (even if this desire is logically flawed). In order to do so, we need to understand more about our estimates and, crucially, their uncertainty. This will allow us to judge whether we can <em>trust</em> the values we have calculated as good approximations of the population.</p>
 <section id="parameter-estimates-as-random-variables">
 <h2>Parameter Estimates as Random Variables<a class="headerlink" href="#parameter-estimates-as-random-variables" title="Link to this heading">#</a></h2>
 <figure class="align-right">
 <a class="reference internal image-reference" href="_images/darts-analogy.png"><img alt="_images/darts-analogy.png" src="_images/darts-analogy.png" style="width: 269.1px; height: 269.1px;" /></a>
 </figure>
-<p>The first characteristic of our estimates that we need to understand is that they are <em>random variables</em>. Remember that we conceptualise the population parameters as fixed. For every sample we draw from the population, we can use a method such as Maximum Likelihood to <em>estimate</em> those population constants. However, these estimates will change with every new sample we take. You can think of this like throwing darts at a dart board. If the bullseye represents the true population value, every time we take a sample and produce an estimate we are throwing a dart at the board. Sometimes we will hit the bullseyes, other times we might be close and other times we might be far away. Over time, a <em>distribution</em> of darts will emerge. If we are doing well, the hope is that most of our darts are close to the bullseye with fewer of them further away.</p>
-<p>Remembering back to earlier in this unit, a variable whose value changes every time we measure it is known as a <em>random variable</em>. As such, the parameter estimates can be characterised as random variables, meaning that each estimate is associated with some probability distribution that indicates:</p>
+<p>The first characteristic of our estimates that we need to understand is that they are <em>random variables</em>. Remember that we conceptualise the population parameters as fixed. For every sample we draw from the population, we can use a method such as Maximum Likelihood to <em>estimate</em> those population values. However, these estimates will change with every new sample we take. You can think of this like throwing darts at a dart board. If the bullseye represents the true population value, every time we take a sample and produce an estimate we are throwing a dart at the board. Sometimes we will hit the bullseyes, other times we might be close and other times we might be far away. Over time, a <em>distribution</em> of darts will emerge. If we are doing well, the hope is that most of our darts are close to the bullseye with fewer of them further away.</p>
+<p>As defined earlier in this unit, a variable whose value changes every time we measure it is known as a <em>random variable</em>. As such, the parameter estimates can be characterised as random variables, meaning that each estimate is associated with some probability distribution that indicates</p>
 <ol class="arabic simple">
 <li><p>What the <em>average</em> value of the estimate is across different samples (the expected value)</p></li>
 <li><p>How much the value of the estimate will change across difference samples (the variance)</p></li>
@@ -445,32 +429,32 @@ y \sim \mathcal{N}\left(5,2\right)
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">set.seed</span><span class="p">(</span><span class="m">999</span><span class="p">)</span>
 
-<span class="n">mu</span><span class="w">     </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">5</span><span class="w">             </span><span class="c1"># True mean</span>
-<span class="n">sigma</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">2</span><span class="w">             </span><span class="c1"># True standard deviation</span>
-<span class="n">n.sims</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1000</span><span class="w">          </span><span class="c1"># Consider 1,000 different samples</span>
-<span class="n">n</span><span class="w">      </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">100</span><span class="w">           </span><span class="c1"># Each sample will consist of 100 observations</span>
-<span class="n">mu.hat</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rep</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="n">n.sims</span><span class="p">)</span><span class="w"> </span><span class="c1"># Array for saving each estimate of mu</span>
+<span class="c1"># True parameter values</span>
+<span class="n">mu</span><span class="w">     </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">5</span>
+<span class="n">sigma</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">2</span>
 
-<span class="nf">for </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="n">n.sims</span><span class="p">){</span>
-<span class="w">    </span><span class="n">y</span><span class="w">         </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="n">mu</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="n">sigma</span><span class="p">)</span><span class="w"> </span><span class="c1"># Simulate a sample from the population</span>
+<span class="c1"># Simulations</span>
+<span class="n">n.sims</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1000</span><span class="w">          </span><span class="c1"># 1,000 repeats of the experiment</span>
+<span class="n">n</span><span class="w">      </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">100</span><span class="w">           </span><span class="c1"># Each experiment has 100 observations</span>
+<span class="n">mu.hat</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rep</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="n">n.sims</span><span class="p">)</span>
+
+<span class="kr">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="kr">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="n">n.sims</span><span class="p">){</span>
+<span class="w">    </span><span class="n">y</span><span class="w">         </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="n">mu</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="n">sigma</span><span class="p">)</span><span class="w"> </span><span class="c1"># Simulate a sample</span>
 <span class="w">    </span><span class="n">mu.hat</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">mean</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="w">                     </span><span class="c1"># Estimate mu and save it</span>
 <span class="p">}</span>
 
 <span class="c1"># Histogram of the sampling distribution</span>
-<span class="nf">par</span><span class="p">(</span><span class="n">cex.lab</span><span class="o">=</span><span class="m">1.3</span><span class="p">,</span><span class="w"> </span><span class="n">cex.axis</span><span class="o">=</span><span class="m">1.1</span><span class="p">,</span><span class="w"> </span><span class="n">cex</span><span class="o">=</span><span class="m">1.4</span><span class="p">)</span><span class="w"> </span><span class="c1"># plot scaling</span>
-<span class="nf">hist</span><span class="p">(</span><span class="n">mu.hat</span><span class="p">,</span><span class="w"> </span>
-<span class="w">    </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;skyblue&quot;</span><span class="p">,</span><span class="w"> </span>
-<span class="w">    </span><span class="n">probability</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span>
+<span class="nf">hist</span><span class="p">(</span><span class="n">mu.hat</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;skyblue&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">probability</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span>
 <span class="w">    </span><span class="n">main</span><span class="o">=</span><span class="nf">expression</span><span class="p">(</span><span class="s">&quot;Sampling Distribution of &quot;</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nf">hat</span><span class="p">(</span><span class="n">mu</span><span class="p">)),</span><span class="w"> </span>
 <span class="w">    </span><span class="n">xlab</span><span class="o">=</span><span class="nf">expression</span><span class="p">(</span><span class="nf">hat</span><span class="p">(</span><span class="n">mu</span><span class="p">)))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/ce0dbbd993995d66f31fc45c820d6c570021de61dc48ff5ce2a6813236560fd2.png"><img alt="_images/ce0dbbd993995d66f31fc45c820d6c570021de61dc48ff5ce2a6813236560fd2.png" src="_images/ce0dbbd993995d66f31fc45c820d6c570021de61dc48ff5ce2a6813236560fd2.png" style="width: 720px; height: 420px;" /></a>
+<a class="reference internal image-reference" href="_images/06c3753e9b119ad60bab486bb0dc760004a7c1fe5fd728baa66814bbb5f52e0e.png"><img alt="_images/06c3753e9b119ad60bab486bb0dc760004a7c1fe5fd728baa66814bbb5f52e0e.png" src="_images/06c3753e9b119ad60bab486bb0dc760004a7c1fe5fd728baa66814bbb5f52e0e.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
-<p>So we can see that <span class="math notranslate nohighlight">\(\hat{\mu}\)</span> is indeed a random variable, with a distribution looks a lot like a normal distribution. In fact, it <em>is</em> a normal distribution, which is a consequence of assuming that the population distribution is normal. We can also examine the empirical<a class="footnote-reference brackets" href="#empirfoot" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> mean and standard deviation of this distribution:</p>
+<p>So we can see that the distribution of <span class="math notranslate nohighlight">\(\hat{\mu}\)</span> looks a lot like a normal distribution. In fact, it <em>is</em> a normal distribution. This is one of the useful consequence of assuming that the population distribution is normal. We can also examine the empirical<a class="footnote-reference brackets" href="#empirical-foot" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> mean and standard deviation of this distribution:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="nf">mean</span><span class="p">(</span><span class="n">mu.hat</span><span class="p">))</span>
@@ -490,12 +474,12 @@ y \sim \mathcal{N}\left(5,2\right)
 </section>
 <section id="sampling-distributions">
 <h2>Sampling Distributions<a class="headerlink" href="#sampling-distributions" title="Link to this heading">#</a></h2>
-<p>The probability distributions of parameters estimates play a central role in statistical inference and so are given a special names. These are known as <em>sampling distributions</em>. So, we now have:</p>
+<p>The probability distributions of parameters estimates play a central role in statistical inference and so are given a special name. These are known as <em>sampling distributions</em>. So, we now have:</p>
 <ul class="simple">
 <li><p><em>Population distributions</em> - our theoretical data-generating process</p></li>
 <li><p><em>Sampling distributions</em> - how quantities associated with the data-generating process change with each new sample.</p></li>
 </ul>
-<p>In the example above, the quantity that changed with each sample was a simple estimate of the mean. However, any value we can calculate from our sample that changes with each new sample is a random variable with a sampling distribution. For our current purpose, knowing the exact form of the sampling distribution is key because it tells us whether our estimate is biased, but also how <em>uncertain</em> we are about our estimated values. Because this characterisation of uncertainty is key for inference, the standard deviation of a sampling distribution is also given a special name: the <em>standard error</em>.</p>
+<p>In the example above, the quantity that changed with each sample was a simple estimate of the mean. However, any value we can calculate from our sample that changes with each new sample is a random variable with a sampling distribution. For our current purpose, knowing the exact form of the sampling distribution is key because it tells us both whether our estimate is <em>biased</em> and how <em>uncertain</em> we are about our estimated values. A very <em>narrow</em> sampling distribution suggests we will usually be close to the true value, whereas a very <em>wide</em> sampling distribution suggests we will be far off the true value in many cases. Because this uncertainty is governed by the <em>width</em> of the sampling distribution, we have a keen interest in knowing what the <em>standard deviation</em> of this distribution is. Because this is such a key quantity for inference, the standard deviation of a sampling distribution is given a special name: the <em>standard error</em>.</p>
 <div class="tip admonition">
 <p class="admonition-title">Standard Error vs Standard Deviation</p>
 <p>Understanding what the standard error is, and how it differs from the standard deviation, is crucial because students often get these muddled. The standard deviation of a set of data represents the <em>raw variability</em> in that data. It is specific to that sample and indicates how far, on average, each data point is from the mean. The <em>standard error</em> is the theoretical variability of some estimate from that sample. This tells us how <em>precise</em> the estimate is likely to be, on average. The standard deviation is therefore most relevant for <em>descriptive statistics</em>, whereas the standard error is most relevant for <em>inferential statistics</em>.</p>
@@ -503,7 +487,7 @@ y \sim \mathcal{N}\left(5,2\right)
 </div>
 <p>The idea of the sampling distribution is illustrated in <a class="reference internal" href="#sampling-dist-fig"><span class="std std-numref">Fig. 1</span></a>. Here, we conceptualise drawing <span class="math notranslate nohighlight">\(k\)</span> samples of size <span class="math notranslate nohighlight">\(n\)</span> from the same population distribution. Each sample provides an estimate of the mean. Based on this sample of estimates, we can build a distribution of the most probable values for <span class="math notranslate nohighlight">\(\hat{\mu}\)</span> across repeated samples. This distribution is the <em>sampling distribution</em> of the estimate <span class="math notranslate nohighlight">\(\hat{\mu}\)</span>.</p>
 <figure class="align-default" id="sampling-dist-fig">
-<a class="reference internal image-reference" href="_images/sampling-dist.png"><img alt="_images/sampling-dist.png" src="_images/sampling-dist.png" style="width: 700px;" /></a>
+<a class="reference internal image-reference" href="_images/sampling-dist.png"><img alt="_images/sampling-dist.png" src="_images/sampling-dist.png" style="width: 600px;" /></a>
 <figcaption>
 <p><span class="caption-number">Fig. 1 </span><span class="caption-text">Illustration of the concept of a sampling distribution.</span><a class="headerlink" href="#sampling-dist-fig" title="Link to this image">#</a></p>
 </figcaption>
@@ -527,7 +511,7 @@ y \sim \mathcal{N}\left(5,2\right)
 \hat{\beta}_{1} \sim \mathcal{N}\left(\beta_{1},\frac{\sigma^{2}}{\sum{\left(x_{i} - \bar{x}\right)^{2}}}\right).
 \]</div>
 <p>So, this is a normal distribution with an expected value of <span class="math notranslate nohighlight">\(\beta_{1}\)</span> (the <em>true</em> slope value), and a variance that is a scaled version of the population variance.</p>
-<p>We can demonstrate the correctness of this derivation using simulations in <code class="docutils literal notranslate"><span class="pre">R</span></code>. The output below compares the <em>empirical</em> mean and variance of the sampling distribution of <span class="math notranslate nohighlight">\(\hat{\beta}_{1}\)</span> to their <em>theoretical</em> values from the formula above. You can expand the box below if you want to see the code, but the more important aspect is looking at the comparison in the output.</p>
+<p>Before exploring what these values mean in more detail, we can demonstrate the correctness of this derivation using simulations in <code class="docutils literal notranslate"><span class="pre">R</span></code>. This is preferable to working through all the maths because we can <em>see</em> the result in front of us. As an example, the output below compares the <em>empirical</em> mean and variance of the sampling distribution of <span class="math notranslate nohighlight">\(\hat{\beta}_{1}\)</span> to their <em>theoretical</em> values using the formula above. You can expand the box below if you want to see the code, but the more important aspect is looking at the comparison in the output.</p>
 <div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -537,28 +521,32 @@ y \sim \mathcal{N}\left(5,2\right)
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">set.seed</span><span class="p">(</span><span class="m">777</span><span class="p">)</span>
 
+<span class="c1"># True values</span>
 <span class="n">beta.0</span><span class="w">     </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">2</span>
 <span class="n">beta.1</span><span class="w">     </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">3</span>
 <span class="n">sigma</span><span class="w">      </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">5</span>
-<span class="n">n</span><span class="w">          </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">50</span>
-<span class="n">n.sims</span><span class="w">     </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">10000</span>
-<span class="n">x</span><span class="w">          </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">runif</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">10</span><span class="p">)</span>
+
+<span class="c1"># Simulations</span>
+<span class="n">n</span><span class="w">          </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">50</span><span class="w">             </span><span class="c1"># sample size of each experiment</span>
+<span class="n">n.sims</span><span class="w">     </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">10000</span><span class="w">          </span><span class="c1"># number of experiments</span>
+<span class="n">x</span><span class="w">          </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">runif</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">10</span><span class="p">)</span><span class="w">  </span><span class="c1"># random sample of values for the predictor</span>
 <span class="n">beta.1.hat</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rep</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="n">n.sims</span><span class="p">)</span>
 
-<span class="nf">for </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="n">n.sims</span><span class="p">){</span>
+<span class="kr">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="kr">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="n">n.sims</span><span class="p">){</span>
 <span class="w">    </span><span class="n">y</span><span class="w">             </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="n">beta.0</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">beta.1</span><span class="o">*</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="n">sigma</span><span class="p">)</span>
 <span class="w">    </span><span class="n">beta.1.hat</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">coef</span><span class="p">(</span><span class="nf">lm</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">x</span><span class="p">))[</span><span class="m">2</span><span class="p">]</span>
 <span class="p">}</span>
 
 <span class="c1"># Compare theoretical and empirical values</span>
-<span class="n">th.var</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">sigma</span><span class="o">^</span><span class="m">2</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nf">sum</span><span class="p">((</span><span class="n">x</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nf">mean</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="o">^</span><span class="m">2</span><span class="p">)</span>
-<span class="n">th.mean</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">beta.1</span>
-<span class="n">em.var</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">var</span><span class="p">(</span><span class="n">beta.1.hat</span><span class="p">)</span>
-<span class="n">em.mean</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">mean</span><span class="p">(</span><span class="n">beta.1.hat</span><span class="p">)</span>
+<span class="n">theory.var</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">sigma</span><span class="o">^</span><span class="m">2</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nf">sum</span><span class="p">((</span><span class="n">x</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nf">mean</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="o">^</span><span class="m">2</span><span class="p">)</span>
+<span class="n">theory.mean</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">beta.1</span>
+<span class="n">empiri.var</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">var</span><span class="p">(</span><span class="n">beta.1.hat</span><span class="p">)</span>
+<span class="n">empiri.mean</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">mean</span><span class="p">(</span><span class="n">beta.1.hat</span><span class="p">)</span>
 
-<span class="n">df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">data.frame</span><span class="p">(</span><span class="n">Derivation</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Theoretical&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Empirical&quot;</span><span class="p">),</span><span class="w"> </span><span class="n">Mean</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="n">th.mean</span><span class="p">,</span><span class="n">em.mean</span><span class="p">),</span><span class="w"> </span>
-<span class="w">                 </span><span class="n">Variance</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="n">th.var</span><span class="p">,</span><span class="n">em.var</span><span class="p">))</span>
-<span class="nf">print</span><span class="p">(</span><span class="n">df</span><span class="p">,</span><span class="n">row.names</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span>
+<span class="n">results</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">data.frame</span><span class="p">(</span><span class="n">Derivation</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Theoretical&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Empirical&quot;</span><span class="p">),</span><span class="w"> </span>
+<span class="w">                      </span><span class="n">Mean</span><span class="w">      </span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="n">theory.mean</span><span class="p">,</span><span class="n">empiri.mean</span><span class="p">),</span><span class="w"> </span>
+<span class="w">                      </span><span class="n">Variance</span><span class="w">  </span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="n">theory.var</span><span class="p">,</span><span class="n">empiri.var</span><span class="p">))</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">results</span><span class="p">,</span><span class="w"> </span><span class="n">row.names</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -571,7 +559,7 @@ y \sim \mathcal{N}\left(5,2\right)
 </div>
 </div>
 </div>
-<p>These values are very close and, in principle, should converge as the number of simulations increases. We can also visualise the theoretical normal sampling distribution on top of the empirical sampling distribution to show their close correspondance.</p>
+<p>These values are very close and, in principle, should converge as the number of simulations increases. We can also visualise the theoretical sampling distribution on top of the empirical sampling distribution to show their close correspondance.</p>
 <div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -579,24 +567,28 @@ y \sim \mathcal{N}\left(5,2\right)
 <span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">par</span><span class="p">(</span><span class="n">cex.lab</span><span class="o">=</span><span class="m">1.3</span><span class="p">,</span><span class="w"> </span><span class="n">cex.axis</span><span class="o">=</span><span class="m">1.1</span><span class="p">,</span><span class="w"> </span><span class="n">cex</span><span class="o">=</span><span class="m">1.4</span><span class="p">)</span><span class="w"> </span><span class="c1"># plot scaling</span>
-
-<span class="c1"># Plot histogram of sampling distribution</span>
-<span class="nf">hist</span><span class="p">(</span><span class="n">beta.1.hat</span><span class="p">,</span><span class="w"> </span><span class="n">probability</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;skyblue&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">1.7</span><span class="p">),</span><span class="w"> </span><span class="n">xlim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">4</span><span class="p">),</span><span class="w"> </span>
-<span class="w">    </span><span class="n">breaks</span><span class="o">=</span><span class="m">50</span><span class="p">,</span><span class="w"> </span><span class="n">main</span><span class="o">=</span><span class="nf">expression</span><span class="p">(</span><span class="s">&quot;Empirical vs Theoretical Sampling Distribution of &quot;</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nf">hat</span><span class="p">(</span><span class="n">beta</span><span class="p">)[</span><span class="m">1</span><span class="p">]),</span>
-<span class="w">    </span><span class="n">xlab</span><span class="o">=</span><span class="nf">expression</span><span class="p">(</span><span class="nf">hat</span><span class="p">(</span><span class="n">beta</span><span class="p">)[</span><span class="m">1</span><span class="p">]))</span>
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot histogram of sampling distribution</span>
+<span class="nf">hist</span><span class="p">(</span><span class="n">beta.1.hat</span><span class="p">,</span><span class="w"> </span>
+<span class="w">     </span><span class="n">probability</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span>
+<span class="w">     </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;skyblue&quot;</span><span class="p">,</span><span class="w"> </span>
+<span class="w">     </span><span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">1.7</span><span class="p">),</span><span class="w"> </span>
+<span class="w">     </span><span class="n">xlim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">4</span><span class="p">),</span><span class="w"> </span>
+<span class="w">     </span><span class="n">breaks</span><span class="o">=</span><span class="m">50</span><span class="p">,</span><span class="w"> </span>
+<span class="w">     </span><span class="n">main</span><span class="o">=</span><span class="nf">expression</span><span class="p">(</span><span class="s">&quot;Empirical vs Theoretical Sampling Distribution of &quot;</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nf">hat</span><span class="p">(</span><span class="n">beta</span><span class="p">)[</span><span class="m">1</span><span class="p">]),</span>
+<span class="w">     </span><span class="n">xlab</span><span class="o">=</span><span class="nf">expression</span><span class="p">(</span><span class="nf">hat</span><span class="p">(</span><span class="n">beta</span><span class="p">)[</span><span class="m">1</span><span class="p">])</span>
+<span class="p">)</span>
 
 <span class="c1"># Add a normal density curve with the theoretical mean and standard error</span>
-<span class="nf">curve</span><span class="p">(</span><span class="nf">dnorm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="n">th.mean</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="nf">sqrt</span><span class="p">(</span><span class="n">th.var</span><span class="p">)),</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="o">=</span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="n">add</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="nf">curve</span><span class="p">(</span><span class="nf">dnorm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="n">theory.mean</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="nf">sqrt</span><span class="p">(</span><span class="n">theory.var</span><span class="p">)),</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="o">=</span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="n">add</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </details>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/65c4e2154117e6aa0a23e9c5450d868528f5d1447ff4d0b877b0c94e1f6ab5c5.png"><img alt="_images/65c4e2154117e6aa0a23e9c5450d868528f5d1447ff4d0b877b0c94e1f6ab5c5.png" src="_images/65c4e2154117e6aa0a23e9c5450d868528f5d1447ff4d0b877b0c94e1f6ab5c5.png" style="width: 720px; height: 420px;" /></a>
+<a class="reference internal image-reference" href="_images/fd5d773a1ebead6df74601af3d944ea30a06a9762fa24f1089b954ca28fa37aa.png"><img alt="_images/fd5d773a1ebead6df74601af3d944ea30a06a9762fa24f1089b954ca28fa37aa.png" src="_images/fd5d773a1ebead6df74601af3d944ea30a06a9762fa24f1089b954ca28fa37aa.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
-<p>So, the main take-away here is that the theory works and the form of the sampling distribution for <span class="math notranslate nohighlight">\(\hat{\beta}_{1}\)</span> is known. Importantly, this can be derived mathematically, without the need for simulation, though it is important to recognise that this depends upon the population distribution being normal<a class="footnote-reference brackets" href="#cltfoot" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>.</p>
+<p>The main take-away here is that the theory works and the form of the sampling distribution for <span class="math notranslate nohighlight">\(\hat{\beta}_{1}\)</span> is known. Importantly, this can be derived <em>mathematically</em>, without the need for simulation, so long as the population distribution is normal<a class="footnote-reference brackets" href="#clt-foot" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>.</p>
 <section id="understanding-the-expected-value">
 <h3>Understanding the Expected Value<a class="headerlink" href="#understanding-the-expected-value" title="Link to this heading">#</a></h3>
 <p>As already mentioned, the expected value of the sampling distribution is important in order to determine whether our estimation method is <em>biased</em>. For the derivation above, we have</p>
@@ -604,7 +596,7 @@ y \sim \mathcal{N}\left(5,2\right)
 \[
 E\left(\hat{\beta}_{1}\right) = \beta_{1}.
 \]</div>
-<p>As such, we expect that, on average across samples, our estimate will be equal to the population value. Going back to the dartboard analogy, this would be akin to our throws mainly clustering on or around the bullseye, meaning that, on average, we have hit the bullseye<a class="footnote-reference brackets" href="#jokefoot" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>. A <em>biased</em> estimate, on the other hand, would be one where our throws are consistently clustering around a point that is <em>not</em> our target. On average, we will therefore get the wrong answer. We have seen this previously when discussing the variance estimate from MLE. As such, our desire is generally for an estimate that is <em>unbiased</em> so that we have some theoretical guarantee that we will be accurately estimating the population value over repeated experimentation. Notice that this implicitly embeds the idea of <em>replication</em> in order to accurately estimate the population value.</p>
+<p>As such, we expect that, on average across samples, our estimate will be equal to the population value. Going back to the dartboard analogy, this would be akin to our throws mainly clustering on or around the bullseye, meaning that, on average, we have hit the bullseye<a class="footnote-reference brackets" href="#joke-foot" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>. A <em>biased</em> estimate, on the other hand, would be one where our throws are consistently clustering around a point that is <em>not</em> our target. On average, we will therefore get the wrong answer. We have seen this previously when discussing the variance estimate from MLE. As such, our desire is generally for an estimate that is <em>unbiased</em> so that we have some theoretical guarantee that we will be accurately estimating the population value over repeated experimentation.</p>
 </section>
 <section id="understanding-the-standard-error">
 <h3>Understanding the Standard Error<a class="headerlink" href="#understanding-the-standard-error" title="Link to this heading">#</a></h3>
@@ -627,9 +619,6 @@ E\left(\hat{\beta}_{1}\right) = \beta_{1}.
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">set.seed</span><span class="p">(</span><span class="m">42</span><span class="p">)</span>
 
-<span class="c1"># Plot size</span>
-<span class="nf">options</span><span class="p">(</span><span class="n">repr.plot.width</span><span class="o">=</span><span class="m">14</span><span class="p">,</span><span class="w"> </span><span class="n">repr.plot.height</span><span class="o">=</span><span class="m">8</span><span class="p">)</span>
-
 <span class="c1"># Parameters</span>
 <span class="n">n</span><span class="w">      </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">30</span>
 <span class="n">beta.0</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">0</span>
@@ -637,31 +626,30 @@ E\left(\hat{\beta}_{1}\right) = \beta_{1}.
 <span class="n">sigma</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">5</span>
 <span class="n">n.reps</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">4</span>
 
-<span class="c1"># Layout and scaling</span>
+<span class="c1"># Layout</span>
 <span class="nf">par</span><span class="p">(</span><span class="n">mfrow</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">4</span><span class="p">),</span><span class="w"> </span><span class="n">mar</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="m">3</span><span class="p">,</span><span class="m">2</span><span class="p">,</span><span class="m">1</span><span class="p">))</span>
-<span class="nf">par</span><span class="p">(</span><span class="n">cex.lab</span><span class="o">=</span><span class="m">1.3</span><span class="p">,</span><span class="w"> </span><span class="n">cex.axis</span><span class="o">=</span><span class="m">1.1</span><span class="p">,</span><span class="w"> </span><span class="n">cex</span><span class="o">=</span><span class="m">1.4</span><span class="p">)</span>
 
 <span class="c1"># Low spread sims</span>
-<span class="nf">for </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="n">n.reps</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="n">x.l</span><span class="w">   </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">runif</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="m">9.5</span><span class="p">,</span><span class="w"> </span><span class="m">10.5</span><span class="p">)</span>
-<span class="w">  </span><span class="n">y.l</span><span class="w">   </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="n">beta.0</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">beta.1</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x.l</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="n">sigma</span><span class="p">)</span>
-<span class="w">  </span><span class="n">fit.l</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">y.l</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">x.l</span><span class="p">)</span>
-<span class="w">  </span><span class="n">title</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">paste</span><span class="p">(</span><span class="s">&quot;Low Spread&quot;</span><span class="p">,</span><span class="n">i</span><span class="p">)</span>
+<span class="kr">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="kr">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="n">n.reps</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">x.low</span><span class="w">   </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">runif</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="m">9.5</span><span class="p">,</span><span class="w"> </span><span class="m">10.5</span><span class="p">)</span>
+<span class="w">  </span><span class="n">y.low</span><span class="w">   </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="n">beta.0</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">beta.1</span><span class="o">*</span><span class="n">x.low</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="n">sigma</span><span class="p">)</span>
+<span class="w">  </span><span class="n">fit.low</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">y.low</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">x.low</span><span class="p">)</span>
+<span class="w">  </span><span class="n">title</span><span class="w">   </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">paste</span><span class="p">(</span><span class="s">&quot;Low Spread&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">)</span><span class="w"> </span>
 <span class="w">  </span>
-<span class="w">  </span><span class="nf">plot</span><span class="p">(</span><span class="n">x.l</span><span class="p">,</span><span class="w"> </span><span class="n">y.l</span><span class="p">,</span><span class="w"> </span><span class="n">main</span><span class="o">=</span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="n">xlab</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylab</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">xlim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">20</span><span class="p">),</span><span class="w"> </span><span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">35</span><span class="p">))</span>
-<span class="w">  </span><span class="nf">abline</span><span class="p">(</span><span class="n">fit.l</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;blue&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="o">=</span><span class="m">2</span><span class="p">)</span><span class="w">         </span><span class="c1"># Estimated line</span>
+<span class="w">  </span><span class="nf">plot</span><span class="p">(</span><span class="n">x.low</span><span class="p">,</span><span class="w"> </span><span class="n">y.low</span><span class="p">,</span><span class="w"> </span><span class="n">main</span><span class="o">=</span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="n">xlab</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylab</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">xlim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">20</span><span class="p">),</span><span class="w"> </span><span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">35</span><span class="p">))</span>
+<span class="w">  </span><span class="nf">abline</span><span class="p">(</span><span class="n">fit.low</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;blue&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="o">=</span><span class="m">2</span><span class="p">)</span><span class="w">       </span><span class="c1"># Estimated line</span>
 <span class="w">  </span><span class="nf">abline</span><span class="p">(</span><span class="n">beta.0</span><span class="p">,</span><span class="w"> </span><span class="n">beta.1</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lty</span><span class="o">=</span><span class="m">2</span><span class="p">)</span><span class="w"> </span><span class="c1"># True line</span>
 <span class="p">}</span>
 
-<span class="c1"># Low spread sims</span>
-<span class="nf">for </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="n">n.reps</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="n">x.h</span><span class="w">   </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">runif</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">20</span><span class="p">)</span>
-<span class="w">  </span><span class="n">y.h</span><span class="w">   </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="n">beta.0</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">beta.1</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x.h</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="n">sigma</span><span class="p">)</span>
-<span class="w">  </span><span class="n">fit.h</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">y.h</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">x.h</span><span class="p">)</span>
-<span class="w">  </span><span class="n">title</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">paste</span><span class="p">(</span><span class="s">&quot;High Spread&quot;</span><span class="p">,</span><span class="n">i</span><span class="p">)</span>
+<span class="c1"># High spread sims</span>
+<span class="kr">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="kr">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="n">n.reps</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">x.high</span><span class="w">   </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">runif</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">20</span><span class="p">)</span>
+<span class="w">  </span><span class="n">y.high</span><span class="w">   </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="n">beta.0</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">beta.1</span><span class="o">*</span><span class="n">x.high</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="n">sigma</span><span class="p">)</span>
+<span class="w">  </span><span class="n">fit.high</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">lm</span><span class="p">(</span><span class="n">y.high</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">x.high</span><span class="p">)</span>
+<span class="w">  </span><span class="n">title</span><span class="w">    </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">paste</span><span class="p">(</span><span class="s">&quot;High Spread&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">)</span>
 <span class="w">  </span>
-<span class="w">  </span><span class="nf">plot</span><span class="p">(</span><span class="n">x.h</span><span class="p">,</span><span class="w"> </span><span class="n">y.h</span><span class="p">,</span><span class="w"> </span><span class="n">main</span><span class="o">=</span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="n">xlab</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylab</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">xlim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">20</span><span class="p">),</span><span class="w"> </span><span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">-10</span><span class="p">,</span><span class="m">50</span><span class="p">))</span>
-<span class="w">  </span><span class="nf">abline</span><span class="p">(</span><span class="n">fit.h</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;blue&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="o">=</span><span class="m">2</span><span class="p">)</span><span class="w">         </span><span class="c1"># Estimated line</span>
+<span class="w">  </span><span class="nf">plot</span><span class="p">(</span><span class="n">x.high</span><span class="p">,</span><span class="w"> </span><span class="n">y.high</span><span class="p">,</span><span class="w"> </span><span class="n">main</span><span class="o">=</span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="n">xlab</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylab</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">xlim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">20</span><span class="p">),</span><span class="w"> </span><span class="n">ylim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">-10</span><span class="p">,</span><span class="m">50</span><span class="p">))</span>
+<span class="w">  </span><span class="nf">abline</span><span class="p">(</span><span class="n">fit.high</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;blue&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lwd</span><span class="o">=</span><span class="m">2</span><span class="p">)</span><span class="w">         </span><span class="c1"># Estimated line</span>
 <span class="w">  </span><span class="nf">abline</span><span class="p">(</span><span class="n">beta.0</span><span class="p">,</span><span class="w"> </span><span class="n">beta.1</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lty</span><span class="o">=</span><span class="m">2</span><span class="p">)</span><span class="w"> </span><span class="c1"># True line</span>
 <span class="p">}</span>
 </pre></div>
@@ -669,18 +657,18 @@ E\left(\hat{\beta}_{1}\right) = \beta_{1}.
 </div>
 </details>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/5473bc71d1eda579faf1a1747c3a1e55676aa3cfef81edd011da9f0c7c0e9da6.png"><img alt="_images/5473bc71d1eda579faf1a1747c3a1e55676aa3cfef81edd011da9f0c7c0e9da6.png" src="_images/5473bc71d1eda579faf1a1747c3a1e55676aa3cfef81edd011da9f0c7c0e9da6.png" style="width: 840px; height: 480px;" /></a>
+<a class="reference internal image-reference" href="_images/c12978148f460d3e677c3437bbf0d780e57bba00a5650457cf36ae65ac93e924.png"><img alt="_images/c12978148f460d3e677c3437bbf0d780e57bba00a5650457cf36ae65ac93e924.png" src="_images/c12978148f460d3e677c3437bbf0d780e57bba00a5650457cf36ae65ac93e924.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
 <p>Notice that when the spread of <span class="math notranslate nohighlight">\(x\)</span> is very low, the estimate of the regression line is wildly unstable. This is because, with limited information about <span class="math notranslate nohighlight">\(x\)</span>, the fit is mostly influences by small changes in the vertical spread of the data. In other words, there is very little <em>signal</em> relative to the <em>noise</em>. The degree to which our estimate differs from the truth is therefore much larger and the SE will be much bigger. By comparison, when the spread of <span class="math notranslate nohighlight">\(x\)</span> is much higher, the estimate of the regression line is much more stable and corresponds much more closely to the true value. As such, the SE will be much lower.</p>
-<div class="tip admonition">
+<div class="tip dropdown admonition">
 <p class="admonition-title">Experimental Optimisation I</p>
 <p>The dependence of the standard error on the range of values for <span class="math notranslate nohighlight">\(x\)</span> provides important information for optimising experiments. Although the predictor variables are not always under our direct control, considerations should be made about whether a good range of <span class="math notranslate nohighlight">\(x\)</span> values are available. For instance, if we are directly interested in relationships with <code class="docutils literal notranslate"><span class="pre">age</span></code> as a predictor, having a sample that ranges from 20 years old to 21 years old will likely not provide enough information. Sampling more widely and trying to achieve a good spread between 20 years old and 50 years would likely produce much more stable and meaningful estimates.</p>
 </div>
 </section>
 <section id="dependence-on-sample-size">
 <h4>Dependence on Sample Size<a class="headerlink" href="#dependence-on-sample-size" title="Link to this heading">#</a></h4>
-<p>Beyond the importance of the range of <span class="math notranslate nohighlight">\(x\)</span> values, another element of great importance is the <em>amount</em> of data that we have. In the definition of the SE, notice that the value in the denominator is a <em>sum</em>, rather than an average. As such, it gets bigger as we collect more data. Although slightly hidden in the formula above, we can make this more explicit by writing</p>
+<p>Beyond the range of <span class="math notranslate nohighlight">\(x\)</span> values, another element of great importance is the <em>amount</em> of data that we have. In the definition of the SE, notice that the value in the denominator is a <em>sum</em>, rather than an average. As such, it gets bigger as we collect more data. Although slightly hidden in the formula above, we can make this more explicit by writing</p>
 <div class="math notranslate nohighlight">
 \[
 \text{Var}\left(\hat{\beta}_{1}\right) = \frac{\sigma^{2}}{(n-1)\sigma^{2}_{x}},
@@ -707,15 +695,14 @@ E\left(\hat{\beta}_{1}\right) = \beta_{1}.
 <span class="n">n.sims</span><span class="w">     </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1000</span>
 <span class="n">n</span><span class="w">          </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">5</span><span class="p">,</span><span class="m">10</span><span class="p">,</span><span class="m">50</span><span class="p">,</span><span class="m">100</span><span class="p">,</span><span class="m">1000</span><span class="p">,</span><span class="m">5000</span><span class="p">)</span>
 
-<span class="c1"># Layout and scaling</span>
+<span class="c1"># Layout</span>
 <span class="nf">par</span><span class="p">(</span><span class="n">mfrow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="n">mar</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">4</span><span class="p">,</span><span class="m">4</span><span class="p">,</span><span class="m">3</span><span class="p">,</span><span class="m">1</span><span class="p">))</span>
-<span class="nf">par</span><span class="p">(</span><span class="n">cex.lab</span><span class="o">=</span><span class="m">1.3</span><span class="p">,</span><span class="w"> </span><span class="n">cex.axis</span><span class="o">=</span><span class="m">1.1</span><span class="p">,</span><span class="w"> </span><span class="n">cex</span><span class="o">=</span><span class="m">1.4</span><span class="p">)</span>
 
-<span class="nf">for </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="nf">length</span><span class="p">(</span><span class="n">n</span><span class="p">)){</span>
+<span class="kr">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="kr">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="nf">length</span><span class="p">(</span><span class="n">n</span><span class="p">)){</span>
 <span class="w">    </span><span class="n">x</span><span class="w">       </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">runif</span><span class="p">(</span><span class="n">n</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="m">0</span><span class="p">,</span><span class="m">10</span><span class="p">)</span>
 <span class="w">    </span><span class="n">b.1.hat</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rep</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="n">n.sims</span><span class="p">)</span>
 
-<span class="w">    </span><span class="nf">for </span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="n">n.sims</span><span class="p">){</span>
+<span class="w">    </span><span class="kr">for</span><span class="w"> </span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="kr">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="n">n.sims</span><span class="p">){</span>
 <span class="w">        </span><span class="n">y</span><span class="w">          </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="w"> </span><span class="n">mean</span><span class="o">=</span><span class="n">beta.0</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">beta.1</span><span class="o">*</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="o">=</span><span class="n">sigma</span><span class="p">)</span>
 <span class="w">        </span><span class="n">b.1.hat</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">coef</span><span class="p">(</span><span class="nf">lm</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">x</span><span class="p">))[</span><span class="m">2</span><span class="p">]</span>
 <span class="w">    </span><span class="p">}</span>
@@ -730,11 +717,11 @@ E\left(\hat{\beta}_{1}\right) = \beta_{1}.
 </div>
 </details>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/fdfa7c096b3373e1dde85b0d51f5d68c247a6b0b949a5660bf827cb76a67081c.png"><img alt="_images/fdfa7c096b3373e1dde85b0d51f5d68c247a6b0b949a5660bf827cb76a67081c.png" src="_images/fdfa7c096b3373e1dde85b0d51f5d68c247a6b0b949a5660bf827cb76a67081c.png" style="width: 840px; height: 720px;" /></a>
+<a class="reference internal image-reference" href="_images/eb1d9b3e97c605cfe4cdbe8b635d34f8cc8e225fb9ba39d1a957c78102f16ff7.png"><img alt="_images/eb1d9b3e97c605cfe4cdbe8b635d34f8cc8e225fb9ba39d1a957c78102f16ff7.png" src="_images/eb1d9b3e97c605cfe4cdbe8b635d34f8cc8e225fb9ba39d1a957c78102f16ff7.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
-<p>The shrinking width of the sampling distribution as <span class="math notranslate nohighlight">\(n\)</span> increases should be very clear. Although each of these distributions are centred on the true value, their variability differs wildly. As such, our confidence in the precision of our estimates changes dramatically as we get more and more data. When <span class="math notranslate nohighlight">\(n = 5\)</span>, we expect our estimate to differ from the true value by an average of 0.996 units. However, when <span class="math notranslate nohighlight">\(n = 5000\)</span>, we expect our estimate to differ from the true value by an average of 0.025 units. It should be clear that we are more likely to trust our estimate to be close to the true value when we have more data.</p>
-<div class="tip admonition">
+<p>The shrinking width of the sampling distribution as <span class="math notranslate nohighlight">\(n\)</span> increases should be very clear. Although each of these distributions are centred on the true value, their variability differs wildly. As such, our confidence in the precision of our estimates improves dramatically as we get more and more data.</p>
+<div class="tip dropdown admonition">
 <p class="admonition-title">Experimental Optimisation II</p>
 <p>The dependence of the standard error on the sample size provides even more important information for optimising experiments. Although we want a wide-range of values for <span class="math notranslate nohighlight">\(x\)</span>, we also want as much data as possible. A dataset where we only have a single measurement for each value of <span class="math notranslate nohighlight">\(x\)</span> is not going to be as useful as a dataset with 20 measurements for each value of <span class="math notranslate nohighlight">\(x\)</span>. So, ideally, we want <em>both</em> a large sample size and a large spread of <span class="math notranslate nohighlight">\(x\)</span> values. The importance of <em>both</em> these elements is often under-appreciated in practice, where researchers tend to fixate on sample size above everything else. However, a larger sample across a narrow range of <span class="math notranslate nohighlight">\(x\)</span> could end up being equivalent to a smaller sample across a wider range of <span class="math notranslate nohighlight">\(x\)</span> in terms of the value of the SE. Indeed, in the example in the table below, an experiment with <span class="math notranslate nohighlight">\(n=20\)</span> is better than an experiment with <span class="math notranslate nohighlight">\(n=50\)</span>, when coupled with a larger range of values for <span class="math notranslate nohighlight">\(x\)</span>.</p>
 <div class="pst-scrollable-table-container"><table class="table">
@@ -763,31 +750,10 @@ E\left(\hat{\beta}_{1}\right) = \beta_{1}.
 </div>
 </section>
 </section>
-<section id="what-about-the-intercept-and-variance">
-<h3>What About the Intercept and Variance?<a class="headerlink" href="#what-about-the-intercept-and-variance" title="Link to this heading">#</a></h3>
-<p>We have now spent some time discussing the sampling distribution of <span class="math notranslate nohighlight">\(\hat{\beta}_{1}\)</span>, but what about the sampling distributions of <span class="math notranslate nohighlight">\(\hat{\beta}_{0}\)</span> and <span class="math notranslate nohighlight">\(\hat{\sigma}^{2}\)</span>? Like <span class="math notranslate nohighlight">\(\hat{\beta}_{1}\)</span>, under assumptions of population normality, these can be derived mathematically to give:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\begin{align*}
-    \hat{\beta}_{0} &amp;\sim \mathcal{N}\left(\beta_{0}, \sigma^{2}\left[\frac{1}{n} + \frac{\bar{x}^{2}}{\sum{(x_{i} - \bar{x})^{2}}}\right]\right) \\
-    \hat{\sigma}^{2} &amp;\sim \frac{\sigma^{2}}{n-2} \cdot \chi^{2}\left(n-2\right)
-\end{align*}
-\end{split}\]</div>
-<p>These looks more complex than the slope. However, we can see that the intercept is also normal and <em>unbiased</em>, with a standard error that still relies on the spread of <span class="math notranslate nohighlight">\(x\)</span> (albeit, in a more complicated form). The variance is distributed as a scaled <span class="math notranslate nohighlight">\(\chi^{2}\)</span> with parameter <span class="math notranslate nohighlight">\(k = n-2\)</span>. This <em>is</em> more complex than the distributions for the slope and intercept, but we do not need to worry about it right now. The relevance of this will come into play when we discuss the creation of <em>test statistics</em> in the next part of the lesson.</p>
-</section>
-<section id="what-about-multiple-rgression">
-<h3>What About Multiple Rgression?<a class="headerlink" href="#what-about-multiple-rgression" title="Link to this heading">#</a></h3>
-<p>We have seen the sampling distributions in <em>simple</em> regression, but what about <em>multiple</em> regression? The good news is that most of the theory stays the same. The only element that differs is the standard error. This is a consequence of the discussion we had last week about multiple regression coefficients represents the variance of a predictor <em>after</em> taking all other predictors into account. The sampling distribution for the slope estimate <span class="math notranslate nohighlight">\(j\)</span> in multiple regression is</p>
-<div class="math notranslate nohighlight">
-\[
-\hat{\beta}_{j} \sim \mathcal{N}\left(\beta_{j},\frac{\sigma^{2}}{\sum{\left(x_{ij} - \bar{x}_{j}\right)^{2} \cdot \left(1 - R^{2}_{j}\right)}}\right).
-\]</div>
-<p>This is largely the same as before, except that the spread in <span class="math notranslate nohighlight">\(x_{j}\)</span> is now multiplied by the term <span class="math notranslate nohighlight">\((1 - R^{2}_{j})\)</span>. For now, we can think of this as an adjustment for how correlated predictor <span class="math notranslate nohighlight">\(j\)</span> is with all other predictors in the model. The bigger this is, the smaller <span class="math notranslate nohighlight">\((1 - R^{2}_{j})\)</span> becomes and the more that the spread of <span class="math notranslate nohighlight">\(x_{j}\)</span> is made <em>smaller</em>. As such, the greater the correlation, the <em>larger</em> the standard error. We will discuss the intuition behind this when we cover <em>multicollinearity</em> next week.</p>
-</section>
 </section>
 <section id="estimation-uncertainty-in-r">
 <h2>Estimation Uncertainty in <code class="docutils literal notranslate"><span class="pre">R</span></code><a class="headerlink" href="#estimation-uncertainty-in-r" title="Link to this heading">#</a></h2>
-<p>As a final part to this section, we can see how <code class="docutils literal notranslate"><span class="pre">R</span></code> reports the uncertainty of all the estimates from a multiple regression fit using the <code class="docutils literal notranslate"><span class="pre">lm()</span></code> function. Here, we will return to the <code class="docutils literal notranslate"><span class="pre">mtcars</span></code> example and fit the model <code class="docutils literal notranslate"><span class="pre">mpg</span> <span class="pre">~</span> <span class="pre">wt</span> <span class="pre">+</span> <span class="pre">hp</span> <span class="pre">+</span> <span class="pre">disp</span></code>.</p>
+<p>As a final part to this section, we can see how <code class="docutils literal notranslate"><span class="pre">R</span></code> reports the uncertainty of all the estimates from a multiple regression fit using the <code class="docutils literal notranslate"><span class="pre">lm()</span></code> function. The formula for the standard error of the slopes in a multiple regression is a bit more complicated than in simple regression, but we will leave this detail until next week. For now, we will return to the <code class="docutils literal notranslate"><span class="pre">mtcars</span></code> example and fit the model <code class="docutils literal notranslate"><span class="pre">mpg</span> <span class="pre">~</span> <span class="pre">wt</span> <span class="pre">+</span> <span class="pre">hp</span> <span class="pre">+</span> <span class="pre">disp</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">data</span><span class="p">(</span><span class="n">mtcars</span><span class="p">)</span>
@@ -823,7 +789,7 @@ F-statistic: 44.57 on 3 and 28 DF,  p-value: 8.65e-11
 <p>For each one of the slopes (and the intercept) we have a report of both the <code class="docutils literal notranslate"><span class="pre">Estimate</span></code> and the <code class="docutils literal notranslate"><span class="pre">Std.</span> <span class="pre">Error</span></code>. Let us work through each slope and see how we could interpret each estimate in light of its uncertainty. Note that we will see ways of formalising this in the next section. This is just an example of how this information can be used to assess the precision of our estimates in a more general fashion.</p>
 <section id="interpreting-wt">
 <h3>Interpreting <code class="docutils literal notranslate"><span class="pre">wt</span></code><a class="headerlink" href="#interpreting-wt" title="Link to this heading">#</a></h3>
-<p>Starting with <code class="docutils literal notranslate"><span class="pre">wt</span></code>, we can see that, for each unit increase, we have an estimated <em>decrease</em> of 3.80 MPG. The SE is reported as 1.07, meaning that on average we expect this estimate to be around 1.07 MPG off from the true value. The estimate is therefore <em>larger</em> than its uncertainty, suggesting some reasonable degree of precision. By adding or subtracting the SE from the estimate, we can derive a plausible range of slopes within <span class="math notranslate nohighlight">\(\left[-4.88, -2.72\right]\)</span>, all of which seem to be indicative of <em>some</em> negative relationship between <code class="docutils literal notranslate"><span class="pre">wt</span></code> and <code class="docutils literal notranslate"><span class="pre">mpg</span></code>. These ranges are plotted below (as an added-variable plot), where the estimated line is shown as a dashed line, with the upper and lower limits based on <span class="math notranslate nohighlight">\(\pm 1 \times \text{SE}\)</span> shown as coloured lines.</p>
+<p>Starting with <code class="docutils literal notranslate"><span class="pre">wt</span></code>, we can see that, for each unit increase, we have an estimated <em>decrease</em> of 3.80 MPG. The SE is reported as 1.07, meaning that across repeats of this experiment we would expect this estimate to vary by around 1.07 MPG from the true value. The estimate is therefore <em>larger</em> than its uncertainty, suggesting some reasonable degree of precision. By adding or subtracting the SE from the estimate, we can derive a plausible range of slopes within <span class="math notranslate nohighlight">\(\left[-4.88, -2.72\right]\)</span>, all of which seem to be indicative of <em>some</em> negative relationship between <code class="docutils literal notranslate"><span class="pre">wt</span></code> and <code class="docutils literal notranslate"><span class="pre">mpg</span></code>. These ranges are plotted below (as an added-variable plot), where the estimated line is shown as a dashed line, with the upper and lower limits based on <span class="math notranslate nohighlight">\(\pm 1 \times \text{SE}\)</span> shown as coloured lines.</p>
 <div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -834,21 +800,20 @@ F-statistic: 44.57 on 3 and 28 DF,  p-value: 8.65e-11
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">wt.resid</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">resid</span><span class="p">(</span><span class="nf">lm</span><span class="p">(</span><span class="n">wt</span><span class="w">  </span><span class="o">~</span><span class="w"> </span><span class="n">hp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">disp</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">))</span>
 <span class="n">mpg.resid</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">resid</span><span class="p">(</span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">hp</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">disp</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">))</span>
 <span class="w">  </span>
-<span class="n">SE</span><span class="w">    </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">summary</span><span class="p">(</span><span class="n">model</span><span class="p">)</span><span class="o">$</span><span class="n">coefficients</span><span class="p">[</span><span class="s">&quot;wt&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Std. Error&quot;</span><span class="p">]</span>
+<span class="n">SE</span><span class="w">    </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">summary</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span><span class="o">$</span><span class="n">coefficients</span><span class="p">[</span><span class="s">&quot;wt&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Std. Error&quot;</span><span class="p">]</span>
 <span class="n">lower</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">coef</span><span class="p">(</span><span class="n">mod</span><span class="p">)[</span><span class="m">2</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">SE</span><span class="w"> </span>
 <span class="n">upper</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">coef</span><span class="p">(</span><span class="n">mod</span><span class="p">)[</span><span class="m">2</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">SE</span>
 
-<span class="nf">par</span><span class="p">(</span><span class="n">cex.lab</span><span class="o">=</span><span class="m">1.3</span><span class="p">,</span><span class="w"> </span><span class="n">cex.axis</span><span class="o">=</span><span class="m">1.1</span><span class="p">,</span><span class="w"> </span><span class="n">cex</span><span class="o">=</span><span class="m">1.4</span><span class="p">)</span><span class="w"> </span><span class="c1"># Plot scale</span>
 <span class="nf">plot</span><span class="p">(</span><span class="n">wt.resid</span><span class="p">,</span><span class="w"> </span><span class="n">mpg.resid</span><span class="p">,</span><span class="w"> </span><span class="n">xlab</span><span class="o">=</span><span class="s">&quot;Weight (corrected)&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylab</span><span class="o">=</span><span class="s">&quot;MPG (corrected)&quot;</span><span class="p">)</span>
 <span class="nf">abline</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="nf">coef</span><span class="p">(</span><span class="n">mod</span><span class="p">)[</span><span class="m">2</span><span class="p">],</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;black&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lty</span><span class="o">=</span><span class="m">2</span><span class="p">)</span><span class="w"> </span><span class="c1"># Estimated line</span>
-<span class="nf">abline</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">lower</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;blue&quot;</span><span class="p">)</span><span class="w"> </span><span class="c1"># Line - 1*SE</span>
-<span class="nf">abline</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">upper</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1"># Line + 1*SE</span>
+<span class="nf">abline</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">lower</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;blue&quot;</span><span class="p">)</span><span class="w">                </span><span class="c1"># Line - 1*SE</span>
+<span class="nf">abline</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">upper</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">)</span><span class="w">                 </span><span class="c1"># Line + 1*SE</span>
 </pre></div>
 </div>
 </div>
 </details>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/fb6f6c58968f6a71dce288e6cc7cacc186f95d3778030edeca19a0792dc649de.png"><img alt="_images/fb6f6c58968f6a71dce288e6cc7cacc186f95d3778030edeca19a0792dc649de.png" src="_images/fb6f6c58968f6a71dce288e6cc7cacc186f95d3778030edeca19a0792dc649de.png" style="width: 720px; height: 420px;" /></a>
+<a class="reference internal image-reference" href="_images/c80d1423389254ffd0fa0c3c9fadc671c6cee7eb98895e0a322ca9432ee770e3.png"><img alt="_images/c80d1423389254ffd0fa0c3c9fadc671c6cee7eb98895e0a322ca9432ee770e3.png" src="_images/c80d1423389254ffd0fa0c3c9fadc671c6cee7eb98895e0a322ca9432ee770e3.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
 </section>
@@ -865,11 +830,10 @@ F-statistic: 44.57 on 3 and 28 DF,  p-value: 8.65e-11
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">hp.resid</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">resid</span><span class="p">(</span><span class="nf">lm</span><span class="p">(</span><span class="n">hp</span><span class="w">  </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">disp</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">))</span>
 <span class="n">mpg.resid</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">resid</span><span class="p">(</span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">disp</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">))</span>
 <span class="w">  </span>
-<span class="n">SE</span><span class="w">    </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">summary</span><span class="p">(</span><span class="n">model</span><span class="p">)</span><span class="o">$</span><span class="n">coefficients</span><span class="p">[</span><span class="s">&quot;hp&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Std. Error&quot;</span><span class="p">]</span>
+<span class="n">SE</span><span class="w">    </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">summary</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span><span class="o">$</span><span class="n">coefficients</span><span class="p">[</span><span class="s">&quot;hp&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Std. Error&quot;</span><span class="p">]</span>
 <span class="n">lower</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">coef</span><span class="p">(</span><span class="n">mod</span><span class="p">)[</span><span class="m">3</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">SE</span><span class="w"> </span>
 <span class="n">upper</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">coef</span><span class="p">(</span><span class="n">mod</span><span class="p">)[</span><span class="m">3</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">SE</span>
 
-<span class="nf">par</span><span class="p">(</span><span class="n">cex.lab</span><span class="o">=</span><span class="m">1.3</span><span class="p">,</span><span class="w"> </span><span class="n">cex.axis</span><span class="o">=</span><span class="m">1.1</span><span class="p">,</span><span class="w"> </span><span class="n">cex</span><span class="o">=</span><span class="m">1.4</span><span class="p">)</span><span class="w"> </span><span class="c1"># Plot scale</span>
 <span class="nf">plot</span><span class="p">(</span><span class="n">hp.resid</span><span class="p">,</span><span class="w"> </span><span class="n">mpg.resid</span><span class="p">,</span><span class="w"> </span><span class="n">xlab</span><span class="o">=</span><span class="s">&quot;HP (corrected)&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylab</span><span class="o">=</span><span class="s">&quot;MPG (corrected)&quot;</span><span class="p">)</span>
 <span class="nf">abline</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="nf">coef</span><span class="p">(</span><span class="n">mod</span><span class="p">)[</span><span class="m">3</span><span class="p">],</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;black&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lty</span><span class="o">=</span><span class="m">2</span><span class="p">)</span><span class="w"> </span><span class="c1"># Estimated line</span>
 <span class="nf">abline</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">lower</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;blue&quot;</span><span class="p">)</span><span class="w"> </span><span class="c1"># Line - 1*SE</span>
@@ -879,7 +843,7 @@ F-statistic: 44.57 on 3 and 28 DF,  p-value: 8.65e-11
 </div>
 </details>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/e014856de95b97357e80b8b4b7eb7fe19fa0ccee7ffb79d6415124b7fb85b004.png"><img alt="_images/e014856de95b97357e80b8b4b7eb7fe19fa0ccee7ffb79d6415124b7fb85b004.png" src="_images/e014856de95b97357e80b8b4b7eb7fe19fa0ccee7ffb79d6415124b7fb85b004.png" style="width: 720px; height: 420px;" /></a>
+<a class="reference internal image-reference" href="_images/9bc97fbcec92da83aafba02a2fd7b23c01ba4c04db9a73f7f71337f4772075b4.png"><img alt="_images/9bc97fbcec92da83aafba02a2fd7b23c01ba4c04db9a73f7f71337f4772075b4.png" src="_images/9bc97fbcec92da83aafba02a2fd7b23c01ba4c04db9a73f7f71337f4772075b4.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
 </section>
@@ -896,11 +860,10 @@ F-statistic: 44.57 on 3 and 28 DF,  p-value: 8.65e-11
 <div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">disp.resid</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">resid</span><span class="p">(</span><span class="nf">lm</span><span class="p">(</span><span class="n">disp</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">hp</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">))</span>
 <span class="n">mpg.resid</span><span class="w">   </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">resid</span><span class="p">(</span><span class="nf">lm</span><span class="p">(</span><span class="n">mpg</span><span class="w">  </span><span class="o">~</span><span class="w"> </span><span class="n">wt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">hp</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">mtcars</span><span class="p">))</span>
 <span class="w">  </span>
-<span class="n">SE</span><span class="w">    </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">summary</span><span class="p">(</span><span class="n">model</span><span class="p">)</span><span class="o">$</span><span class="n">coefficients</span><span class="p">[</span><span class="s">&quot;disp&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Std. Error&quot;</span><span class="p">]</span>
+<span class="n">SE</span><span class="w">    </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">summary</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span><span class="o">$</span><span class="n">coefficients</span><span class="p">[</span><span class="s">&quot;disp&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Std. Error&quot;</span><span class="p">]</span>
 <span class="n">lower</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">coef</span><span class="p">(</span><span class="n">mod</span><span class="p">)[</span><span class="m">4</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">SE</span><span class="w"> </span>
 <span class="n">upper</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">coef</span><span class="p">(</span><span class="n">mod</span><span class="p">)[</span><span class="m">4</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">SE</span>
 
-<span class="nf">par</span><span class="p">(</span><span class="n">cex.lab</span><span class="o">=</span><span class="m">1.3</span><span class="p">,</span><span class="w"> </span><span class="n">cex.axis</span><span class="o">=</span><span class="m">1.1</span><span class="p">,</span><span class="w"> </span><span class="n">cex</span><span class="o">=</span><span class="m">1.4</span><span class="p">)</span><span class="w"> </span><span class="c1"># Plot scale</span>
 <span class="nf">plot</span><span class="p">(</span><span class="n">disp.resid</span><span class="p">,</span><span class="w"> </span><span class="n">mpg.resid</span><span class="p">,</span><span class="w"> </span><span class="n">xlab</span><span class="o">=</span><span class="s">&quot;Displacement (corrected)&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylab</span><span class="o">=</span><span class="s">&quot;MPG (corrected)&quot;</span><span class="p">)</span>
 <span class="nf">abline</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="nf">coef</span><span class="p">(</span><span class="n">mod</span><span class="p">)[</span><span class="m">4</span><span class="p">],</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;black&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lty</span><span class="o">=</span><span class="m">2</span><span class="p">)</span><span class="w"> </span><span class="c1"># Estimated line</span>
 <span class="nf">abline</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">lower</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s">&quot;blue&quot;</span><span class="p">)</span><span class="w"> </span><span class="c1"># Line - 1*SE</span>
@@ -910,7 +873,7 @@ F-statistic: 44.57 on 3 and 28 DF,  p-value: 8.65e-11
 </div>
 </details>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="_images/6c32529a851ce7e3c688994b304d9b3a3e422d1146722d752cd27d1d1e741e3c.png"><img alt="_images/6c32529a851ce7e3c688994b304d9b3a3e422d1146722d752cd27d1d1e741e3c.png" src="_images/6c32529a851ce7e3c688994b304d9b3a3e422d1146722d752cd27d1d1e741e3c.png" style="width: 720px; height: 420px;" /></a>
+<a class="reference internal image-reference" href="_images/f33a747f3f83ed699bd1a62fd667d24f5063243552572b9b587a1e6c441ec055.png"><img alt="_images/f33a747f3f83ed699bd1a62fd667d24f5063243552572b9b587a1e6c441ec055.png" src="_images/f33a747f3f83ed699bd1a62fd667d24f5063243552572b9b587a1e6c441ec055.png" style="width: 420px; height: 420px;" /></a>
 </div>
 </div>
 <aside class="topic">
@@ -927,17 +890,17 @@ F-statistic: 44.57 on 3 and 28 DF,  p-value: 8.65e-11
 </aside>
 <hr class="footnotes docutils" />
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="empirfoot" role="note">
+<aside class="footnote brackets" id="empirical-foot" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
 <p>Empirical means that we have derived the values from real data or simulation, as opposed to <em>theoretical</em> values which can be calculated using known formulas.</p>
 </aside>
-<aside class="footnote brackets" id="cltfoot" role="note">
+<aside class="footnote brackets" id="clt-foot" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
-<p>This reliance on normality is not always needed. As we will explore next week, the central limit theorem indicates that under large-enough sample sizes, the sampling distribution will be normal, even if the population distribution is not.</p>
+<p>This reliance on normality is not always needed. The <em>central limit theorem</em> indicates that under large-enough samples the sampling distribution will be normal, even if the population distribution is not.</p>
 </aside>
-<aside class="footnote brackets" id="jokefoot" role="note">
+<aside class="footnote brackets" id="joke-foot" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">3</a><span class="fn-bracket">]</span></span>
-<p>Three statisticians go deer hunting with bows and arrows. They spot a big buck and take aim. One shoots and his arrow flies off three meters to the right. The second shoots and his arrow flies off three meters to the left. The third statistician jumps up and down yelling: “We got him! We got him!”.</p>
+<p>Three statisticians go deer hunting with bows and arrows. They spot a big buck and take aim. One shoots and his arrow flies off three meters to the right. The second shoots and his arrow flies off three meters to the left. The third statistician jumps up and down yelling “We got him! We got him!”.</p>
 </aside>
 </aside>
 </section>
@@ -999,7 +962,8 @@ F-statistic: 44.57 on 3 and 28 DF,  p-value: 8.65e-11
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
   <div class="sidebar-secondary-item">
@@ -1020,8 +984,6 @@ F-statistic: 44.57 on 3 and 28 DF,  p-value: 8.65e-11
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dependence-on-sample-size">Dependence on Sample Size</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-about-the-intercept-and-variance">What About the Intercept and Variance?</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-about-multiple-rgression">What About Multiple Rgression?</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#estimation-uncertainty-in-r">Estimation Uncertainty in <code class="docutils literal notranslate"><span class="pre">R</span></code></a><ul class="nav section-nav flex-column">
@@ -1078,8 +1040,8 @@ By Dr George Farmer & Dr Martyn McFarquhar
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
-<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
   </footer>
