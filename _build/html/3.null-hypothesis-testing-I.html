@@ -374,7 +374,10 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#estimates-and-population-values">Estimates and Population Values</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-an-estimate-with-a-hypothesised-value">Comparing an Estimate with a Hypothesised Value</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-sampling-distribution-of-delta">The Sampling Distribution of <span class="math notranslate nohighlight">\(\delta\)</span></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-null-hypothesis">The Null Hypothesis</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-null-hypothesis">The Null Hypothesis</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-null-hypothesis-does-not-have-to-be-0">The Null Hypothesis Does Not Have to Be 0</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -496,7 +499,7 @@ E\left(\delta\middle|\beta_{1}^{(0)} = \beta_{1}\right) = \beta_{1} - \beta_{1}^
 <section id="the-null-hypothesis">
 <h3>The Null Hypothesis<a class="headerlink" href="#the-null-hypothesis" title="Link to this heading">#</a></h3>
 <p>Once we have a clear idea of comparing our parameter estimate to some hypothesised population value, the next most obvious question is what value to pick? For our example above, this is a question of what to set <span class="math notranslate nohighlight">\(\beta_{1}^{(0)}\)</span> to? Unfortunately, in most experimental situations, there is no clear answer to this. Indeed, it is rare for us to have any idea what singular specific parameter value we are interested in. For instance, when considering a simple regression model, what value of the slope are we interested in? What single value can answer our experimental question? Typically, this is a meaningless consideration, as it would be a rare situation where only a <em>single specific value of the slope</em> was interesting, with all values (both <em>smaller</em> and <em>larger</em>) being uninteresting. So it appears we have hit a problem.</p>
-<p>The core insight provided by <a class="reference external" href="https://en.wikipedia.org/wiki/Ronald_Fisher">Fisher</a> was that we need not focus on ill-defined values of interest. Instead, we can more precisely define what parameter value would indicate <em>no effect</em>. If we do so, we can then determine whether the effect we have calculated is <em>compatible</em> or <em>incompatible</em> with there being no effect in the population. The more incompatible the data is, the more we suspect that the idea of <em>no effect</em> is incorrect. This specification of no effect is known as the <em>null hypothesis</em> <span class="math notranslate nohighlight">\(\left(\mathcal{H}_{0}\right)\)</span>.</p>
+<p>The core insight provided by <a class="reference external" href="https://en.wikipedia.org/wiki/Ronald_Fisher">Fisher</a> was that we need not focus on ill-defined values of interest. Instead, we can more precisely define what parameter value would indicate <em>no effect</em>. If we do so, we can then determine whether the effect we have calculated is <em>compatible</em> or <em>incompatible</em> with there being no effect in the population. The more incompatible the data is, the more we suspect that the idea of <em>no effect</em> is incorrect. This specification of no effect is known as the <em>null hypothesis</em> and is denoted <span class="math notranslate nohighlight">\(\mathcal{H}_{0}\)</span>.</p>
 <p>As an example, if we had a simple regression model, then the null hypothesis would be</p>
 <div class="math notranslate nohighlight">
 \[
@@ -513,29 +516,34 @@ E\left(\delta\middle|\beta_{1}^{(0)} = \beta_{1}\right) = \beta_{1} - \beta_{1}^
 E\left(\delta\right|\mathcal{H}_{0}) = E\left(\hat{\beta}_{1} - \beta_{1}^{(0)}\middle|\mathcal{H}_{0}\right) = E\left(\hat{\beta}_{1}\middle|\mathcal{H}_{0}\right) - \beta_{1}^{(0)} = 0 - 0 = 0.
 \]</div>
 <p>So we can still calculate probabilities using the same distribution of <span class="math notranslate nohighlight">\(\delta\)</span> that is centred around 0. Because subtracting 0 just makes <span class="math notranslate nohighlight">\(\delta = \hat{\beta}_{1}\)</span>, our question is really about how far our slope estimate is from 0, and whether this distances makes it <em>compatible</em> or <em>incompatible</em> with the null hypothesis that the slope is 0 in the population.</p>
+<section id="the-null-hypothesis-does-not-have-to-be-0">
+<h4>The Null Hypothesis Does Not Have to Be 0<a class="headerlink" href="#the-null-hypothesis-does-not-have-to-be-0" title="Link to this heading">#</a></h4>
 <p>Importantly, the proposed population value need not be 0. Although a typical choice, the null hypothesis is not defined by the proposed value being 0 (though this is a common confusion). Instead, it is defined by testing the compatibility of the data with <span class="math notranslate nohighlight">\(E\left(\delta|\mathcal{H}_{0}\right) = 0\)</span>. So the proposed value is simply <em>whatever value the parameter would have if the null hypothesis were true</em>. As an example, if our null hypothesis was that there was <em>no difference</em> in average IQ between our sample and the general population, we would want to set <span class="math notranslate nohighlight">\(\text{IQ}^{(0)} = 100\)</span>. We would then have</p>
 <div class="math notranslate nohighlight">
 \[
 \delta = \widehat{\text{IQ}} - \text{IQ}^{(0)} = \widehat{\text{IQ}} - 100.
 \]</div>
-<p>So <span class="math notranslate nohighlight">\(\delta\)</span> now represents how far off our estimated average IQ is from 100. Importantly, under the null hypothesis that <span class="math notranslate nohighlight">\(\text{IQ} = 100\)</span>, the distribution of <span class="math notranslate nohighlight">\(\delta\)</span> is <em>still centred around 0</em>. The only difference is that the value of <span class="math notranslate nohighlight">\(\delta\)</span> is now interpreted as the <em>discrepancy from 100</em>, rather than the <em>discrepancy from 0</em>. The proposed value simply provides our <em>baseline</em> for comparison. This means that <span class="math notranslate nohighlight">\(\delta\)</span> is always centred around 0, even when we choose a difference hypothesised value. We can see this flexibility in the <code class="docutils literal notranslate"><span class="pre">R</span></code> function for a one-sample <span class="math notranslate nohighlight">\(t\)</span>-test, as it takes the form</p>
+<p>So <span class="math notranslate nohighlight">\(\delta\)</span> now represents how far off our estimated average IQ is from 100. Importantly, under the null hypothesis that <span class="math notranslate nohighlight">\(\text{IQ} = 100\)</span>, the distribution of <span class="math notranslate nohighlight">\(\delta\)</span> is <em>still centred around 0</em>. The only difference is that the value of <span class="math notranslate nohighlight">\(\delta\)</span> is now interpreted as the <em>discrepancy from 100</em>, rather than the <em>discrepancy from 0</em>. The proposed value simply provides our <em>baseline</em> for comparison. This means that <span class="math notranslate nohighlight">\(\delta\)</span> is always centred around 0, even when we choose a different hypothesised value.</p>
+<p>We can see these ideas demonstrated in the <code class="docutils literal notranslate"><span class="pre">R</span></code> function for a one-sample <span class="math notranslate nohighlight">\(t\)</span>-test, as this takes the form</p>
 <div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="nf">t.test</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">mu</span><span class="o">=</span><span class="n">proposed_value</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Here we can choose any value we like for the comparison. Using <code class="docutils literal notranslate"><span class="pre">mu=0</span></code> is fairly meaningless in the example of IQ, but using <code class="docutils literal notranslate"><span class="pre">mu=100</span></code> produces a legitimate and useful null hypothesis.</p>
+<p>Here we can choose any value we like for the comparison. Using <code class="docutils literal notranslate"><span class="pre">mu=0</span></code> is fairly meaningless in the example of IQ, but using <code class="docutils literal notranslate"><span class="pre">mu=100</span></code> produces a legitimate and useful null hypothesis. The point is that <code class="docutils literal notranslate"><span class="pre">mu</span></code> takes on whatever value is indicative of <em>no effect</em>, which will depend entirely upon what the data actually is. For most outcome measures, a value of 0 is unhelpful. Consider measuring reaction time, height, weight or a myriad of other metrics where 0 is nonsensical. So just remember, the null hypothesis does not automatically mean 0, but the test is always based on an expectation that <span class="math notranslate nohighlight">\(\delta = 0\)</span>. This just means that we are testing whether we are <em>correct</em> about the proposed value because if we are, the difference between our estimate and the truth will be 0, on average. The closer the calculated value of <span class="math notranslate nohighlight">\(\delta\)</span> is to 0, the more hopeful we are that this is the case.</p>
 <div class="tip admonition">
 <p class="admonition-title">Null Comparisons in Software</p>
 <p>Although the example above highlighted how we can, in principle, specify any null value we like, we do not always have this level of control in software. Although the <code class="docutils literal notranslate"><span class="pre">t.test()</span></code> function does allow this, within the context of a linear model, we will always automatically get comparisons that use an implicit proposed value of 0. For regression slopes, this is fine because a slope of 0 indicates <em>no relationship</em> and thus is sensible. However, for the intercept, the test is asking whether <span class="math notranslate nohighlight">\(\beta_{0} = 0\)</span>. In other words, could the population slope be a regression through the origin? For many problems, this is not a very sensible or meaningful question and thus the test on the intercept is largely ignored. This highlights the importance of considering what <em>questions</em> tests are asking when they are produced automatically.</p>
 </div>
+<p>Just remember, despite all the complexity above, we have arrived at a very simple result. We are probably right about the population value if our estimated value is very close to it. If we estimate <span class="math notranslate nohighlight">\(\widehat{\text{IQ}} = 98\)</span>, then a population value of <span class="math notranslate nohighlight">\(\text{IQ} = 100\)</span> seems quite lkely. However, if we estimate <span class="math notranslate nohighlight">\(\widehat{\text{IQ}} = 130\)</span>, then this seems less plausible. This is actually <em>extremely simple</em>. The difficulty comes with formalising this in terms of probability, which requires some well-defined probability distribution under the conditions that our guess is correct. It is this desire for a probabilistic answer to our question that leads to much of this complexity, but the actual <em>idea</em> is deceptively simple.</p>
 <aside class="topic">
 <p class="topic-title">What do you now know?</p>
 <p>In this section, we have explored the first part of NHST in terms of defining the null hypothesis. After reading this section, you should have a good sense of:</p>
 <ul class="simple">
 <li><p>The principle of comparing our estimated value to some proposed population value and calling the difference <span class="math notranslate nohighlight">\(\delta\)</span>.</p></li>
-<li><p>The idea that if we are <em>correct</em> about the population value, then the distribution of <span class="math notranslate nohighlight">\(\delta\)</span> will be centred on 0. Under the assumption that we are correct, larger values of <span class="math notranslate nohighlight">\(\delta\)</span> are therefore less probable than smaller values.</p></li>
-<li><p>The principle that, when selecting a proposed population value, NHST tells us to choose a value that indicates <em>no effect</em>. This defines the <em>null hypothesis</em>.</p></li>
+<li><p>The idea that if we are <em>correct</em> about the population value, then the distribution of <span class="math notranslate nohighlight">\(\delta\)</span> will be centred on 0. Larger values of <span class="math notranslate nohighlight">\(\delta\)</span> are then less probable than smaller values.</p></li>
+<li><p>The principle that, when selecting a proposed population value, NHST tells us to choose a value that indicates <em>no effect</em> to define the <em>null hypothesis</em>.</p></li>
 <li><p>The fact that the null value does not <em>have</em> to be 0, but often is (especially when tests are automatically generated in software).</p></li>
 <li><p>The idea that we can use the distribution of <span class="math notranslate nohighlight">\(\delta\)</span> when we are correct to calculate how likely our value of <span class="math notranslate nohighlight">\(\delta\)</span> would be, if the null were true.</p></li>
+<li><p>The idea that NHST is simply asking the question “if there were no effect in the population, how probable would our result be?”</p></li>
 </ul>
 </aside>
 <hr class="footnotes docutils" />
@@ -545,6 +553,7 @@ E\left(\delta\right|\mathcal{H}_{0}) = E\left(\hat{\beta}_{1} - \beta_{1}^{(0)}\
 <p>The reason why the expectation disappears from <span class="math notranslate nohighlight">\(\beta_{1}^{(0)}\)</span> is because our hypothesised value is <em>not</em> a random variable, it is a <em>constant</em>. In other words, it is a single number that will not change if we repeat the same experiment over and over again. As such, its average value across samples is just its original value. This is a basic result of using the expectation operator with a constant <span class="math notranslate nohighlight">\(c\)</span>, giving <span class="math notranslate nohighlight">\(E(c) = c\)</span>.</p>
 </aside>
 </aside>
+</section>
 </section>
 </section>
 </section>
@@ -617,7 +626,10 @@ E\left(\delta\right|\mathcal{H}_{0}) = E\left(\hat{\beta}_{1} - \beta_{1}^{(0)}\
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#estimates-and-population-values">Estimates and Population Values</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-an-estimate-with-a-hypothesised-value">Comparing an Estimate with a Hypothesised Value</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-sampling-distribution-of-delta">The Sampling Distribution of <span class="math notranslate nohighlight">\(\delta\)</span></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-null-hypothesis">The Null Hypothesis</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-null-hypothesis">The Null Hypothesis</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-null-hypothesis-does-not-have-to-be-0">The Null Hypothesis Does Not Have to Be 0</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
