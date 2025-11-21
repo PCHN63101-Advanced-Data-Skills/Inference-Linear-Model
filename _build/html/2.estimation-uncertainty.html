@@ -573,7 +573,7 @@ y \sim \mathcal{N}\left(5,2\right)
 </div>
 </div>
 </div>
-<p>These values are very close and, in principle, should converge as the number of simulations increases. We can also visualise the theoretical sampling distribution on top of the empirical sampling distribution to show their close correspondance.</p>
+<p>These values are very close and, in principle, should converge as the number of simulations increases. We can also visualise the theoretical sampling distribution on top of the empirical sampling distribution to show their close correspondence.</p>
 <div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -693,7 +693,7 @@ E\left(\hat{\beta}_{1}\right) = \beta_{1}.
 (n-1)\sigma^{2}_{x} = (n-1) \frac{\sum{(x_{i} - \bar{x})^{2}}}{n-1} = \sum{(x_{i} - \bar{x})^{2}},
 \]</div>
 <p>so it is a bit redundant writing it this way. However, doing so makes the dependence on the sample size clearer. To put it simply, the <em>bigger</em> the sample size the <em>larger</em> the denominator becomes and the <em>smaller</em> the standard error. To put it even more simply, <em>more data</em> makes our estimate <em>more precise</em>.</p>
-<p>This makes intuitive sense. The more data we have, the closer we are to having the full population at our disposal and thus the better our estimate of the population value should be. To make our estimate as precise as possible we want both a wide-spread of <span class="math notranslate nohighlight">\(x\)</span> values, as well as more data. We can demonstrate this dependance in <code class="docutils literal notranslate"><span class="pre">R</span></code> using simulations. The output below shows the sampling distribution of <span class="math notranslate nohighlight">\(\hat{\beta}_{1}\)</span> for sample sizes of 5, 10, 50, 100, 1000 and 5000. Again, the code is hidden, but you can study it if you like to get a clearer idea of how these simulations work.</p>
+<p>This makes intuitive sense. The more data we have, the closer we are to having the full population at our disposal and thus the better our estimate of the population value should be. To make our estimate as precise as possible we want both a wide-spread of <span class="math notranslate nohighlight">\(x\)</span> values, as well as more data. We can demonstrate this dependence in <code class="docutils literal notranslate"><span class="pre">R</span></code> using simulations. The output below shows the sampling distribution of <span class="math notranslate nohighlight">\(\hat{\beta}_{1}\)</span> for sample sizes of 5, 10, 50, 100, 1000 and 5000. Again, the code is hidden, but you can study it if you like to get a clearer idea of how these simulations work.</p>
 <div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
