@@ -16,20 +16,22 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-  
-  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
-
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b76e3c8a" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
@@ -37,10 +39,11 @@
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="_static/test.css?v=90b7ad94" />
   
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
-  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="_static/documentation_options.js?v=9eb32ce0"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
@@ -67,6 +70,7 @@
     <link rel="prev" title="NHST III: Statistical Significance" href="5.null-hypothesis-testing-III.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -82,19 +86,8 @@
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-primary-sidebar-checkbox"/>
-  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
-  
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-secondary-sidebar-checkbox"/>
-  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
-  
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
+  <dialog id="pst-search-dialog">
+    
 <form class="bd-search d-flex align-items-center"
       action="search.html"
       method="get">
@@ -102,7 +95,6 @@
   <input type="search"
          class="form-control"
          name="q"
-         id="search-input"
          placeholder="Search this book..."
          aria-label="Search this book..."
          autocomplete="off"
@@ -110,8 +102,8 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
-  </div>
+</form>
+  </dialog>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
@@ -127,7 +119,8 @@
       
       
       
-      <div class="bd-sidebar-primary bd-sidebar">
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -157,21 +150,17 @@
     
     
     <img src="_static/logo.png" class="logo__image only-light" alt="Linear Models II: Statistical Inference - Home"/>
-    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Linear Models II: Statistical Inference - Home"/>`);</script>
+    <img src="_static/logo.png" class="logo__image only-dark pst-js-only" alt="Linear Models II: Statistical Inference - Home"/>
   
   
 </a></div>
         <div class="sidebar-primary-item">
 
- <script>
- document.write(`
-   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script></div>
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
@@ -198,9 +187,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -344,24 +338,16 @@
 
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
-  </button>
-`);
-</script>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-  </button>
-`);
-</script>
+</button>
 <button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
@@ -453,12 +439,12 @@ document.write(`
 <span class="c1"># Store mean p-values</span>
 <span class="n">mean_pvals</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">numeric</span><span class="p">(</span><span class="nf">length</span><span class="p">(</span><span class="n">sample_sizes</span><span class="p">))</span>
 
-<span class="nf">for </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="nf">seq_along</span><span class="p">(</span><span class="n">sample_sizes</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="kr">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="kr">in</span><span class="w"> </span><span class="nf">seq_along</span><span class="p">(</span><span class="n">sample_sizes</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="n">n</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">sample_sizes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
 <span class="w">  </span>
 <span class="w">  </span><span class="n">pvals</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">numeric</span><span class="p">(</span><span class="n">reps</span><span class="p">)</span>
 <span class="w">  </span>
-<span class="w">  </span><span class="nf">for </span><span class="p">(</span><span class="n">r</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="n">reps</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kr">for</span><span class="w"> </span><span class="p">(</span><span class="n">r</span><span class="w"> </span><span class="kr">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="n">reps</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="n">dat</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">mvrnorm</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">mu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">),</span><span class="w"> </span><span class="n">Sigma</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Sigma</span><span class="p">)</span>
 <span class="w">    </span><span class="n">test</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">cor.test</span><span class="p">(</span><span class="n">dat</span><span class="p">[,</span><span class="w"> </span><span class="m">1</span><span class="p">],</span><span class="w"> </span><span class="n">dat</span><span class="p">[,</span><span class="w"> </span><span class="m">2</span><span class="p">])</span>
 <span class="w">    </span><span class="n">pvals</span><span class="p">[</span><span class="n">r</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">test</span><span class="o">$</span><span class="n">p.value</span>
@@ -524,7 +510,7 @@ document.write(`
 </ol>
 <p>This is a perfectly valid argument, but the conclusion is not sensible because the first premise is wrong. <em>Some</em> British people are Members of Parliament (650 of them, in fact). We can make the premise more correct by making it probabilistic.</p>
 <ol class="arabic simple">
-<li><p>If a person is British then it is unlikely that they are a Member of Parliament (given that we are talking 650 people out of a population of over 68 million).</p></li>
+<li><p>If a person is British then it is unlikely that they are a Member of Parliament<a class="footnote-reference brackets" href="#premise-foot" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>.</p></li>
 <li><p>This person is a Member of Parliament.</p></li>
 <li><p>Therefore, this person is unlikely to be British.</p></li>
 </ol>
@@ -535,7 +521,7 @@ document.write(`
 <li><p>This result has been generated (i.e. we have calculated a small <span class="math notranslate nohighlight">\(p\)</span>-value).</p></li>
 <li><p>Therefore, <span class="math notranslate nohighlight">\(H_{0}\)</span> is unlikely to be true.</p></li>
 </ol>
-<p>This is exactly the same logical form as above and yet it <em>sounds</em> like a plausible line of reasoning. Nevertheless, in the same vein as the example above, it is logically invalid. Yet this is the conclusion that is implicit in every significant finding reported in the literature. This is what <a class="reference external" href="https://www.sjsu.edu/faculty/gerstman/misc/Cohen1994.pdf">Cohen (1994)</a> refers to as “the illusion of obtaining improbability”. In fact, jumping from 2 to 3 above requires an <em>inductive leap</em> because it does not follow logically using deduction. This is the inductive reasoning that lies at the heart of NHST. We are rejecting the possibility that we observed something rare and are instead assuming that <span class="math notranslate nohighlight">\(H_{0}\)</span> is false. This is a <em>leap of faith</em><a class="footnote-reference brackets" href="#logic-foot" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>. Although the mathematics of calculating <span class="math notranslate nohighlight">\(p\)</span>-values are purely deductive, drawing conclusions about <span class="math notranslate nohighlight">\(H_{0}\)</span> based on <span class="math notranslate nohighlight">\(p\)</span>-value is inescapably induction and logically invalid.</p>
+<p>This is exactly the same logical form as above and yet it <em>sounds</em> like a plausible line of reasoning. Nevertheless, in the same vein as the example above, it is logically invalid. Yet this is the conclusion that is implicit in every significant finding reported in the literature. This is what <a class="reference external" href="https://www.sjsu.edu/faculty/gerstman/misc/Cohen1994.pdf">Cohen (1994)</a> refers to as “the illusion of obtaining improbability”. In fact, jumping from 2 to 3 above requires an <em>inductive leap</em> because it does not follow logically using deduction. This is the inductive reasoning that lies at the heart of NHST. We are rejecting the possibility that we observed something rare and are instead assuming that <span class="math notranslate nohighlight">\(H_{0}\)</span> is false. This is a <em>leap of faith</em><a class="footnote-reference brackets" href="#logic-foot" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>. Although the mathematics of calculating <span class="math notranslate nohighlight">\(p\)</span>-values are purely deductive, drawing conclusions about <span class="math notranslate nohighlight">\(H_{0}\)</span> based on <span class="math notranslate nohighlight">\(p\)</span>-value is inescapably induction and logically invalid.</p>
 <p>Another way of thinking about this is that a probabilistic conclusion has been reached about <span class="math notranslate nohighlight">\(H_{0}\)</span>, yet we know that a <span class="math notranslate nohighlight">\(p\)</span>-value is <em>not</em> a probability statement about <span class="math notranslate nohighlight">\(H_{0}\)</span>. How can we conclude that the null is unlikely when we have not calculated the probability of the null? Instead, a <span class="math notranslate nohighlight">\(p\)</span>-value is a probability statement about the <em>data</em>. In other words, <span class="math notranslate nohighlight">\(p = P(\mathcal{D}|H_{0}) \neq P(H_{0}|\mathcal{D})\)</span>. Although <span class="math notranslate nohighlight">\(P(\mathcal{D}|H_{0})\)</span> and <span class="math notranslate nohighlight">\(P(H_{0}|\mathcal{D})\)</span> <em>sound</em> very similar, they are not the same quantity. This is discussed in much more detail in the optional drop-down box below. From a pure Frequentist perspective, if we have a significant <span class="math notranslate nohighlight">\(p\)</span>-value we can conclude that our data are unlikely if the null hypothesis were true. We cannot make any statement about the null hypothesis itself, no matter how much we want to!</p>
 <blockquote class="epigraph">
 <div><p>What’s wrong with NHST? Well, among many other things, it does not tell us what we want to know, and we
@@ -588,7 +574,7 @@ so much want to know what we want to know that, out of desperation, we neverthel
 <p>Another issue with NHST is that it presents itself as an objective alternative to “subjective” Bayesianism, yet on closer inspection, this claim falls short. It has been stated already that Fisher’s main motivating factor for developing Frequentist methods was that he believed that there was no room for <em>personal belief</em> within science. His aim was to create a method that was <em>objective</em>, and NHST was the result. Unfortunately, despite Fisher’s efforts, two key parts of NHST remain highly subjective:</p>
 <ul class="simple">
 <li><p>The threshold for significance itself is <em>arbitrary</em>. Although Fisher did not condone hard thresholds, his heuristic of <span class="math notranslate nohighlight">\(p = 0.05\)</span> remains a subjective marker for “significance”. There is no argument to be made that can logically or rationally justify why <span class="math notranslate nohighlight">\(1/20\)</span> is a meaningful yardstick. This gets worse when moving to the Neyman-Pearson approach and making binary decisions based on an arbitrary <span class="math notranslate nohighlight">\(\alpha\)</span>-level.</p></li>
-<li><p>The results of NHST are highly dependent on the decisions of the data analyst. Choices about the model form, variables, null value, test-statistic and direction of the test are all based on subjective decisions made by the researcher. These choices<a class="footnote-reference brackets" href="#rdf-foot" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a> are a natural part of a data analysis, but will always have a big impact on the <span class="math notranslate nohighlight">\(p\)</span>-value.</p></li>
+<li><p>The results of NHST are highly dependent on the decisions of the data analyst. Choices about the model form, variables, null value, test-statistic and direction of the test are all based on subjective decisions made by the researcher. These choices<a class="footnote-reference brackets" href="#rdf-foot" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a> are a natural part of a data analysis, but will always have a big impact on the <span class="math notranslate nohighlight">\(p\)</span>-value.</p></li>
 </ul>
 <p>So, far from being the <em>objective</em> method that Fisher desired, NHST simply displaces subjectivity into modelling decisions and arbitrary heuristics/thresholds for interpretation. This leads to a method that is unable to be purely objective, but in trying to be objective ends up answering questions we are not interested in. Indeed, the obsessive strive for objectivity backs NHST into a corner, where it is unable to say much that is useful. Somewhat ironically, Fisher’s desire for objectivity stemmed from his own <em>subjective</em> view of how science ought to be. In criticising Bayesian inference (which he referred to as “inverse probability”), Fisher said:</p>
 <blockquote class="epigraph">
@@ -655,12 +641,16 @@ p = P\left(\mathcal{D}|\mathcal{H}_{0}\right) = P\left(\text{The ground is wet}|
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
 <p>Fisher <em>knew</em> that frequentist probabilities about the data were unsatisfying. He also knew that researchers wanted was a quantity more like <span class="math notranslate nohighlight">\(P(\beta_{1}|\mathcal{D})\)</span>. To do this <em>without</em> Bayesian methods, he tried to invent a new type of probability called <a class="reference external" href="https://en.wikipedia.org/wiki/Fiducial_inference"><em>fiducial</em> probability</a> to get statements about parameters that were compatible with Frequentism. This was generally considered a failure, but does highlight that even Fisher knew that Frequentist methods were answering the wrong question.</p>
 </aside>
-<aside class="footnote brackets" id="logic-foot" role="note">
+<aside class="footnote brackets" id="premise-foot" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">3</a><span class="fn-bracket">]</span></span>
+<p>An important point here is that this premise is <em>not</em> saying that <em>because</em> someone is a British citizen, it is unlikely that they are an MP. Quite the opposite, because being a British citizen is a <em>requirement</em> before running for government. It is saying that <em>even though</em> someone is British, it remains unlikely that they are an MP. This is correct because there are only 650 MPs out of a population of 68,000,000. If you were to pluck a random British citizen off the street, it is very unlikely you would select an MP. Though if you did this enough, in a truly random way, you would eventually find an MP. So it is not impossible, just unlikely.</p>
+</aside>
+<aside class="footnote brackets" id="logic-foot" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">4</a><span class="fn-bracket">]</span></span>
 <p>This is primarily an issue with Neyman-Pearson logic because their aim was to make sure that our mistakes are controlled. As such, they are happy for us to make this statement, even though it may be wrong, so long as we are not wrong too often. However, we can never know if this particular occasion is the one where we <em>are</em> wrong. So again, we make the leap of faith that we are not wrong this time. Fisher never made such a mistake because he has no interest in rejecting hypotheses and was always very careful to only talk about “compatibility with the null”.</p>
 </aside>
 <aside class="footnote brackets" id="rdf-foot" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">4</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">5</a><span class="fn-bracket">]</span></span>
 <p>The wealth of choices available during a data analysis are sometimes known as <em>researcher degrees of freedom</em>. The more choices available, the more possible outcomes of the analysis there are and the more a set of results depends upon the choices that were made. This <em>garden of forking paths</em> is actually quite a big problem in terms of being able to replicate existing results with new data.</p>
 </aside>
 </aside>
@@ -722,7 +712,8 @@ p = P\left(\mathcal{D}|\mathcal{H}_{0}\right) = P\left(\text{The ground is wet}|
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
   <div class="sidebar-secondary-item">
@@ -788,8 +779,8 @@ By Dr George Farmer & Dr Martyn McFarquhar
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
-<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
   </footer>
